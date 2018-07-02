@@ -8,7 +8,6 @@ using Artesian.SDK.Common;
 using Artesian.SDK.Common.Dto.Api.V2;
 using Artesian.SDK.Dependencies.TimeTools;
 using EnsureThat;
-using NLog;
 using NodaTime;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +18,6 @@ namespace Artesian.SDK.API.MarketData
 {
     public class ActualTimeSerie
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IArtesianService.Latest _ArtesianService;
         private MarketDataEntity.V2.Output _entity;
 
@@ -160,7 +158,8 @@ namespace Artesian.SDK.API.MarketData
                 await _ArtesianService.UpsertCurveDataAsync(data);
             }
             else
-                _logger.Warn("No Data to be saved.");
+            { //_logger.Warn("No Data to be saved.");
+            }
         }
 
     }

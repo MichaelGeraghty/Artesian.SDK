@@ -1,5 +1,4 @@
-﻿using NLog;
-using EnsureThat;
+﻿using EnsureThat;
 using System.Threading;
 using System.Threading.Tasks;
 using Artesian.SDK.API.Dto;
@@ -10,8 +9,6 @@ namespace Artesian.SDK.API.MarketData
     {
 
         private readonly IArtesianService.Latest _ArtesianService;
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
-
 
         public MarketDataFactory(
             IArtesianService.Latest ArtesianService)

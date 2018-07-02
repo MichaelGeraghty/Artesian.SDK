@@ -1,5 +1,4 @@
-﻿using NLog;
-using NodaTime;
+﻿using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -30,8 +29,6 @@ namespace Artesian.SDK.ArtesianService
     {
         public class Latest : IArtesianService.Latest, IDisposable
         {
-
-            private static Logger _logger = LogManager.GetCurrentClassLogger();
             private static Auth0Client _client;
 
             public Latest(ArtesianServiceConfig config, Func<HttpMessageHandler> httpMessageHandler)
@@ -338,8 +335,6 @@ namespace Artesian.SDK.ArtesianService
 
         public class Deprecated : IArtesianService.Deprecated, IDisposable
         {
-
-            private static Logger _logger = LogManager.GetCurrentClassLogger();
             private static Auth0Client _client;
 
             public Deprecated(ArtesianServiceConfig config, Func<HttpMessageHandler> httpMessageHandler)

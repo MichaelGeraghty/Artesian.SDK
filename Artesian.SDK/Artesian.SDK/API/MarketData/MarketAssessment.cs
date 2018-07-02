@@ -1,5 +1,4 @@
-﻿using NLog;
-using NodaTime;
+﻿using NodaTime;
 using System;
 using System.Collections.Generic;
 using EnsureThat;
@@ -20,7 +19,6 @@ namespace Artesian.SDK.API.MarketData
 {
     public class MarketAssessment
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IArtesianService.Latest _ArtesianService;
         private MarketDataEntity.V2.Output _entity;
 
@@ -205,7 +203,10 @@ namespace Artesian.SDK.API.MarketData
                 await _ArtesianService.UpsertCurveDataAsync(data);
             }
             else
-                _logger.Warn("No Data to be saved.");
+            {
+                // _logger.Warn("No Data to be saved.");
+            }
+
         }
 
         public class AssessmentElement

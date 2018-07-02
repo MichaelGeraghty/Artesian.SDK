@@ -1,17 +1,13 @@
-﻿using Artesian.SDK.Common.Dto;
-using NLog;
+﻿
 using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
-using Artesian.SDK.Dependencies.TimeTools;
 using Artesian.SDK.Dependencies.MarketTools.MarketProducts;
 using System.Net.Http;
 using Artesian.SDK.Common;
-using Artesian.SDK.API;
-using System.Runtime.CompilerServices;
 using Artesian.SDK.API.Configuration;
 using Artesian.SDK.ArtesianService.Clients;
 using Artesian.SDK.API.ArtesianService;
@@ -24,7 +20,6 @@ namespace Artesian.SDK.ArtesianService.QueryService
     {
         public class Latest : IArtesianQueryService.Latest, IDisposable
         {
-            private static Logger _logger = LogManager.GetCurrentClassLogger();
             private readonly Auth0Client _client;
 
             public Latest(ArtesianServiceConfig config, Func<HttpMessageHandler> httpMessageHandler)
