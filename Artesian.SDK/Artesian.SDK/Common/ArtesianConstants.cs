@@ -15,19 +15,6 @@ namespace Artesian.SDK.Common
         public const string ArtesianAssemblyVersion = "3.3";
         public const string ArtesianFileVersion = "3.3.19";
 
-        public static readonly string[] ApiVersions = {
-             "v2.0"
-            ,"v2.1" //query layer is deprecated, transform is not supported at query api
-        };
-
-        public static readonly string[] QueryVersions = {
-             "v1.0" //timetransform is supported
-        };
-
-        public static readonly string[] PreviewVersions = {
-             "v1.0"
-        };
-
         public static string EnforceEmptyPayload = string.Empty;
     }
 }
