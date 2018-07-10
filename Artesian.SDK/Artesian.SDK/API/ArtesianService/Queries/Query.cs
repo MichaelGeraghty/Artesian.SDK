@@ -1,4 +1,5 @@
-﻿using Artesian.SDK.Common;
+﻿using Artesian.SDK.API.ArtesianService.Config;
+using Artesian.SDK.Common;
 using Artesian.SDK.Dependencies;
 using NodaTime;
 using System;
@@ -9,7 +10,7 @@ namespace Artesian.SDK.API.ArtesianService.Queries
     public abstract class ArkiveQuery
     {
         // must comment and document all methods
-        private ExtractionRangeSelectionCfg _extractionRangeCfg = new ExtractionRangeSelectionCfg();
+        private ExtractionRangeSelectionConfig _extractionRangeCfg = new ExtractionRangeSelectionConfig();
         private ExtractionRangeType? _extractionRangeType = null;
 
         protected IEnumerable<int> _ids;

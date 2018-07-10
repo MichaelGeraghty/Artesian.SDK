@@ -1,20 +1,28 @@
-﻿using Artesian.SDK.API.DTO;
+﻿using Artesian.SDK.API.ArtesianService.Config;
+using Artesian.SDK.API.ArtesianService.Interface;
+using Artesian.SDK.API.DTO;
+using Artesian.SDK.ArtesianService.Clients;
 using Artesian.SDK.Dependencies;
 using NodaTime;
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Artesian.SDK.API.ArtesianService.Queries
 {
-    class ActualQuery : ArkiveQuery
+    public class ActualQuery : ArkiveQuery, IActualQuery<ActualQuery>
     {
         protected Granularity? _granularity;
+        private Auth0Client _client;
         protected int? _tr;
         private string _routePrefix = "ts";
 
-        public ActualQuery(int[] ids, Granularity granularity)
+        internal ActualQuery(int[] ids, Granularity granularity, Auth0Client client)
         {
             _forMarketData(ids);
             _granularity = granularity;
+            _client = client;
         }
 
         #region facade methods
@@ -70,6 +78,11 @@ namespace Artesian.SDK.API.ArtesianService.Queries
             return url.ToString();
         }
 
+        public async Task<IEnumerable<TimeSerieRow.Actual.V1_0>> ExecuteAsync()
+        {
+            return await _client.Exec<IEnumerable<TimeSerieRow.Actual.V1_0>>(HttpMethod.Get, Build());
+        }
+
         //not required if granularity set through ctor
         protected override void _validateQuery()
         {
@@ -79,19 +92,6 @@ namespace Artesian.SDK.API.ArtesianService.Queries
                 throw new ApplicationException("Extraction granularity must be provided");
         }
         #endregion
-
-
-        //public ActualQuery ForMarketData(int[] ids)
-        //{
-        //    _forMarketData(ids);
-        //    return this;
-        //}
-
-        //public ActualQuery InGranularity(Granularity granularity)
-        //{
-        //    _granularity = granularity;
-        //    return this;
-        //}
 
 
     }

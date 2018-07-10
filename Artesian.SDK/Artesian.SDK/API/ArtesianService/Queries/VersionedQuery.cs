@@ -1,24 +1,32 @@
-﻿using Artesian.SDK.API.DTO;
+﻿using Artesian.SDK.API.ArtesianService.Config;
+using Artesian.SDK.API.ArtesianService.Interface;
+using Artesian.SDK.API.DTO;
+using Artesian.SDK.ArtesianService.Clients;
 using Artesian.SDK.Common;
 using Artesian.SDK.Dependencies;
 using NodaTime;
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Artesian.SDK.API.ArtesianService.Queries
 {
-    class VersionedQuery : ArkiveQuery
+    public class VersionedQuery : ArkiveQuery, IVersionedQuery<VersionedQuery>
     {
-        private VersionSelectioncfg _versionSelectionCfg = new VersionSelectioncfg();
+        private VersionSelectionConfig _versionSelectionCfg = new VersionSelectionConfig();
         private VersionSelectionType? _versionSelectionType = null;
         private Granularity? _granularity;
+        private Auth0Client _client;
         private int? _tr;
         private string _routePrefix = "vts";
 
 
-        public VersionedQuery(int[] ids, Granularity granularity)
+        internal VersionedQuery(int[] ids, Granularity granularity, Auth0Client client)
         {
             _forMarketData(ids);
             _granularity = granularity;
+            _client = client;
         }
 
         #region facade methods
@@ -185,6 +193,11 @@ namespace Artesian.SDK.API.ArtesianService.Queries
             return url.ToString();
         }
 
+        public async Task<IEnumerable<TimeSerieRow.Versioned.V1_0>> ExecuteAsync()
+        {
+            return await _client.Exec<IEnumerable<TimeSerieRow.Versioned.V1_0>>(HttpMethod.Get, Build());
+        }
+
         protected override void _validateQuery()
         {
             base._validateQuery();
@@ -196,20 +209,6 @@ namespace Artesian.SDK.API.ArtesianService.Queries
                 throw new ApplicationException("Version selection must be provided");
         }
         #endregion
-
-
-
-        //public VersionedQuery ForMarketData(int[] ids)
-        //{
-        //    _forMarketData(ids);
-        //    return this;
-        //}
-
-        //public VersionedQuery InGranularity(Granularity granularity)
-        //{
-        //    _granularity = granularity;
-        //    return this;
-        //}
 
     }
 }

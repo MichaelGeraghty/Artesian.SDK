@@ -1,20 +1,27 @@
-﻿using Artesian.SDK.Common;
+﻿using Artesian.SDK.API.ArtesianService.Config;
+using Artesian.SDK.API.ArtesianService.Interface;
+using Artesian.SDK.ArtesianService.Clients;
+using Artesian.SDK.Common;
 using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.MarketTools.MarketProducts;
 using NodaTime;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Artesian.SDK.API.ArtesianService.Queries
 {
-    class MasQuery : ArkiveQuery
+    public class MasQuery : ArkiveQuery, IMasQuery<MasQuery>
     {
         private IEnumerable<IMarketProduct> _products;
         private string _routePrefix = "mas";
+        private Auth0Client _client;
 
-        public MasQuery(int[] ids)
+        internal MasQuery(int[] ids, Auth0Client client)
         {
             _forMarketData(ids);
+            _client = client;
         }
 
         #region facade methods
@@ -69,6 +76,11 @@ namespace Artesian.SDK.API.ArtesianService.Queries
             return url.ToString();
         }
 
+        public async Task<IEnumerable<AssessmentRow.V2>> ExecuteAsync()
+        {
+            return await _client.Exec<IEnumerable<AssessmentRow.V2>>(HttpMethod.Get, Build());
+        }
+
         protected override void _validateQuery()
         {
             base._validateQuery();
@@ -77,11 +89,5 @@ namespace Artesian.SDK.API.ArtesianService.Queries
                 throw new ApplicationException("Products must be provided for extraction");
         }
         #endregion
-
-        //public MasQuery ForMarketData(int[] ids)
-        //{
-        //    _ids = ids;
-        //    return this;
-        //}
     }
 }

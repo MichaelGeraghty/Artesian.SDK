@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artesian.SDK", "Artesian.SDK\Artesian.SDK.csproj", "{E7F77EAF-D238-43BA-BB20-C5CA65D2BAF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Artesian.SDK", "Artesian.SDK\Artesian.SDK.csproj", "{E7F77EAF-D238-43BA-BB20-C5CA65D2BAF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
