@@ -1,13 +1,14 @@
 ﻿using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.Common;
 using Artesian.SDK.QueryService.Config;
+using Artesian.SDK.QueryService.Configuration;
 using NodaTime;
 using System;
 using System.Collections.Generic;
 
 namespace Artesian.SDK.QueryService.Queries
 {
-    public abstract class ArkiveQuery
+    public abstract class Query
     {
         // must comment and document all methods
         private ExtractionRangeSelectionConfig _extractionRangeCfg = new ExtractionRangeSelectionConfig();
@@ -16,13 +17,13 @@ namespace Artesian.SDK.QueryService.Queries
         protected IEnumerable<int> _ids;
         protected string _tz;
 
-        protected ArkiveQuery _forMarketData(int[] ids)
+        protected Query _forMarketData(int[] ids)
         {
             _ids = ids;
             return this;
         }
 
-        protected ArkiveQuery _inTimezone(string tz)
+        protected Query _inTimezone(string tz)
         {
             if (DateTimeZoneProviders.Tzdb.GetZoneOrNull(tz) == null)
                 throw new ArgumentException($"Timezone {tz} is not recognized");
@@ -30,28 +31,28 @@ namespace Artesian.SDK.QueryService.Queries
             return this;
         }
 
-        protected ArkiveQuery _inAbsoluteDateRange(LocalDateRange extractionDateRange)
+        protected Query _inAbsoluteDateRange(LocalDateRange extractionDateRange)
         {
             _extractionRangeType = ExtractionRangeType.DateRange;
             _extractionRangeCfg.DateRange = extractionDateRange;
             return this;
         }
 
-        protected ArkiveQuery _inRelativePeriodRange(PeriodRange extractionPeriodRange)
+        protected Query _inRelativePeriodRange(PeriodRange extractionPeriodRange)
         {
             _extractionRangeType = ExtractionRangeType.PeriodRange;
             _extractionRangeCfg.PeriodRange = extractionPeriodRange;
             return this;
         }
 
-        protected ArkiveQuery _inRelativePeriod(Period extractionPeriod)
+        protected Query _inRelativePeriod(Period extractionPeriod)
         {
             _extractionRangeType = ExtractionRangeType.Period;
             _extractionRangeCfg.Period = extractionPeriod;
             return this;
         }
 
-        protected ArkiveQuery _inRelativeInterval(RelativeInterval relativeInterval)
+        protected Query _inRelativeInterval(RelativeInterval relativeInterval)
         {
             _extractionRangeType = ExtractionRangeType.RelativeInterval;
             _extractionRangeCfg.Interval = relativeInterval;

@@ -1,8 +1,8 @@
 ﻿using Artesian.SDK.Clients;
 using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.Common;
-using Artesian.SDK.Dependencies.MarketTools.MarketProducts;
 using Artesian.SDK.QueryService.Config;
+using Artesian.SDK.QueryService.Configuration;
 using Artesian.SDK.QueryService.Interface;
 using NodaTime;
 using System;
@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.QueryService.Queries
 {
-    public class MasQuery : ArkiveQuery, IMasQuery<MasQuery>
+    public class MasQuery : Query, IMasQuery<MasQuery>
     {
-        private IEnumerable<IMarketProduct> _products;
+        private IEnumerable<string> _products;
         private string _routePrefix = "mas";
         private Auth0Client _client;
 
@@ -58,7 +58,7 @@ namespace Artesian.SDK.QueryService.Queries
 
         #region market assessment methods
 
-        public MasQuery ForProducts(IEnumerable<IMarketProduct> products)
+        public MasQuery ForProducts(params string[] products)
         {
             _products = products;
             return this;

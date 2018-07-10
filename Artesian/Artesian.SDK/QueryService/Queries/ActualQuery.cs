@@ -2,6 +2,7 @@
 using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.Common.DTO;
 using Artesian.SDK.QueryService.Config;
+using Artesian.SDK.QueryService.Configuration;
 using Artesian.SDK.QueryService.Interface;
 using NodaTime;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.QueryService.Queries
 {
-    public class ActualQuery : ArkiveQuery, IActualQuery<ActualQuery>
+    public class ActualQuery : Query, IActualQuery<ActualQuery>
     {
         protected Granularity? _granularity;
         private Auth0Client _client;
@@ -84,7 +85,7 @@ namespace Artesian.SDK.QueryService.Queries
         }
 
         //not required if granularity set through ctor
-        protected override void _validateQuery()
+        protected sealed override void _validateQuery()
         {
             base._validateQuery();
 

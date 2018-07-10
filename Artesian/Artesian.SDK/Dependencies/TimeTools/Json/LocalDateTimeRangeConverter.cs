@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Artesian.SDK.QueryService.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
 using System;

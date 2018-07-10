@@ -14,18 +14,17 @@ using Newtonsoft.Json.Serialization;
 using MessagePack.Resolvers;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
-using Artesian.SDK.Configuration;
 using Polly.Caching;
 using JWT.Builder;
 using System.Collections.Generic;
 using Artesian.SDK.Clients.Exceptions.Client;
 using Artesian.SDK.Clients.Exceptions.Remote;
 using MessagePack.NodaTime;
-using Artesian.SDK.Dependencies.MarketTools.MarketProducts;
 using Artesian.SDK.Dependencies.TimeTools.Json;
 using Artesian.SDK.Dependencies.Tools.Extensions;
 using Artesian.SDK.Dependencies;
 using Artesian.SDK.Configuration.Interface;
+using Artesian.SDK.Clients.Formatters;
 
 namespace Artesian.SDK.Clients
 {
@@ -75,7 +74,6 @@ namespace Artesian.SDK.Clients
 
             var cfg = new JsonSerializerSettings();
             cfg = cfg.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-            cfg = cfg.ConfigureForProductAbsolute();
             cfg = cfg.ConfigureForDictionary();
             cfg = cfg.ConfigureForNodaTimeRanges();
             cfg.Formatting = Formatting.Indented;

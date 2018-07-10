@@ -1,11 +1,10 @@
-﻿using Artesian.SDK.Dependencies.MarketTools.MarketProducts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Artesian.SDK.QueryService.Interface
 {
     interface IMasQuery<T>: IQuery<T>
     {
-        T ForProducts(IEnumerable<IMarketProduct> products);
+        T ForProducts(params string[] products);
         string Build();
     }
 }

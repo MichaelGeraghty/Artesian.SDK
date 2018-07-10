@@ -3,6 +3,7 @@ using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.Common;
 using Artesian.SDK.Dependencies.Common.DTO;
 using Artesian.SDK.QueryService.Config;
+using Artesian.SDK.QueryService.Configuration;
 using Artesian.SDK.QueryService.Interface;
 using NodaTime;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.QueryService.Queries
 {
-    public class VersionedQuery : ArkiveQuery, IVersionedQuery<VersionedQuery>
+    public class VersionedQuery : Query, IVersionedQuery<VersionedQuery>
     {
         private VersionSelectionConfig _versionSelectionCfg = new VersionSelectionConfig();
         private VersionSelectionType? _versionSelectionType = null;
@@ -170,7 +171,7 @@ namespace Artesian.SDK.QueryService.Queries
             string subPath;
 
             if (_versionSelectionCfg.LastOf.DateRange != null)
-                subPath = $"{_versionSelectionType}/{UrlComposer.ToUrlParam(_versionSelectionCfg.LastOf.DateRange)}";
+                subPath = $"{_versionSelectionType}/{UrlComposer.ToUrlParam(_versionSelectionCfg.LastOf.DateRange.Value)}";
             else if (_versionSelectionCfg.LastOf.Period != null)
                 subPath = $"{_versionSelectionType}/{_versionSelectionCfg.LastOf.Period}";
             else if (_versionSelectionCfg.LastOf.PeriodRange != null)

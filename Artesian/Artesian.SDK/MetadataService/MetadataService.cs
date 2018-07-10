@@ -14,7 +14,7 @@ using Artesian.SDK.MetadataService.Interface;
 
 namespace Artesian.SDK.MetadataService
 {
-    public class MetadataService : IArtesianMetaDataService
+    public class MetadataService : IMetaDataService
     {
         private IArtesianServiceConfig _cfg;
         private static Auth0Client _client;

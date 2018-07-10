@@ -7,7 +7,7 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Artesian.SDK.Dependencies
+namespace Artesian.SDK.Clients.Formatters
 {
     public class LZ4MessagePackFormatter : MediaTypeFormatter
     {

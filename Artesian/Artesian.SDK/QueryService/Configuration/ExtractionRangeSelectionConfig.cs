@@ -1,4 +1,5 @@
 ﻿using Artesian.SDK.Dependencies;
+using Artesian.SDK.QueryService.Configuration;
 using NodaTime;
 
 namespace Artesian.SDK.QueryService.Config

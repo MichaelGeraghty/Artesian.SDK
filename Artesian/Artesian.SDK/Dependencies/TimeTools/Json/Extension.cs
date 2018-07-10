@@ -46,7 +46,6 @@ namespace Artesian.SDK.Dependencies.TimeTools.Json
 
             converters.Add(new LocalDateRangeConverter());
             converters.Add(new LocalDateTimeRangeConverter());
-            converters.Add(new ZonedDateTimeRangeConverter());
         }
     }
 }
