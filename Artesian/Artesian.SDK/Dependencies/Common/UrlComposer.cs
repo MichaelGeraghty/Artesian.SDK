@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace Artesian.SDK.Common
+namespace Artesian.SDK.Dependencies.Common
 {
     public class UrlComposer
     {

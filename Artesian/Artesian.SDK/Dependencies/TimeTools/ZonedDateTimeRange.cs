@@ -1,5 +1,4 @@
-﻿using Artesian.SDK.API.ArtesianService;
-using Artesian.SDK.Dependencies.TimeTools;
+﻿using Artesian.SDK.Dependencies.TimeTools;
 using EnsureThat;
 using NodaTime;
 using System;

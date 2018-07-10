@@ -1,4 +1,4 @@
-﻿namespace Artesian.SDK.Common.Dto
+﻿namespace Artesian.SDK.Dependencies.Common.Dto
 {
     public enum AggregationRule
     {

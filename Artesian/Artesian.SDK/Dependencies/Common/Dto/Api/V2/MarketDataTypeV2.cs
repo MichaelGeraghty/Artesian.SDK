@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Artesian.SDK.Common.Dto;
+using System;
 
-namespace Artesian.SDK.Common.Dto.Api.V2
+namespace Artesian.SDK.Dependencies.Common.Dto.Api.V2
 {
     public enum MarketDataTypeV2
     {

@@ -1,6 +1,6 @@
 ﻿using MessagePack;
 
-namespace Artesian.SDK.Common.Dto
+namespace Artesian.SDK.Dependencies.Common.Dto
 {
     [MessagePackObject]
     public class MarketAssessmentValue

@@ -1,12 +1,11 @@
-﻿using Artesian.SDK.API.DTO;
-using Artesian.SDK.Common.Dto.TimeTransform.Dto;
-using FluentValidation;
+﻿using Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Dto;
+using Artesian.SDK.Dependencies.Common.DTO;
 using MessagePack;
 using NodaTime;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Artesian.SDK.Common.Dto.Api.V2
+namespace Artesian.SDK.Dependencies.Common.Dto.Api.V2
 {
     /// <summary>
     /// The MarketData Entity with Etag

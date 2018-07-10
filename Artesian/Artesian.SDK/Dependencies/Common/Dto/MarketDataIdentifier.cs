@@ -1,10 +1,9 @@
-﻿using Artesian.SDK.Common;
-using FluentValidation;
+﻿using FluentValidation;
 using MessagePack;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Artesian.SDK.API.Dto
+namespace Artesian.SDK.Dependencies.Common.Dto
 {
     [MessagePackObject]
     public class MarketDataIdentifier : IEquatable<MarketDataIdentifier>

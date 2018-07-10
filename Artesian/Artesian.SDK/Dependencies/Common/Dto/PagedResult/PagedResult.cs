@@ -1,7 +1,7 @@
 ﻿using MessagePack;
 using System.Collections.Generic;
 
-namespace Artesian.SDK.API.Dto.PagedResult
+namespace Artesian.SDK.Dependencies.Common.Dto.PagedResult
 {
     [MessagePackObject]
     public class PagedResult<T>

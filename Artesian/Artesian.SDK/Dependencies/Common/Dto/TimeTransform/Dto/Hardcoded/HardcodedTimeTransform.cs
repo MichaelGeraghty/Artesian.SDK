@@ -1,9 +1,9 @@
-﻿using Artesian.SDK.API.DTO;
-using Artesian.SDK.Common.Dto.TimeTransform.Enum;
+﻿using Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Enum;
+using Artesian.SDK.Dependencies.Common.DTO;
 using System;
 using System.Collections.Generic;
 
-namespace Artesian.SDK.Common.Dto.TimeTransform.Dto.Hardcoded
+namespace Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Dto.Hardcoded
 {
     public static class HardcodedTimeTransform
     {

@@ -1,4 +1,4 @@
-﻿namespace Artesian.SDK.Common.Dto.TimeTransform.Enum
+﻿namespace Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Enum
 {
     public enum TransformDefinitionType
     {

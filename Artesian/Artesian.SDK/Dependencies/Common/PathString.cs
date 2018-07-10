@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Artesian.SDK.Common
+namespace Artesian.SDK.Dependencies.Common
 {
     public class PathString : IEquatable<PathString>
     {

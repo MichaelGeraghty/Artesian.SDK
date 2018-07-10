@@ -1,10 +1,10 @@
-﻿using Artesian.SDK.Common.Dto.TimeTransform.Enum;
-using Artesian.SDK.Common.Dto.TimeTransform.Serialize;
+﻿using Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Enum;
+using Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Serialize;
 using MessagePack;
 using Newtonsoft.Json;
 using System;
 
-namespace Artesian.SDK.Common.Dto.TimeTransform.Dto
+namespace Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Dto
 {
     [MessagePackObject]
     [Union(0, typeof(TimeTransformSimpleShift))]

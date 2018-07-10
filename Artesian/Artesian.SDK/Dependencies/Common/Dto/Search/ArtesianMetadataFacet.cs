@@ -1,7 +1,7 @@
 ﻿using MessagePack;
 using System.Collections.Generic;
 
-namespace Artesian.SDK.Common.Dto.Search
+namespace Artesian.SDK.Dependencies.Common.Dto.Search
 {
     [MessagePackObject]
     public class ArtesianMetadataFacet

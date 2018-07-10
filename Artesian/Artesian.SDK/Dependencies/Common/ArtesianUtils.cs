@@ -1,5 +1,5 @@
-﻿using Artesian.SDK.API.DTO;
-using Artesian.SDK.Common.Dto.Api.V2;
+﻿using Artesian.SDK.Dependencies.Common.Dto.Api.V2;
+using Artesian.SDK.Dependencies.Common.DTO;
 using Artesian.SDK.Dependencies.TimeTools;
 using EnsureThat;
 using FluentValidation;
@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Artesian.SDK.Common
+namespace Artesian.SDK.Dependencies.Common
 {
     public static class ArtesianUtils
     {

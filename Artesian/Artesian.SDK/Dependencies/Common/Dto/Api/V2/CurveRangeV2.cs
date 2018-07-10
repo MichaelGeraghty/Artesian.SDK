@@ -1,7 +1,7 @@
 ﻿using MessagePack;
 using NodaTime;
 
-namespace Artesian.SDK.Common.Dto.Api.V2
+namespace Artesian.SDK.Dependencies.Common.Dto.Api.V2
 {
     /// <summary>
     /// The Curve Range

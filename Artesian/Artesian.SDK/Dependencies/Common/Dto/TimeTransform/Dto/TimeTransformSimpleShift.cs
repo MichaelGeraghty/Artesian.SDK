@@ -1,8 +1,8 @@
-﻿using Artesian.SDK.API.DTO;
-using Artesian.SDK.Common.Dto.TimeTransform.Enum;
+﻿using Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Enum;
+using Artesian.SDK.Dependencies.Common.DTO;
 using MessagePack;
 
-namespace Artesian.SDK.Common.Dto.TimeTransform.Dto
+namespace Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Dto
 {
     [MessagePackObject]
     public class TimeTransformSimpleShift : TimeTransformBase

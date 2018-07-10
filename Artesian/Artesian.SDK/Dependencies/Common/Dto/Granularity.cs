@@ -1,10 +1,9 @@
 ﻿using System;
 using Artesian.SDK.Common;
-using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.TimeTools;
 using NodaTime;
 
-namespace Artesian.SDK.API.DTO
+namespace Artesian.SDK.Dependencies.Common.DTO
 {
     //keep Granularity sorted (order is important ( VERY IMPORTANT (DON'T SCREW THIS UP)))
     public enum Granularity

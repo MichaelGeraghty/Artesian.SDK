@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Artesian.SDK.Common.Dto.TimeTransform.Enum
+namespace Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Enum
 {
     public enum HardCodedEnum
     {

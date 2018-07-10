@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-namespace Artesian.SDK.Common
+﻿namespace Artesian.SDK.Dependencies.Common
 {
     public abstract class ArtesianConstants
     {

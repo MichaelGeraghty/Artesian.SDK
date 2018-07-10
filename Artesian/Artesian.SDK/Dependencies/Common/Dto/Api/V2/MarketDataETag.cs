@@ -2,7 +2,7 @@
 using EnsureThat;
 using MessagePack;
 
-namespace Artesian.SDK.Common.Dto.Api.V2
+namespace Artesian.SDK.Dependencies.Common.Dto.Api.V2
 {
     /// <summary>
     /// The MarketData id with Etag

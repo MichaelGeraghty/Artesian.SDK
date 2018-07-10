@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Artesian.SDK.Common.Dto.Search
+namespace Artesian.SDK.Dependencies.Common.Dto.Search
 {
     /// <summary>
     /// The dto for a new search facet based
