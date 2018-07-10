@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Artesian.SDK.Configuration.Interface;
+using System;
 
 namespace Artesian.SDK.Configuration
 {
-    public class ArtesianServiceConfig
+    public class ArtesianServiceConfig: IArtesianServiceConfig
     {
         public Uri BaseAddress { get; set; }
         public string Audience { get; set; }

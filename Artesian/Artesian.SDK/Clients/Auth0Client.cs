@@ -18,7 +18,6 @@ using Artesian.SDK.Configuration;
 using Polly.Caching;
 using JWT.Builder;
 using System.Collections.Generic;
-
 using Artesian.SDK.Clients.Exceptions.Client;
 using Artesian.SDK.Clients.Exceptions.Remote;
 using MessagePack.NodaTime;
@@ -26,6 +25,7 @@ using Artesian.SDK.Dependencies.MarketTools.MarketProducts;
 using Artesian.SDK.Dependencies.TimeTools.Json;
 using Artesian.SDK.Dependencies.Tools.Extensions;
 using Artesian.SDK.Dependencies;
+using Artesian.SDK.Configuration.Interface;
 
 namespace Artesian.SDK.Clients
 {
@@ -35,8 +35,6 @@ namespace Artesian.SDK.Clients
 
         private readonly AuthenticationApiClient _auth0;
         private readonly ClientCredentialsTokenRequest _credentials;
-        private Task<(AccessTokenResponse response, DateTimeOffset expire)> _tokenResult;
-
         private readonly HttpClient _client;
 
         private readonly JsonMediaTypeFormatter _jsonFormatter;
@@ -56,7 +54,7 @@ namespace Artesian.SDK.Clients
 #endif
         private readonly Policy<(string AccessToken, DateTimeOffset ExpiresOn)> _cachePolicy;
 
-        public ArtesianServiceConfig Config { get; private set; }
+        public IArtesianServiceConfig Config { get; private set; }
 
         static Auth0Client()
         {
@@ -69,7 +67,7 @@ namespace Artesian.SDK.Clients
                 );
         }
 
-        public Auth0Client(ArtesianServiceConfig config, Func<HttpMessageHandler> httpMessageHandler, string Url)
+        public Auth0Client(IArtesianServiceConfig config, Func<HttpMessageHandler> httpMessageHandler, string Url)
         {
 
             this.Config = config;

@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Artesian.SDK.Clients;
 using Artesian.SDK.Common.Dto.Search;
-using Artesian.SDK.Configuration;
+using Artesian.SDK.Configuration.Interface;
 using Artesian.SDK.Dependencies.Common;
 using Artesian.SDK.Dependencies.Common.Dto.PagedResult;
 using Artesian.SDK.Dependencies.Common.Dto.Search;
@@ -14,12 +14,12 @@ using Artesian.SDK.MetadataService.Interface;
 
 namespace Artesian.SDK.MetadataService
 {
-    class ArtesianService : IArtesianMetaDataService
+    public class MetadataService : IArtesianMetaDataService
     {
-        private ArtesianServiceConfig _cfg;
+        private IArtesianServiceConfig _cfg;
         private static Auth0Client _client;
 
-        public ArtesianService(ArtesianServiceConfig cfg)
+        public MetadataService(IArtesianServiceConfig cfg)
         {
             throw new Exception("Provide url");
             _cfg = cfg;
