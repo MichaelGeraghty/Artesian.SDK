@@ -1,7 +1,6 @@
 ﻿using Artesian.SDK.Clients;
-using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.Common;
-using Artesian.SDK.Dependencies.Common.DTO;
+using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Config;
 using Artesian.SDK.QueryService.Configuration;
 using Artesian.SDK.QueryService.Interface;

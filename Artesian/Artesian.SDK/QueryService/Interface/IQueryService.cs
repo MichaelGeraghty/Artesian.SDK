@@ -1,5 +1,5 @@
-﻿using Artesian.SDK.QueryService.Queries;
-using Artesian.SDK.Dependencies.Common.DTO;
+﻿using Artesian.SDK.Dto;
+using Artesian.SDK.QueryService.Queries;
 
 namespace Artesian.SDK.QueryService.Interface
 {

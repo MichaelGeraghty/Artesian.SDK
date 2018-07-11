@@ -23,7 +23,7 @@ using MessagePack.NodaTime;
 using Artesian.SDK.Dependencies.TimeTools.Json;
 using Artesian.SDK.Dependencies.Tools.Extensions;
 using Artesian.SDK.Dependencies;
-using Artesian.SDK.Configuration.Interface;
+using Artesian.SDK.Configuration;
 using Artesian.SDK.Clients.Formatters;
 
 namespace Artesian.SDK.Clients

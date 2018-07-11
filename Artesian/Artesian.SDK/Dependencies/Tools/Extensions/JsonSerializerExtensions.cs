@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Artesian.SDK.Dependencies.Tools.Extensions
+﻿namespace Artesian.SDK.Dependencies.Tools.Extensions
 {
     using Newtonsoft.Json;
     using System;

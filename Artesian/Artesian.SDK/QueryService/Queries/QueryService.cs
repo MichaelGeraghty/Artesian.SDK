@@ -1,6 +1,6 @@
 ﻿using Artesian.SDK.Clients;
-using Artesian.SDK.Configuration.Interface;
-using Artesian.SDK.Dependencies.Common.DTO;
+using Artesian.SDK.Configuration;
+using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Interface;
 using System;
 using System.Net.Http;

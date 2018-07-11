@@ -1,6 +1,4 @@
-﻿using Artesian.SDK.Dependencies;
-using Artesian.SDK.Dependencies.TimeTools;
-using Artesian.SDK.QueryService.Configuration;
+﻿using Artesian.SDK.QueryService.Configuration;
 using NodaTime;
 using NodaTime.Text;
 using System.Collections.Generic;

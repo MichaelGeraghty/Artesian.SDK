@@ -4,12 +4,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Artesian.SDK.Clients;
-using Artesian.SDK.Common.Dto.Search;
-using Artesian.SDK.Configuration.Interface;
+using Artesian.SDK.Configuration;
 using Artesian.SDK.Dependencies.Common;
-using Artesian.SDK.Dependencies.Common.Dto.PagedResult;
-using Artesian.SDK.Dependencies.Common.Dto.Search;
-using Artesian.SDK.Dependencies.Common.Dto.TimeTransform.Dto;
+using Artesian.SDK.Dto.PagedResult;
+using Artesian.SDK.Dto.Search;
+using Artesian.SDK.Dto.TimeTransform.Dto;
 using Artesian.SDK.MetadataService.Interface;
 
 namespace Artesian.SDK.MetadataService

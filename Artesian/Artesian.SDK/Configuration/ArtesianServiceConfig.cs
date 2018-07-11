@@ -1,5 +1,4 @@
-﻿using Artesian.SDK.Configuration.Interface;
-using System;
+﻿using System;
 
 namespace Artesian.SDK.Configuration
 {

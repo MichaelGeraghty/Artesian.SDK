@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Artesian.SDK.QueryService.Interface
+﻿namespace Artesian.SDK.QueryService.Interface
 {
     interface IMasQuery<T>: IQuery<T>
     {
