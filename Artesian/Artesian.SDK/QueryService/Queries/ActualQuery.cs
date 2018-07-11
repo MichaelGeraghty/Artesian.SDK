@@ -18,14 +18,18 @@ namespace Artesian.SDK.QueryService.Queries
         protected int? _tr;
         private string _routePrefix = "ts";
 
-        internal ActualQuery(int[] ids, Granularity granularity, Auth0Client client)
+        internal ActualQuery(Auth0Client client)
         {
-            _forMarketData(ids);
-            _granularity = granularity;
             _client = client;
         }
 
         #region facade methods
+        public ActualQuery ForMarketData(int[] ids)
+        {
+            _ids = ids;
+            return this;
+        }
+
         public ActualQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -62,11 +66,30 @@ namespace Artesian.SDK.QueryService.Queries
             _tr = tr;
             return this;
         }
+
+        public ActualQuery WithTimeTransform(SystemTimeTransform tr)
+        {
+            _tr = (int)tr;
+            return this;
+        }
         #endregion
 
 
         #region actual query methods
-        public string Build()
+        public ActualQuery InGranularity(Granularity granularity)
+        {
+            _granularity = granularity;
+            return this;
+        }
+
+        public async Task<IEnumerable<TimeSerieRow.Actual.V1_0>> ExecuteAsync()
+        {
+            return await _client.Exec<IEnumerable<TimeSerieRow.Actual.V1_0>>(HttpMethod.Get, _buildRequest());
+        }
+
+
+        #region private
+        string _buildRequest()
         {
             _validateQuery();
 
@@ -78,11 +101,6 @@ namespace Artesian.SDK.QueryService.Queries
             return url.ToString();
         }
 
-        public async Task<IEnumerable<TimeSerieRow.Actual.V1_0>> ExecuteAsync()
-        {
-            return await _client.Exec<IEnumerable<TimeSerieRow.Actual.V1_0>>(HttpMethod.Get, Build());
-        }
-
         //not required if granularity set through ctor
         protected sealed override void _validateQuery()
         {
@@ -90,7 +108,8 @@ namespace Artesian.SDK.QueryService.Queries
 
             if (_granularity == null)
                 throw new ApplicationException("Extraction granularity must be provided");
-        }
+        } 
+        #endregion
         #endregion
 
 

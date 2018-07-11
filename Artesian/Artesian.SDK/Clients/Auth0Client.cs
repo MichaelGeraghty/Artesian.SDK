@@ -28,7 +28,7 @@ using Artesian.SDK.Clients.Formatters;
 
 namespace Artesian.SDK.Clients
 {
-    public sealed class Auth0Client : IDisposable
+    internal sealed class Auth0Client : IDisposable
     {
         private readonly MediaTypeFormatterCollection _formatters;
 
@@ -44,29 +44,14 @@ namespace Artesian.SDK.Clients
 
         private readonly string _url;
 
-#if NETSTANDARD2_0
-        private readonly Polly.Caching.MemoryCache.MemoryCacheProvider _memoryCacheProvider
-           = new Polly.Caching.MemoryCache.MemoryCacheProvider(new Microsoft.Extensions.Caching.Memory.MemoryCache(new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions()));
-#else 
-        private readonly Polly.Caching.MemoryCache.MemoryCacheProvider _memoryCacheProvider
-           = new Polly.Caching.MemoryCache.MemoryCacheProvider(new System.Runtime.Caching.MemoryCache(typeof(Auth0Client).FullName));
-#endif
+        private readonly Polly.Caching.Memory.MemoryCacheProvider _memoryCacheProvider
+           = new Polly.Caching.Memory.MemoryCacheProvider(new Microsoft.Extensions.Caching.Memory.MemoryCache(new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions()));
+
         private readonly Policy<(string AccessToken, DateTimeOffset ExpiresOn)> _cachePolicy;
 
         public IArtesianServiceConfig Config { get; private set; }
 
-        static Auth0Client()
-        {
-            CompositeResolver.RegisterAndSetAsDefault(
-                BuiltinResolver.Instance,
-                NodatimeResolver.Instance,
-                AttributeFormatterResolver.Instance,
-                DynamicEnumAsStringResolver.Instance,
-                StandardResolver.Instance
-                );
-        }
-
-        public Auth0Client(IArtesianServiceConfig config, Func<HttpMessageHandler> httpMessageHandler, string Url)
+        public Auth0Client(IArtesianServiceConfig config, string Url)
         {
 
             this.Config = config;
@@ -86,8 +71,8 @@ namespace Artesian.SDK.Clients
             jsonFormatter.SerializerSettings = cfg;
             _jsonFormatter = jsonFormatter;
 
-            _msgPackFormatter = new MessagePackFormatter(CompositeResolver.Instance);
-            _lz4msgPackFormatter = new LZ4MessagePackFormatter(CompositeResolver.Instance);
+            _msgPackFormatter = new MessagePackFormatter(CustomCompositeResolver.Instance);
+            _lz4msgPackFormatter = new LZ4MessagePackFormatter(CustomCompositeResolver.Instance);
 
             var formatters = new MediaTypeFormatterCollection();
             formatters.Clear();
@@ -105,7 +90,11 @@ namespace Artesian.SDK.Clients
                 ClientSecret = Config.ClientSecret,
             };
 
-            _client = HttpClientFactory.Create(httpMessageHandler());
+            _client = HttpClientFactory.Create(new HttpClientHandler()
+            {
+                AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
+            });
+
             _client.BaseAddress = this.Config.BaseAddress;
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(LZ4MessagePackFormatter.DefaultMediaType.MediaType, 1));

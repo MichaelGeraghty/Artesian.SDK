@@ -13,7 +13,7 @@ namespace Artesian.SDK.QueryService.Queries
         private ExtractionRangeSelectionConfig _extractionRangeCfg = new ExtractionRangeSelectionConfig();
         private ExtractionRangeType? _extractionRangeType = null;
 
-        protected IEnumerable<int> _ids;
+        protected IEnumerable<int> _ids =  null;
         protected string _tz;
 
         protected Query _forMarketData(int[] ids)

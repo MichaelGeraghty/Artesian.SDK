@@ -16,26 +16,23 @@ namespace Artesian.SDK.QueryService.Queries
         {
             throw new Exception("Provide url");
             _cfg = cfg;
-            _client = new Auth0Client(cfg, () => new HttpClientHandler()
-            {
-                AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
-            }, "" //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            _client = new Auth0Client(cfg, "" //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             );
         }
 
         public ActualQuery CreateActual(int[] ids, Granularity granularity)
         {
-            return new ActualQuery(ids, granularity, _client);
+            return new ActualQuery(_client);
         }
 
         public VersionedQuery CreateVersioned(int[] ids, Granularity granularity)
         {
-            return new VersionedQuery(ids, granularity, _client);
+            return new VersionedQuery(_client);
         }
 
         public MasQuery CreateMarketAssessment(int[] ids)
         {
-            return new MasQuery(ids, _client);
+            return new MasQuery(_client);
         }
 
 

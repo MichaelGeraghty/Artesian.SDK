@@ -3,6 +3,5 @@
     interface IMasQuery<T>: IQuery<T>
     {
         T ForProducts(params string[] products);
-        string Build();
     }
 }

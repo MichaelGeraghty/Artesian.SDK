@@ -27,4 +27,10 @@
         LastOfMonths,
         Version
     }
+
+    public enum SystemTimeTransform
+    {
+        GASDAY66,
+        THERMALYEAR,
+    }
 }

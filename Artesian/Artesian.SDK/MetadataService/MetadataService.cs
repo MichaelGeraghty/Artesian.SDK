@@ -22,10 +22,7 @@ namespace Artesian.SDK.MetadataService
         {
             throw new Exception("Provide url");
             _cfg = cfg;
-            _client = new Auth0Client(cfg, () => new HttpClientHandler()
-            {
-                AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
-            }, "" //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            _client = new Auth0Client(cfg, "" //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             );
         }
 

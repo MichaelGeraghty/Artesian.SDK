@@ -22,14 +22,18 @@ namespace Artesian.SDK.QueryService.Queries
         private string _routePrefix = "vts";
 
 
-        internal VersionedQuery(int[] ids, Granularity granularity, Auth0Client client)
+        internal VersionedQuery(Auth0Client client)
         {
-            _forMarketData(ids);
-            _granularity = granularity;
             _client = client;
         }
 
         #region facade methods
+        public VersionedQuery ForMarketData(int[] ids)
+        {
+            _ids = ids;
+            return this;
+        }
+
         public VersionedQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -66,10 +70,22 @@ namespace Artesian.SDK.QueryService.Queries
             _tr = tr;
             return this;
         }
+
+        public VersionedQuery WithTimeTransform(SystemTimeTransform tr)
+        {
+            _tr = (int)tr;
+            return this;
+        }
         #endregion
 
 
         #region versioned query methods
+        public VersionedQuery InGranularity(Granularity granularity)
+        {
+            _granularity = granularity;
+            return this;
+        }
+
         public VersionedQuery ForLastNVersions(int lastN)
         {
             _versionSelectionType = VersionSelectionType.LastN;
@@ -139,6 +155,24 @@ namespace Artesian.SDK.QueryService.Queries
             return this;
         }
 
+        public async Task<IEnumerable<TimeSerieRow.Versioned.V1_0>> ExecuteAsync()
+        {
+            return await _client.Exec<IEnumerable<TimeSerieRow.Versioned.V1_0>>(HttpMethod.Get, _buildRequest());
+        }
+
+
+        #region private
+        protected override void _validateQuery()
+        {
+            base._validateQuery();
+
+            if (_granularity == null)
+                throw new ApplicationException("Extraction granularity must be provided");
+
+            if (_versionSelectionType == null)
+                throw new ApplicationException("Version selection must be provided");
+        }
+
         private string _buildVersionRoute()
         {
             string subPath;
@@ -181,7 +215,7 @@ namespace Artesian.SDK.QueryService.Queries
             return subPath;
         }
 
-        public string Build()
+        string _buildRequest()
         {
             _validateQuery();
 
@@ -191,23 +225,9 @@ namespace Artesian.SDK.QueryService.Queries
                         .AddQueryParam("tr", _tr);
 
             return url.ToString();
-        }
+        } 
+        #endregion
 
-        public async Task<IEnumerable<TimeSerieRow.Versioned.V1_0>> ExecuteAsync()
-        {
-            return await _client.Exec<IEnumerable<TimeSerieRow.Versioned.V1_0>>(HttpMethod.Get, Build());
-        }
-
-        protected override void _validateQuery()
-        {
-            base._validateQuery();
-
-            if (_granularity == null)
-                throw new ApplicationException("Extraction granularity must be provided");
-
-            if (_versionSelectionType == null)
-                throw new ApplicationException("Version selection must be provided");
-        }
         #endregion
 
     }

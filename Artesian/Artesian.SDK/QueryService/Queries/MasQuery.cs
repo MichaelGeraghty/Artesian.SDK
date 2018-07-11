@@ -17,13 +17,18 @@ namespace Artesian.SDK.QueryService.Queries
         private string _routePrefix = "mas";
         private Auth0Client _client;
 
-        internal MasQuery(int[] ids, Auth0Client client)
+        internal MasQuery(Auth0Client client)
         {
-            _forMarketData(ids);
             _client = client;
         }
 
         #region facade methods
+        public MasQuery ForMarketData(int[] ids)
+        {
+            _ids = ids;
+            return this;
+        }
+
         public MasQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -63,7 +68,13 @@ namespace Artesian.SDK.QueryService.Queries
             return this;
         }
 
-        public string Build()
+        public async Task<IEnumerable<AssessmentRow.V2>> ExecuteAsync()
+        {
+            return await _client.Exec<IEnumerable<AssessmentRow.V2>>(HttpMethod.Get, _buildRequest());
+        }
+
+        #region private
+        string _buildRequest()
         {
             _validateQuery();
 
@@ -75,18 +86,14 @@ namespace Artesian.SDK.QueryService.Queries
             return url.ToString();
         }
 
-        public async Task<IEnumerable<AssessmentRow.V2>> ExecuteAsync()
-        {
-            return await _client.Exec<IEnumerable<AssessmentRow.V2>>(HttpMethod.Get, Build());
-        }
-
         protected override void _validateQuery()
         {
             base._validateQuery();
 
             if (_products == null)
                 throw new ApplicationException("Products must be provided for extraction");
-        }
+        } 
+        #endregion
         #endregion
     }
 }

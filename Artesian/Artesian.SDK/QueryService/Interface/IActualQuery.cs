@@ -1,7 +1,12 @@
-﻿namespace Artesian.SDK.QueryService.Interface
+﻿using Artesian.SDK.Dto;
+using Artesian.SDK.QueryService.Config;
+
+namespace Artesian.SDK.QueryService.Interface
 {
     interface IActualQuery<T>: IQuery<T>
     {
-        string Build();
+        T InGranularity(Granularity granularity);
+        T WithTimeTransform(int tr);
+        T WithTimeTransform(SystemTimeTransform tr);
     }
 }
