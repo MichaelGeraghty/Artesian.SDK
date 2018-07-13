@@ -5,10 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Artesian.SDK.Clients;
 using Artesian.SDK.Configuration;
-using Artesian.SDK.Dependencies.Common;
+using Artesian.SDK.Dto;
 using Artesian.SDK.Dto.PagedResult;
 using Artesian.SDK.Dto.Search;
-using Artesian.SDK.Dto.TimeTransform.Dto;
 using Artesian.SDK.MetadataService.Interface;
 using Flurl;
 
@@ -27,12 +26,12 @@ namespace Artesian.SDK.MetadataService
             );
         }
 
-        public Task<TimeTransformBase> ReadTimeTransformBaseAsync(int timeTransformId, CancellationToken ctk = default)
+        public Task<TimeTransform> ReadTimeTransformBaseAsync(int timeTransformId, CancellationToken ctk = default)
         {
-            return _client.Exec<TimeTransformBase>(HttpMethod.Get, $@"/timeTransform/entity/{timeTransformId}", ctk: ctk);
+            return _client.Exec<TimeTransform>(HttpMethod.Get, $@"/timeTransform/entity/{timeTransformId}", ctk: ctk);
         }
 
-        public Task<PagedResult<TimeTransformBase>> ReadTimeTransformsAsync(int page, int pageSize, bool userDefined, CancellationToken ctk = default)
+        public Task<PagedResult<TimeTransform>> ReadTimeTransformsAsync(int page, int pageSize, bool userDefined, CancellationToken ctk = default)
         {
             var url = "/timeTransform/entity"
                     .SetQueryParam("pageSize", pageSize)
@@ -40,7 +39,7 @@ namespace Artesian.SDK.MetadataService
                     .SetQueryParam("userDefined", userDefined)
                     ;
 
-            return _client.Exec<PagedResult<TimeTransformBase>>(HttpMethod.Get, url.ToString(), ctk: ctk);
+            return _client.Exec<PagedResult<TimeTransform>>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
 
         public Task<ArtesianSearchResults> SearchFacetAsync(ArtesianSearchFilter filter, CancellationToken ctk = default)

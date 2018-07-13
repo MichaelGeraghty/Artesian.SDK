@@ -1,5 +1,4 @@
-﻿using Artesian.SDK.Dto.TimeTransform.Dto;
-using MessagePack;
+﻿using MessagePack;
 using NodaTime;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -149,7 +148,7 @@ namespace Artesian.SDK.Dto.Api.V2
                 /// The TimeTransform
                 /// </summary>
                 [MessagePack.Key(11)]
-                public TimeTransformBase Transform { get; set; } //NULLABLE
+                public TimeTransform Transform { get; set; } //NULLABLE
                 /// <summary>
                 /// The Last time the metadata has been updated
                 /// </summary>

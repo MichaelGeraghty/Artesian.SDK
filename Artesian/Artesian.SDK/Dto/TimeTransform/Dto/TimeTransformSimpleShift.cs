@@ -1,10 +1,9 @@
-﻿using Artesian.SDK.Dto.TimeTransform.Enum;
-using MessagePack;
+﻿using MessagePack;
 
-namespace Artesian.SDK.Dto.TimeTransform.Dto
+namespace Artesian.SDK.Dto
 {
     [MessagePackObject]
-    public class TimeTransformSimpleShift : TimeTransformBase
+    public class TimeTransformSimpleShift : TimeTransform
     {
         [Key("Period")]
         public Granularity Period { get; set; }

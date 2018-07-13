@@ -2,9 +2,7 @@
 using Artesian.SDK.Configuration;
 using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Interface;
-using NodaTime.Text;
 using System;
-using System.Net.Http;
 
 namespace Artesian.SDK.QueryService.Queries
 {
@@ -15,23 +13,23 @@ namespace Artesian.SDK.QueryService.Queries
 
         public QueryService(IArtesianServiceConfig cfg)
         {
-            throw new Exception("Provide url");
+            //throw new Exception("Provide url");
             _cfg = cfg;
             _client = new Auth0Client(cfg, "" //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             );
         }
 
-        public ActualQuery CreateActual(int[] ids, Granularity granularity)
+        public ActualQuery CreateActual()
         {
             return new ActualQuery(_client);
         }
 
-        public VersionedQuery CreateVersioned(int[] ids, Granularity granularity)
+        public VersionedQuery CreateVersioned()
         {
             return new VersionedQuery(_client);
         }
 
-        public MasQuery CreateMarketAssessment(int[] ids)
+        public MasQuery CreateMarketAssessment()
         {
             return new MasQuery(_client);
         }

@@ -1,15 +1,13 @@
-﻿using Artesian.SDK.Dto.TimeTransform.Enum;
-using Artesian.SDK.Dto.TimeTransform.Serialize;
-using MessagePack;
+﻿using MessagePack;
 using Newtonsoft.Json;
 using System;
 
-namespace Artesian.SDK.Dto.TimeTransform.Dto
+namespace Artesian.SDK.Dto
 {
     [MessagePackObject]
     [Union(0, typeof(TimeTransformSimpleShift))]
-    [JsonConverter(typeof(TimeTransformBaseConverter))]
-    public abstract class TimeTransformBase
+    [JsonConverter(typeof(TimeTransformConverter))]
+    public abstract class TimeTransform
     {
         [Key("ID")]
         public int ID { get; set; }

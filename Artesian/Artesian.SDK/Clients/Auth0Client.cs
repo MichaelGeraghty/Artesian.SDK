@@ -1,30 +1,29 @@
-﻿using NodaTime;
-using NodaTime.Serialization.JsonNet;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Polly;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Formatting;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using MessagePack.Resolvers;
-using Auth0.AuthenticationApi;
-using Auth0.AuthenticationApi.Models;
-using Polly.Caching;
-using JWT.Builder;
-using System.Collections.Generic;
-using Artesian.SDK.Clients.Exceptions.Client;
+﻿using Artesian.SDK.Clients.Exceptions.Client;
 using Artesian.SDK.Clients.Exceptions.Remote;
-using MessagePack.NodaTime;
+using Artesian.SDK.Clients.Formatters;
+using Artesian.SDK.Configuration;
+using Artesian.SDK.Dependencies;
 using Artesian.SDK.Dependencies.TimeTools.Json;
 using Artesian.SDK.Dependencies.Tools.Extensions;
-using Artesian.SDK.Dependencies;
-using Artesian.SDK.Configuration;
-using Artesian.SDK.Clients.Formatters;
+using Auth0.AuthenticationApi;
+using Auth0.AuthenticationApi.Models;
+using Flurl.Http;
+using JWT.Builder;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using NodaTime;
+using NodaTime.Serialization.JsonNet;
+using Polly;
+using Polly.Caching;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Artesian.SDK.Clients
 {
@@ -34,7 +33,8 @@ namespace Artesian.SDK.Clients
 
         private readonly AuthenticationApiClient _auth0;
         private readonly ClientCredentialsTokenRequest _credentials;
-        private readonly HttpClient _client;
+        private readonly IFlurlClient _client;
+       
 
         private readonly JsonMediaTypeFormatter _jsonFormatter;
         private readonly MessagePackFormatter _msgPackFormatter;
@@ -90,16 +90,18 @@ namespace Artesian.SDK.Clients
                 ClientSecret = Config.ClientSecret,
             };
 
-            _client = HttpClientFactory.Create(new HttpClientHandler()
+
+            _client = new FlurlClient(_url);
+            _client.Settings.HttpClientFactory.CreateHttpClient(new HttpClientHandler()
             {
                 AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
             });
 
-            _client.BaseAddress = this.Config.BaseAddress;
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(LZ4MessagePackFormatter.DefaultMediaType.MediaType, 1));
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MessagePackFormatter.DefaultMediaType.MediaType, 0.9));
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonMediaTypeFormatter.DefaultMediaType.MediaType, 0.8));
+            _client.HttpClient.BaseAddress = this.Config.BaseAddress;
+            _client.HttpClient.DefaultRequestHeaders.Accept.Clear();
+            _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(LZ4MessagePackFormatter.DefaultMediaType.MediaType, 1));
+            _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MessagePackFormatter.DefaultMediaType.MediaType, 0.9));
+            _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonMediaTypeFormatter.DefaultMediaType.MediaType, 0.8));
 
             _cachePolicy = Policy.CacheAsync(_memoryCacheProvider.AsyncFor<(string AccessToken, DateTimeOffset ExpiresOn)>(), new ResultTtl<(string AccessToken, DateTimeOffset ExpiresOn)>(r => new Ttl(r.ExpiresOn - DateTimeOffset.Now, false)));
 
@@ -123,7 +125,7 @@ namespace Artesian.SDK.Clients
                             req.Content = new ObjectContent<TBody>(body, _lz4msgPackFormatter);
                         }
 
-                        using (var res = await _client.SendAsync(req, HttpCompletionOption.ResponseContentRead, ctk))
+                        using (var res = await _client.HttpClient.SendAsync(req, HttpCompletionOption.ResponseContentRead, ctk))
                         {
                             if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
                                 return default;
@@ -140,7 +142,7 @@ namespace Artesian.SDK.Clients
                                 if (res.StatusCode == HttpStatusCode.Conflict)
                                     throw new ArtesianSdkOptimisticConcurrencyException($@"{responseText}");
 
-                                throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, _client.BaseAddress + _url + resource, res.StatusCode, responseText);
+                                throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, _client.HttpClient.BaseAddress + _url + resource, res.StatusCode, responseText);
                             }
 
                             return await res.Content.ReadAsAsync<TResult>(_formatters, ctk);
@@ -158,7 +160,7 @@ namespace Artesian.SDK.Clients
             }
             catch (Exception e)
             {
-                throw new ArtesianSdkClientException($"Failed handling REST call to WebInterface: {method} " + _client.BaseAddress + _url + resource, e);
+                throw new ArtesianSdkClientException($"Failed handling REST call to WebInterface: {method} " + _client.HttpClient.BaseAddress + _url + resource, e);
             }
         }
 

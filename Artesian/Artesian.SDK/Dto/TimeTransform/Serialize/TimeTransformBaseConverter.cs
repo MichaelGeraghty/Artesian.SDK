@@ -1,17 +1,15 @@
-﻿using Artesian.SDK.Dto.TimeTransform.Dto;
-using Artesian.SDK.Dto.TimeTransform.Enum;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 
-namespace Artesian.SDK.Dto.TimeTransform.Serialize
+namespace Artesian.SDK.Dto
 {
-    class TimeTransformBaseConverter : JsonCreationConverter<TimeTransformBase>
+    class TimeTransformConverter : JsonCreationConverter<TimeTransform>
     {
-        protected override Dto.TimeTransformBase Create(Type objectType, JObject jObject)
+        protected override Dto.TimeTransform Create(Type objectType, JObject jObject)
         {
 
-            if (jObject.TryGetValue(nameof(TimeTransformBase.Type), StringComparison.InvariantCultureIgnoreCase, out var token))
+            if (jObject.TryGetValue(nameof(TimeTransform.Type), StringComparison.InvariantCultureIgnoreCase, out var token))
             {
                 if (token.ToObject<TransformType>() == TransformType.SimpleShift)
                 {
