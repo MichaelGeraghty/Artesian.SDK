@@ -13,7 +13,7 @@ namespace Artesian.SDK.QueryService.Queries
         private ExtractionRangeSelectionConfig _extractionRangeCfg = new ExtractionRangeSelectionConfig();
         private ExtractionRangeType? _extractionRangeType = null;
 
-        protected IEnumerable<int> _ids =  null;
+        protected IEnumerable<int> _ids;
         protected string _tz;
 
         protected Query _forMarketData(int[] ids)
@@ -64,7 +64,7 @@ namespace Artesian.SDK.QueryService.Queries
             switch (_extractionRangeType)
             {
                 case ExtractionRangeType.DateRange:
-                    subPath = $"{UrlComposer.ToUrlParam(_extractionRangeCfg.DateRange)}";
+                    subPath = $"{UrlExt.ToUrlParam(_extractionRangeCfg.DateRange)}";
                     break;
                 case ExtractionRangeType.Period:
                     subPath = $"{_extractionRangeCfg.Period}";

@@ -3,6 +3,7 @@ using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Config;
 using Artesian.SDK.QueryService.Configuration;
 using Artesian.SDK.QueryService.Interface;
+using Flurl;
 using NodaTime;
 using System;
 using System.Collections.Generic;
@@ -93,10 +94,10 @@ namespace Artesian.SDK.QueryService.Queries
         {
             _validateQuery();
 
-            var url = new Dependencies.Common.UrlComposer($"/{_routePrefix}/{_granularity}/{_buildExtractionRangeRoute()}")
-                    .AddQueryParam("id", _ids)
-                    .AddQueryParam("tz", _tz)
-                    .AddQueryParam("tr", _tr);
+            var url = $"/{_routePrefix}/{_granularity}/{_buildExtractionRangeRoute()}"
+                .SetQueryParam("id", _ids)
+                .SetQueryParam("tz", _tz)
+                .SetQueryParam("tr", _tr);
 
             return url.ToString();
         }

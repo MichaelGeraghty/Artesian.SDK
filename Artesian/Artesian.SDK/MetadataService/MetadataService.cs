@@ -10,6 +10,7 @@ using Artesian.SDK.Dto.PagedResult;
 using Artesian.SDK.Dto.Search;
 using Artesian.SDK.Dto.TimeTransform.Dto;
 using Artesian.SDK.MetadataService.Interface;
+using Flurl;
 
 namespace Artesian.SDK.MetadataService
 {
@@ -33,26 +34,26 @@ namespace Artesian.SDK.MetadataService
 
         public Task<PagedResult<TimeTransformBase>> ReadTimeTransformsAsync(int page, int pageSize, bool userDefined, CancellationToken ctk = default)
         {
-            var url = new UrlComposer("/timeTransform/entity")
-                    .AddQueryParam("pageSize", $"{pageSize}")
-                    .AddQueryParam("page", $"{page}")
-                    .AddQueryParam("userDefined", userDefined)
+            var url = "/timeTransform/entity"
+                    .SetQueryParam("pageSize", pageSize)
+                    .SetQueryParam("page", page)
+                    .SetQueryParam("userDefined", userDefined)
                     ;
 
-            return _client.Exec<PagedResult<TimeTransformBase>>(HttpMethod.Get, url, ctk: ctk);
+            return _client.Exec<PagedResult<TimeTransformBase>>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
 
         public Task<ArtesianSearchResults> SearchFacetAsync(ArtesianSearchFilter filter, CancellationToken ctk = default)
         {
-            var url = new UrlComposer("/marketdata/searchfacet")
-                    .AddQueryParam("pageSize", $"{filter.PageSize}")
-                    .AddQueryParam("page", $"{filter.Page}")
-                    .AddQueryParam("searchText", filter.SearchText)
-                    .AddQueryParam("filters", filter.Filters?.SelectMany(s => s.Value.Select(x => $@"{s.Key}:{x}")))
-                    .AddQueryParam("sorts", filter.Sorts)
+            var url = "/marketdata/searchfacet"
+                    .SetQueryParam("pageSize", filter.PageSize)
+                    .SetQueryParam("page", filter.Page)
+                    .SetQueryParam("searchText", filter.SearchText)
+                    .SetQueryParam("filters", filter.Filters?.SelectMany(s => s.Value.Select(x => $@"{s.Key}:{x}")))
+                    .SetQueryParam("sorts", filter.Sorts)
                     ;
 
-            return _client.Exec<ArtesianSearchResults>(HttpMethod.Get, url);
+            return _client.Exec<ArtesianSearchResults>(HttpMethod.Get, url.ToString());
         }
     }
 }

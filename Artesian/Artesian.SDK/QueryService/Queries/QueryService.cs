@@ -2,6 +2,7 @@
 using Artesian.SDK.Configuration;
 using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Interface;
+using NodaTime.Text;
 using System;
 using System.Net.Http;
 

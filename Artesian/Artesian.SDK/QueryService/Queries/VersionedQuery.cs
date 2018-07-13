@@ -4,6 +4,7 @@ using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Config;
 using Artesian.SDK.QueryService.Configuration;
 using Artesian.SDK.QueryService.Interface;
+using Flurl;
 using NodaTime;
 using System;
 using System.Collections.Generic;
@@ -190,7 +191,7 @@ namespace Artesian.SDK.QueryService.Queries
                     subPath = _buildLastOfSubRoute();
                     break;
                 case VersionSelectionType.Version:
-                    subPath = $"Version/{UrlComposer.ToUrlParam(_versionSelectionCfg.Version)}";
+                    subPath = $"Version/{UrlExt.ToUrlParam(_versionSelectionCfg.Version)}";
                     break;
                 default:
                     throw new Exception("Unsupported version type");
@@ -204,7 +205,7 @@ namespace Artesian.SDK.QueryService.Queries
             string subPath;
 
             if (_versionSelectionCfg.LastOf.DateRange != null)
-                subPath = $"{_versionSelectionType}/{UrlComposer.ToUrlParam(_versionSelectionCfg.LastOf.DateRange.Value)}";
+                subPath = $"{_versionSelectionType}/{UrlExt.ToUrlParam(_versionSelectionCfg.LastOf.DateRange.Value)}";
             else if (_versionSelectionCfg.LastOf.Period != null)
                 subPath = $"{_versionSelectionType}/{_versionSelectionCfg.LastOf.Period}";
             else if (_versionSelectionCfg.LastOf.PeriodRange != null)
@@ -219,10 +220,10 @@ namespace Artesian.SDK.QueryService.Queries
         {
             _validateQuery();
 
-            var url = new UrlComposer($"/{_routePrefix}/{_buildVersionRoute()}/{_granularity}/{_buildExtractionRangeRoute()}")
-                        .AddQueryParam("id", _ids)
-                        .AddQueryParam("tz", _tz)
-                        .AddQueryParam("tr", _tr);
+            var url = $"/{_routePrefix}/{_buildVersionRoute()}/{_granularity}/{_buildExtractionRangeRoute()}"
+                        .SetQueryParam("id", _ids)
+                        .SetQueryParam("tz", _tz)
+                        .SetQueryParam("tr", _tr);
 
             return url.ToString();
         } 
