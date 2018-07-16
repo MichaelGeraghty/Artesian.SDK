@@ -1,6 +1,5 @@
 ﻿namespace Artesian.SDK.Dto
 {
-    //keep Granularity sorted (order is important ( VERY IMPORTANT (DON'T SCREW THIS UP)))
     public enum Granularity
     {
         Hour = 0

@@ -1,5 +1,4 @@
-﻿using Artesian.SDK.Configuration;
-using EnsureThat;
+﻿using EnsureThat;
 using FluentValidation;
 
 namespace Artesian.SDK.Dependencies.Common

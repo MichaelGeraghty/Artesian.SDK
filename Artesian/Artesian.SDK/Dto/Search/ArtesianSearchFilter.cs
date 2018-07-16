@@ -3,7 +3,7 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Artesian.SDK.Dto.Search
+namespace Artesian.SDK.Dto
 {
     /// <summary>
     /// The dto for a new search facet based

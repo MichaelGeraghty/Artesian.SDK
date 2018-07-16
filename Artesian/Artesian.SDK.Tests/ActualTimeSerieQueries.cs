@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using Artesian.SDK.Configuration;
+﻿using System.Net.Http;
 using Artesian.SDK.Dto;
-using Artesian.SDK.QueryService;
-using Artesian.SDK.QueryService.Config;
-using Artesian.SDK.QueryService.Configuration;
+using Artesian.SDK.Service;
 using Flurl.Http.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodaTime;
@@ -17,7 +12,6 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
         {
-
         };
 
         [TestMethod]
@@ -25,7 +19,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
@@ -46,7 +40,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
@@ -68,7 +62,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
@@ -90,7 +84,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
@@ -112,7 +106,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001, 100000002, 100000003 })
@@ -133,7 +127,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
@@ -157,7 +151,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
@@ -177,7 +171,7 @@ namespace Artesian.SDK.Tests
 
             using (var httpTest = new HttpTest())
             {
-                var qs = new QueryService.Queries.QueryService(_cfg);
+                var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })

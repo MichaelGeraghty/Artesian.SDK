@@ -1,8 +1,7 @@
-﻿using Artesian.SDK.Dto.Api.V2;
-using MessagePack;
+﻿using MessagePack;
 using System.Collections.Generic;
 
-namespace Artesian.SDK.Dto.Search
+namespace Artesian.SDK.Dto
 {
     [MessagePackObject]
     public class ArtesianSearchResults

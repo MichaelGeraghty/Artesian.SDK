@@ -1,8 +1,14 @@
-﻿namespace Artesian.SDK.Configuration
+﻿namespace Artesian.SDK
 {
     public abstract class ArtesianConstants
     {
-        public const string CharacterValidatorRegEx = @"^[^'"",:;\s](?:(?:[^'"",:;\s]| )*[^'"",:;\s])?$";
-        public const string MarketDataNameValidatorRegEx = @"^[^\s](?:(?:[^\s]| )*[^\s])?$";
+        internal const string CharacterValidatorRegEx = @"^[^'"",:;\s](?:(?:[^'"",:;\s]| )*[^'"",:;\s])?$";
+        internal const string MarketDataNameValidatorRegEx = @"^[^\s](?:(?:[^\s]| )*[^\s])?$";
+
+        internal static string QueryVersion { get { return "v1.0"; } }
+        internal static string QueryRoute { get { return "query"; } }
+
+        internal static string MetadataVersion { get { return "v2.1"; } }
+
     }
 }
