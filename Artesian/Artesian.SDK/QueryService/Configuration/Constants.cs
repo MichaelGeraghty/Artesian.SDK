@@ -30,7 +30,7 @@
 
     public enum SystemTimeTransform
     {
-        GASDAY66,
-        THERMALYEAR,
+        GASDAY66 = 1,
+        THERMALYEAR = 2,
     }
 }

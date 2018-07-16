@@ -34,7 +34,7 @@ namespace Artesian.SDK.Clients
         private readonly AuthenticationApiClient _auth0;
         private readonly ClientCredentialsTokenRequest _credentials;
         private readonly IFlurlClient _client;
-       
+
 
         private readonly JsonMediaTypeFormatter _jsonFormatter;
         private readonly MessagePackFormatter _msgPackFormatter;
@@ -114,44 +114,27 @@ namespace Artesian.SDK.Clients
             {
                 var (token, _) = await _getAccessToken();
 
-                using (var req = new HttpRequestMessage(method, $"{_url}{resource}"))
+                using (var res = await _client.Request(resource).WithOAuthBearerToken(token).SendAsync(method))
                 {
-                    try
-                    {
-                        req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
+                        return default;
 
-                        if (body != null)
+                    if (!res.IsSuccessStatusCode)
+                    {
+                        var responseText = await res.Content.ReadAsStringAsync();
+
+                        if (res.StatusCode == HttpStatusCode.BadRequest)
                         {
-                            req.Content = new ObjectContent<TBody>(body, _lz4msgPackFormatter);
+                            throw new ArtesianSdkValidationException($@"{responseText}");
                         }
 
-                        using (var res = await _client.HttpClient.SendAsync(req, HttpCompletionOption.ResponseContentRead, ctk))
-                        {
-                            if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
-                                return default;
+                        if (res.StatusCode == HttpStatusCode.Conflict)
+                            throw new ArtesianSdkOptimisticConcurrencyException($@"{responseText}");
 
-                            if (!res.IsSuccessStatusCode)
-                            {
-                                var responseText = await res.Content.ReadAsStringAsync();
-
-                                if (res.StatusCode == HttpStatusCode.BadRequest)
-                                {
-                                    throw new ArtesianSdkValidationException($@"{responseText}");
-                                }
-
-                                if (res.StatusCode == HttpStatusCode.Conflict)
-                                    throw new ArtesianSdkOptimisticConcurrencyException($@"{responseText}");
-
-                                throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, _client.HttpClient.BaseAddress + _url + resource, res.StatusCode, responseText);
-                            }
-
-                            return await res.Content.ReadAsAsync<TResult>(_formatters, ctk);
-                        }
+                        throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, _client.HttpClient.BaseAddress + _url + resource, res.StatusCode, responseText);
                     }
-                    finally
-                    {
-                        req.Content?.Dispose();
-                    }
+
+                    return await res.Content.ReadAsAsync<TResult>(_formatters, ctk);
                 }
             }
             catch (ArtesianSdkRemoteException)

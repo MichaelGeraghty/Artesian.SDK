@@ -1,8 +1,7 @@
 ﻿using Artesian.SDK.Clients;
 using Artesian.SDK.Configuration;
-using Artesian.SDK.Dto;
 using Artesian.SDK.QueryService.Interface;
-using System;
+using Flurl;
 
 namespace Artesian.SDK.QueryService.Queries
 {
@@ -13,9 +12,8 @@ namespace Artesian.SDK.QueryService.Queries
 
         public QueryService(IArtesianServiceConfig cfg)
         {
-            //throw new Exception("Provide url");
             _cfg = cfg;
-            _client = new Auth0Client(cfg, "" //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            _client = new Auth0Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(Constants.QueryRoute).AppendPathSegment(Constants.Version)
             );
         }
 
