@@ -69,7 +69,7 @@ namespace Artesian.SDK.Dto
                 /// </summary>
                 [Required]
                 [MessagePack.Key(5)]
-                public MarketDataTypeV2 Type { get; set; }
+                public MarketDataType Type { get; set; }
                 /// <summary>
                 /// The Original Timezone
                 /// </summary>
@@ -182,7 +182,7 @@ namespace Artesian.SDK.Dto
                 /// <summary>
                 /// The Curve Ranges
                 /// </summary>
-                public IEnumerable<CurveRangeV2> Curves { get; set; }
+                public IEnumerable<CurveRange> Curves { get; set; }
             }
         }
     }

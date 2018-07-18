@@ -7,7 +7,7 @@ namespace Artesian.SDK.Dto
     /// The Curve Range
     /// </summary>
     [MessagePackObject]
-    public class CurveRangeV2
+    public class CurveRange
     {
 
         /// <summary>

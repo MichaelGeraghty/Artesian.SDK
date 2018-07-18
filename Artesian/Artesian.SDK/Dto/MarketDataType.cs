@@ -1,9 +1,12 @@
-﻿namespace Artesian.SDK.Dto
+﻿using System;
+
+namespace Artesian.SDK.Dto
 {
     public enum MarketDataType
     {
         ActualTimeSerie
-        , ForecastTimeSerie
+        , VersionedTimeSerie
         , MarketAssessment
     }
+
 }

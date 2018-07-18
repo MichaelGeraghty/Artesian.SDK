@@ -1,7 +1,7 @@
-﻿using Artesian.SDK.Dependencies.Common;
-using FluentValidation;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Linq;
 
 namespace Artesian.SDK.Dto
 {
@@ -35,67 +35,44 @@ namespace Artesian.SDK.Dto
         public int Page { get; set; }
     }
 
-    public class ArtesianSearchFilterValidator : AbstractValidator<ArtesianSearchFilter>
+    public static class ArtesianSearchFilterExt
     {
-        public ArtesianSearchFilterValidator()
+        public static void Validate(this ArtesianSearchFilter artesianSearchFilter)
         {
-            RuleFor(x => x.SearchText)
-                .NotNull()
-                ;
-
             var validSorts = @"^(MarketDataId|ProviderName|MarketDataName|OriginalGranularity|Type|OriginalTimezone|Created|LastUpdated)( (asc|desc))?$";
-            RuleForEach(x => x.Sorts)
-                .Matches(validSorts)
-                    .WithMessage("{0} is invalid search param", (parent, x) => x)
-                ;
 
-            RuleFor(x => x.PageSize)
-                .GreaterThanOrEqualTo(0)
-                ;
-
-            RuleFor(x => x.Page)
-                .GreaterThanOrEqualTo(0)
-                ;
-
-            RuleFor(x => x.Filters)
-                .SetCollectionValidator(new FilterPairValidator())
-                ;
-        }
-
-        private class FilterPairValidator : AbstractValidator<KeyValuePair<string, string[]>>
-        {
-            public FilterPairValidator()
+            if (artesianSearchFilter.SearchText == null)
+                throw new ArgumentNullException(nameof(artesianSearchFilter.SearchText));
+            foreach (string element in artesianSearchFilter.Sorts)
             {
-                RuleFor(x => x.Key)
-                    .IsValidString(3, 50) // cannot use IsValidTagKey since here ProviderName, OriginaGranularity etc. are valid.
-                ;
-
-                When(x => x.Value != null, () =>
-                {
-                    When(x => x.Key != "MarketDataName", () =>
-                    {
-                        RuleFor(x => x.Value)
-                           .SetCollectionValidator(new FilterValueValidator(50));
-                    });
-
-                    When(x => x.Key == "MarketDataName", () =>
-                    {
-                        RuleFor(x => x.Value)
-                           .SetCollectionValidator(new FilterValueValidator(250));
-                    });
-                });
+                if (element.Equals(validSorts))
+                    throw new ArgumentException("Invalid search params");
             }
-
-            private class FilterValueValidator : AbstractValidator<string>
+            if (artesianSearchFilter.PageSize < 0)
+                throw new ArgumentException("Page size is less than 0");
+            if (artesianSearchFilter.Page < 0)
+                throw new ArgumentException("Page is less than 0");
+            foreach(KeyValuePair<string, string[]> element in artesianSearchFilter.Filters)
             {
-                public FilterValueValidator(int lenght)
+                ArtesianUtils.IsValidString(element.Key,3,50);
+
+                if(element.Value != null)
                 {
-                    When(x => !string.IsNullOrEmpty(x), () =>
+                    if(element.Key != "MarketDataName")
                     {
-                        RuleFor(x => x)
-                            .IsValidString(1, lenght)
-                            ;
-                    });
+                        foreach (string value in element.Value)
+                        {
+                            ArtesianUtils.IsValidString(value, 1, 50);
+                        }
+
+                    }
+                    else if (element.Key == "MarketDataName")
+                    {
+                        foreach (string value in element.Value)
+                        {
+                            ArtesianUtils.IsValidString(value, 1, 250);
+                        }
+                    }
                 }
             }
         }

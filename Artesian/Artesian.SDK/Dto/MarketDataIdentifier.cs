@@ -1,6 +1,4 @@
-﻿using Artesian.SDK.Dependencies.Common;
-using FluentValidation;
-using MessagePack;
+﻿using MessagePack;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -91,17 +89,13 @@ namespace Artesian.SDK.Dto
         }
     }
 
-    public class MarketDataIdentifierValidator : AbstractValidator<MarketDataIdentifier>
+    public static class MarketDataIdentifierExt
     {
-        public MarketDataIdentifierValidator()
+        public static void Validate(this MarketDataIdentifier marketDataIdentifier)
         {
-            RuleFor(x => x.Provider)
-                .IsValidProviderName()
-                ;
-
-            RuleFor(x => x.Name)
-                .IsValidMarketDataName()
-                ;
+            ArtesianUtils.IsValidProvider(marketDataIdentifier.Provider,1,50);
+            ArtesianUtils.IsValidMarketDataName(marketDataIdentifier.Name,1,250);
         }
     }
+
 }

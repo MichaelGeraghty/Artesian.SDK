@@ -46,7 +46,24 @@ namespace Artesian.SDK.Service
                     .SetQueryParam("sorts", filter.Sorts)
                     ;
 
-            return _client.Exec<ArtesianSearchResults>(HttpMethod.Get, url.ToString());
+            return _client.Exec<ArtesianSearchResults>(HttpMethod.Get, url.ToString(), ctk: ctk);
+        }
+
+        public Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(MarketDataIdentifier id, CancellationToken ctk = default)
+        {
+            var url = "/marketdata/entity"
+                    .SetQueryParam("provider", id.Provider)
+                    .SetQueryParam("name", id.Name)
+                    ;
+            return _client.Exec<MarketDataEntity.V2.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
+        }
+
+        public Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(int id, CancellationToken ctk = default)
+        {
+            var url = "/marketdata/entity/{id}"
+                    .SetQueryParam("id",id)
+                    ;
+            return _client.Exec<MarketDataEntity.V2.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
     }
 }
