@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using Artesian.SDK.Dto;
 using Artesian.SDK.Service;
 using Flurl.Http.Testing;
@@ -12,6 +13,7 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
         {
+           
         };
 
         [TestMethod]
