@@ -37,6 +37,8 @@ namespace Artesian.SDK.Service
 
         public Task<ArtesianSearchResults> SearchFacetAsync(ArtesianSearchFilter filter, CancellationToken ctk = default)
         {
+            filter.Validate();
+
             var url = "/marketdata/searchfacet"
                     .SetQueryParam("pageSize", filter.PageSize)
                     .SetQueryParam("page", filter.Page)

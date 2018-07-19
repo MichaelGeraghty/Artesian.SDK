@@ -75,10 +75,6 @@ namespace Artesian.SDK.Dto
                     }
                 }
             }
-            ArtesianSearchFilter s = new ArtesianSearchFilter();
-            foreach (KeyValuePair<string, string[]> element in s.Filters){
-
-            }
         }
     }
 }
