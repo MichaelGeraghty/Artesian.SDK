@@ -15,6 +15,7 @@
     <Description>Artesian SDK library</Description>
     <PackageTags>Ark;c#;Visual Studio;Framework;Arkive;Artesian;</PackageTags>
     <PackageLicenseUrl>https://github.com/ARKlab/Artesian.SDK/blob/master/LICENSE</PackageLicenseUrl>
+    <Version>0.1.0-alpha02</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
