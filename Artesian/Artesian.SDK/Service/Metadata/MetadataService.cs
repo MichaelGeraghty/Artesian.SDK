@@ -52,6 +52,7 @@ namespace Artesian.SDK.Service
 
         public Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(MarketDataIdentifier id, CancellationToken ctk = default)
         {
+            id.Validate();
             var url = "/marketdata/entity"
                     .SetQueryParam("provider", id.Provider)
                     .SetQueryParam("name", id.Name)
