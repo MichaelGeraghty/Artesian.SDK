@@ -31,6 +31,12 @@ namespace Artesian.SDK.Service
             return this;
         }
 
+        public VersionedQuery ForMarketData(int id)
+        {
+            _ids = new int[] { id };
+            return this;
+        }
+
         public VersionedQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -39,15 +45,13 @@ namespace Artesian.SDK.Service
 
         public VersionedQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
-            LocalDateRange extractionDateRange = new LocalDateRange(start, end);
-            _inAbsoluteDateRange(extractionDateRange);
+            _inAbsoluteDateRange(start, end);
             return this;
         }
 
         public VersionedQuery InRelativePeriodRange(Period from, Period to)
         {
-            PeriodRange extractionPeriodRange = new PeriodRange(from, to);
-            _inRelativePeriodRange(extractionPeriodRange);
+            _inRelativePeriodRange(from, to);
             return this;
         }
 

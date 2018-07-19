@@ -30,17 +30,20 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        protected Query _inAbsoluteDateRange(LocalDateRange extractionDateRange)
+        protected Query _inAbsoluteDateRange(LocalDate start, LocalDate end)
         {
+            if (end <= start)
+                throw new ArgumentException("End date must be greater than start date");
+
             _extractionRangeType = ExtractionRangeType.DateRange;
-            _extractionRangeCfg.DateRange = extractionDateRange;
+            _extractionRangeCfg.DateRange = new LocalDateRange(start, end);
             return this;
         }
 
-        protected Query _inRelativePeriodRange(PeriodRange extractionPeriodRange)
+        protected Query _inRelativePeriodRange(Period from, Period to)
         {
             _extractionRangeType = ExtractionRangeType.PeriodRange;
-            _extractionRangeCfg.PeriodRange = extractionPeriodRange;
+            _extractionRangeCfg.PeriodRange = new PeriodRange(from, to);
             return this;
         }
 

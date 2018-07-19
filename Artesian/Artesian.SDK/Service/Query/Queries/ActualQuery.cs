@@ -28,6 +28,12 @@ namespace Artesian.SDK.Service
             return this;
         }
 
+        public ActualQuery ForMarketData(int id)
+        {
+            _ids = new int[] { id };
+            return this;
+        }
+
         public ActualQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -35,16 +41,14 @@ namespace Artesian.SDK.Service
         }
 
         public ActualQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
-        { 
-            LocalDateRange extractionDateRange = new LocalDateRange(start, end);
-            _inAbsoluteDateRange(extractionDateRange);
+        {
+            _inAbsoluteDateRange(start, end);
             return this;
         }
 
         public ActualQuery InRelativePeriodRange(Period from, Period to)
         {
-            PeriodRange extractionPeriodRange = new PeriodRange(from, to);
-            _inRelativePeriodRange(extractionPeriodRange);
+            _inRelativePeriodRange(from, to);
             return this;
         }
 
