@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using EnsureThat;
 using MessagePack;
+using System;
 
 namespace Artesian.SDK.Dto
 {
@@ -14,7 +14,8 @@ namespace Artesian.SDK.Dto
         {
             //  Ensure.Bool.IsTrue(id >= ArtesianConstants.CurveIDMin, "id out of accepted Range");
             //  Ensure.Bool.IsTrue(id <= ArtesianConstants.CurveIDMax, "id out of accepted Range");
-            EnsureArg.IsNotNull(eTag);
+            if (string.IsNullOrEmpty(eTag))
+                throw new ArgumentException("eTag is null or empty");
 
             ID = id;
             ETag = eTag;

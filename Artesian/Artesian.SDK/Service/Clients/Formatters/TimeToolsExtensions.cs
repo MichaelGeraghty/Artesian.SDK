@@ -1,5 +1,4 @@
-﻿using EnsureThat;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NodaTime.Serialization.JsonNet;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,8 @@ namespace Artesian.SDK.Service
     {
         public static JsonSerializerSettings ConfigureForNodaTimeRanges(this JsonSerializerSettings settings)
         {
-            EnsureArg.IsNotNull(settings);
+            if (settings == null)
+                throw new ArgumentNullException("ConfigureForNodaTimeRanges null settings exception");
 
 
             if (!settings.Converters.Any(x => x == NodaConverters.LocalDateConverter))
@@ -27,7 +27,8 @@ namespace Artesian.SDK.Service
 
         public static JsonSerializer ConfigureForNodaTimeRanges(this JsonSerializer serializer)
         {
-            EnsureArg.IsNotNull(serializer);
+            if(serializer==null)
+                throw new ArgumentNullException("ConfigureForNodaTimeRanges null serializer exception");
 
 
             if (!serializer.Converters.Any(x => x == NodaConverters.LocalDateConverter))
@@ -42,7 +43,8 @@ namespace Artesian.SDK.Service
 
         private static void AddDefaultConverters(IList<JsonConverter> converters)
         {
-            EnsureArg.IsNotNull(converters);
+            if (converters == null)
+                throw new ArgumentNullException("AddDefaultConverters converters null exception");
 
             converters.Add(new LocalDateRangeConverter());
             converters.Add(new LocalDateTimeRangeConverter());
