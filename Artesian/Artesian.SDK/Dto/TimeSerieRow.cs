@@ -6,11 +6,10 @@ namespace Artesian.SDK.Dto
 {
     public static partial class TimeSerieRow
     {
-        public static partial class Versioned
+        [MessagePackObject]
+        public class Versioned
         {
-            [MessagePackObject]
-            public class V2
-            {
+            
                 [JsonProperty(PropertyName = "P")]
                 [Key(0)]
                 public virtual string ProviderName { get; set; }
@@ -34,11 +33,7 @@ namespace Artesian.SDK.Dto
                 [JsonProperty(PropertyName = "D")]
                 [Key(5)]
                 public virtual double? Value { get; set; }
-            }
-
-            [MessagePackObject]
-            public class V1_0 : V2
-            {
+         
                 /// <summary>
                 /// Start of first competence
                 /// </summary>
@@ -52,14 +47,12 @@ namespace Artesian.SDK.Dto
                 [JsonProperty(PropertyName = "E")]
                 [Key(7)]
                 public virtual DateTimeOffset CompetenceEnd { get; set; }
-            }
+            
         }
 
-        public static partial class Actual
+        [MessagePackObject]
+        public class Actual
         {
-            [MessagePackObject]
-            public class V2
-            {
                 /// <summary>
                 /// The Provider display name
                 /// </summary>
@@ -94,11 +87,6 @@ namespace Artesian.SDK.Dto
                 [JsonProperty(PropertyName = "D")]
                 [Key(4)]
                 public virtual double? Value { get; set; }
-            }
-
-            [MessagePackObject]
-            public class V1_0 : V2
-            {
                 /// <summary>
                 /// Start of first competence
                 /// </summary>
@@ -112,7 +100,6 @@ namespace Artesian.SDK.Dto
                 [JsonProperty(PropertyName = "E")]
                 [Key(6)]
                 public virtual DateTimeOffset CompetenceEnd { get; set; }
-            }
         }
     }
 }

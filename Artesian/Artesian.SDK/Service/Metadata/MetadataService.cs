@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Artesian.SDK.Dto;
 using Flurl;
+using NodaTime;
 
 namespace Artesian.SDK.Service
 {
@@ -62,10 +63,21 @@ namespace Artesian.SDK.Service
 
         public Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(int id, CancellationToken ctk = default)
         {
-            var url = "/marketdata/entity/{id}"
-                    .SetQueryParam("id",id)
-                    ;
+            var url = "/marketdata/entity/".AppendPathSegment(id.ToString());
             return _client.Exec<MarketDataEntity.V2.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
+        }
+
+        public Task<PagedResult<CurveRange>> ReadCurveRange(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default)
+        {
+            var url = "/marketdata/entity/".AppendPathSegment(id.ToString()).AppendPathSegment("curves")
+                     .SetQueryParam("page", page)
+                     .SetQueryParam("pageSize", pageSize)
+                     .SetQueryParam("product", product)
+                     .SetQueryParam("versionFrom", versionFrom)
+                     .SetQueryParam("versionTo", versionTo)
+                     ;
+
+            return _client.Exec<PagedResult<CurveRange>>(HttpMethod.Get, url, ctk: ctk);
         }
     }
 }

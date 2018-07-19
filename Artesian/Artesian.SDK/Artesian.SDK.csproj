@@ -6,8 +6,15 @@
     <Win32Resource />
     <OutputType>Library</OutputType>
     <StartupObject />
-    <PackageProjectUrl></PackageProjectUrl>
-    <Copyright />
+    <PackageProjectUrl>https://github.com/ARKlab/Artesian.SDK</PackageProjectUrl>
+    <Copyright>Copyright (C) 2018 ARK LTD</Copyright>
+    <Company>ARK Labs</Company>
+    <Authors>ARK Labs</Authors>
+    <PackageIconUrl>http://www.ark-energy.eu/wp-content/uploads/ark-dark.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/ARKlab/Artesian.SDK</RepositoryUrl>
+    <Description>Artesian SDK library</Description>
+    <PackageTags>Ark;c#;Visual Studio;Framework;Arkive;Artesian;</PackageTags>
+    <PackageLicenseUrl>https://github.com/ARKlab/Artesian.SDK/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

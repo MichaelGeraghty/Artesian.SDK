@@ -1,4 +1,5 @@
 ﻿using Artesian.SDK.Dto;
+using NodaTime;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,5 +13,8 @@ namespace Artesian.SDK.Service
 
         Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(MarketDataIdentifier id, CancellationToken ctk = default(CancellationToken));
         Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(int id, CancellationToken ctk = default(CancellationToken));
+
+        Task<PagedResult<CurveRange>> ReadCurveRange(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default(CancellationToken));
+
     }
 }

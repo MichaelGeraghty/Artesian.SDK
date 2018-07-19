@@ -81,9 +81,9 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public async Task<IEnumerable<TimeSerieRow.Actual.V1_0>> ExecuteAsync(CancellationToken ctk = default)
+        public async Task<IEnumerable<TimeSerieRow.Actual>> ExecuteAsync(CancellationToken ctk = default)
         {
-            return await _client.Exec<IEnumerable<TimeSerieRow.Actual.V1_0>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
+            return await _client.Exec<IEnumerable<TimeSerieRow.Actual>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
         }
 
 

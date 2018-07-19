@@ -11,10 +11,12 @@ using Polly;
 using Polly.Caching;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,12 +87,6 @@ namespace Artesian.SDK.Service
 
 
             _client = new FlurlClient(_url);
-            _client.HttpClient.BaseAddress = this.Config.BaseAddress;
-            _client.HttpClient.DefaultRequestHeaders.Accept.Clear();
-            _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(LZ4MessagePackFormatter.DefaultMediaType.MediaType, 1));
-            _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MessagePackFormatter.DefaultMediaType.MediaType, 0.9));
-            _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonMediaTypeFormatter.DefaultMediaType.MediaType, 0.8));
-
             _cachePolicy = Policy.CacheAsync(_memoryCacheProvider.AsyncFor<(string AccessToken, DateTimeOffset ExpiresOn)>(), new ResultTtl<(string AccessToken, DateTimeOffset ExpiresOn)>(r => new Ttl(r.ExpiresOn - DateTimeOffset.Now, false)));
 
         }
@@ -102,7 +98,7 @@ namespace Artesian.SDK.Service
             {
                 var (token, _) = await _getAccessToken();
 
-                using (var res = await _client.Request(resource).WithOAuthBearerToken(token).SendAsync(method, cancellationToken: ctk))
+                using (var res = await _client.Request(resource).WithOAuthBearerToken(token).WithAcceptHeader(_formatters).SendAsync(method, cancellationToken: ctk))
                 {
                     if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
                         return default;
@@ -169,5 +165,18 @@ namespace Artesian.SDK.Service
         }
 
         #endregion private methods
+    }
+
+    public static class FlurlExt
+    {
+        public static IFlurlRequest WithAcceptHeader(this IFlurlRequest request, MediaTypeFormatterCollection formatters)
+        {
+            var cnt = formatters.Count;
+            var step = 1.0 / (cnt + 1);
+            var sb = new StringBuilder();
+            var headers = formatters.Select((x, i) => new MediaTypeWithQualityHeaderValue(x.SupportedMediaTypes.First().MediaType, 1 - (step * i)));
+
+            return request.WithHeader("Accept", string.Join(",", headers));
+        }
     }
 }
