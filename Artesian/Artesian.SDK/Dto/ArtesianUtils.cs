@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Artesian.SDK.Service;
+using System;
 
 namespace Artesian.SDK.Dto
 {

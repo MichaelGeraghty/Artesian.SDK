@@ -4,6 +4,7 @@ using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Artesian.SDK.Service
@@ -36,15 +37,16 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public VersionedQuery InAbsoluteDateRange(LocalDateRange extractionDateRange)
+        public VersionedQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
-
+            LocalDateRange extractionDateRange = new LocalDateRange(start, end);
             _inAbsoluteDateRange(extractionDateRange);
             return this;
         }
 
-        public VersionedQuery InRelativePeriodRange(PeriodRange extractionPeriodRange)
+        public VersionedQuery InRelativePeriodRange(Period from, Period to)
         {
+            PeriodRange extractionPeriodRange = new PeriodRange(from, to);
             _inRelativePeriodRange(extractionPeriodRange);
             return this;
         }
@@ -95,10 +97,20 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public VersionedQuery ForLastOfDays(LocalDateRange lastOfDateRange)
+        public VersionedQuery ForLastOfDays(LocalDate start, LocalDate end)
         {
+            LocalDateRange lastOfDateRange = new LocalDateRange(start, end);
             _versionSelectionType = VersionSelectionType.LastOfDays;
             _versionSelectionCfg.LastOf.DateRange = lastOfDateRange;
+
+            return this;
+        }
+
+        public VersionedQuery ForLastOfDays(Period from, Period to)
+        {
+            PeriodRange lastOfPeriodRange = new PeriodRange(from, to);
+            _versionSelectionType = VersionSelectionType.LastOfDays;
+            _versionSelectionCfg.LastOf.PeriodRange = lastOfPeriodRange;
 
             return this;
         }
@@ -111,16 +123,9 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public VersionedQuery ForLastOfDays(PeriodRange lastOfPeriodRange)
+        public VersionedQuery ForLastOfMonths(LocalDate start, LocalDate end)
         {
-            _versionSelectionType = VersionSelectionType.LastOfDays;
-            _versionSelectionCfg.LastOf.PeriodRange = lastOfPeriodRange;
-
-            return this;
-        }
-
-        public VersionedQuery ForLastOfMonths(LocalDateRange lastOfDateRange)
-        {
+            LocalDateRange lastOfDateRange = new LocalDateRange(start, end);
             _versionSelectionType = VersionSelectionType.LastOfMonths;
             _versionSelectionCfg.LastOf.DateRange = lastOfDateRange;
 
@@ -135,8 +140,9 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public VersionedQuery ForLastOfMonths(PeriodRange lastOfPeriodRange)
+        public VersionedQuery ForLastOfMonths(Period from, Period to)
         {
+            PeriodRange lastOfPeriodRange = new PeriodRange(from, to);
             _versionSelectionType = VersionSelectionType.LastOfMonths;
             _versionSelectionCfg.LastOf.PeriodRange = lastOfPeriodRange;
 
@@ -151,9 +157,9 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public async Task<IEnumerable<TimeSerieRow.Versioned.V1_0>> ExecuteAsync()
+        public async Task<IEnumerable<TimeSerieRow.Versioned.V1_0>> ExecuteAsync(CancellationToken ctk = default)
         {
-            return await _client.Exec<IEnumerable<TimeSerieRow.Versioned.V1_0>>(HttpMethod.Get, _buildRequest());
+            return await _client.Exec<IEnumerable<TimeSerieRow.Versioned.V1_0>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
         }
 
 

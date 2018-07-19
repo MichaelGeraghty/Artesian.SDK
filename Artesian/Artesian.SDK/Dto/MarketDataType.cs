@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Artesian.SDK.Dto
+﻿namespace Artesian.SDK.Dto
 {
     public enum MarketDataType
     {

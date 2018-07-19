@@ -1,4 +1,4 @@
-﻿namespace Artesian.SDK
+﻿namespace Artesian.SDK.Service
 {
     public abstract class ArtesianConstants
     {

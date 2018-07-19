@@ -25,10 +25,10 @@
     <PackageReference Include="Flurl.Http" Version="2.3.2" />
     <PackageReference Include="JWT" Version="4.0.0" />
     <PackageReference Include="MessagePack.NodaTime" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
     <PackageReference Include="NodaTime.Serialization.JsonNet" Version="2.0.0" />
     <PackageReference Include="Polly.Caching.Memory" Version="2.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="WinInsider.System.Net.Http.Formatting" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

@@ -6,8 +6,8 @@ namespace Artesian.SDK.Service
     {
         T ForMarketData(int[] ids);
         T InTimezone(string tz);
-        T InAbsoluteDateRange(LocalDateRange extractionDateRange);
-        T InRelativePeriodRange(PeriodRange extractionPeriodRange);
+        T InAbsoluteDateRange(LocalDate from, LocalDate to);
+        T InRelativePeriodRange(Period from, Period to);
         T InRelativePeriod(Period extractionPeriod);
         T InRelativeInterval(RelativeInterval relativeInterval);
     }

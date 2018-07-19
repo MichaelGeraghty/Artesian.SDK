@@ -47,7 +47,7 @@ namespace Artesian.SDK.Tests
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
                        .InGranularity(Granularity.Day)
-                       .InAbsoluteDateRange(new LocalDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10)))
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .ExecuteAsync().Result;
 
 
@@ -91,7 +91,7 @@ namespace Artesian.SDK.Tests
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
                        .InGranularity(Granularity.Day)
-                       .InRelativePeriodRange(new PeriodRange(Period.FromWeeks(2), Period.FromDays(20)))
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
 
@@ -113,7 +113,7 @@ namespace Artesian.SDK.Tests
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001, 100000002, 100000003 })
                        .InGranularity(Granularity.Day)
-                       .InRelativePeriodRange(new PeriodRange(Period.FromWeeks(2), Period.FromDays(20)))
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D")
@@ -134,7 +134,7 @@ namespace Artesian.SDK.Tests
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
                        .InGranularity(Granularity.Day)
-                       .InAbsoluteDateRange(new LocalDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10)))
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .InTimezone("CET")
                        .ExecuteAsync().Result;
 
@@ -158,7 +158,7 @@ namespace Artesian.SDK.Tests
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
                        .InGranularity(Granularity.Day)
-                       .InAbsoluteDateRange(new LocalDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10)))
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
@@ -178,7 +178,7 @@ namespace Artesian.SDK.Tests
                 var act = qs.CreateActual()
                        .ForMarketData(new int[] { 100000001 })
                        .InGranularity(Granularity.Day)
-                       .InAbsoluteDateRange(new LocalDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10)))
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .WithTimeTransform(SystemTimeTransform.THERMALYEAR)
                        .ExecuteAsync().Result;
 

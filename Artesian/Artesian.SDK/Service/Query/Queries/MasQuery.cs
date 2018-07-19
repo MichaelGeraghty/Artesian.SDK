@@ -4,6 +4,7 @@ using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Artesian.SDK.Service
@@ -32,14 +33,16 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public MasQuery InAbsoluteDateRange(LocalDateRange extractionDateRange)
+        public MasQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
+            LocalDateRange extractionDateRange = new LocalDateRange(start, end);
             _inAbsoluteDateRange(extractionDateRange);
             return this;
         }
 
-        public MasQuery InRelativePeriodRange(PeriodRange extractionPeriodRange)
+        public MasQuery InRelativePeriodRange(Period from, Period to)
         {
+            PeriodRange extractionPeriodRange = new PeriodRange(from, to);
             _inRelativePeriodRange(extractionPeriodRange);
             return this;
         }
@@ -65,9 +68,9 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public async Task<IEnumerable<AssessmentRow.V2>> ExecuteAsync()
+        public async Task<IEnumerable<AssessmentRow.V2>> ExecuteAsync(CancellationToken ctk = default)
         {
-            return await _client.Exec<IEnumerable<AssessmentRow.V2>>(HttpMethod.Get, _buildRequest());
+            return await _client.Exec<IEnumerable<AssessmentRow.V2>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
         }
 
         #region private

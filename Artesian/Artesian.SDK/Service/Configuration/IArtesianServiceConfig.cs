@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Artesian.SDK
+namespace Artesian.SDK.Service
 {
     public interface IArtesianServiceConfig
     {

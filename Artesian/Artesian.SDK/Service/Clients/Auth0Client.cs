@@ -85,11 +85,6 @@ namespace Artesian.SDK.Service
 
 
             _client = new FlurlClient(_url);
-            _client.Settings.HttpClientFactory.CreateHttpClient(new HttpClientHandler()
-            {
-                AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
-            });
-
             _client.HttpClient.BaseAddress = this.Config.BaseAddress;
             _client.HttpClient.DefaultRequestHeaders.Accept.Clear();
             _client.HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(LZ4MessagePackFormatter.DefaultMediaType.MediaType, 1));
@@ -107,7 +102,7 @@ namespace Artesian.SDK.Service
             {
                 var (token, _) = await _getAccessToken();
 
-                using (var res = await _client.Request(resource).WithOAuthBearerToken(token).SendAsync(method))
+                using (var res = await _client.Request(resource).WithOAuthBearerToken(token).SendAsync(method, cancellationToken: ctk))
                 {
                     if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
                         return default;
