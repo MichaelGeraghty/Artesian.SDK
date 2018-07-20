@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Artesian.SDK.Dto;
 using Flurl;
 using NodaTime;
+using System;
 
 namespace Artesian.SDK.Service
 {
@@ -22,11 +23,17 @@ namespace Artesian.SDK.Service
 
         public Task<TimeTransform> ReadTimeTransformBaseAsync(int timeTransformId, CancellationToken ctk = default)
         {
+            if (timeTransformId < 1)
+                throw new ArgumentException("Transform id is invalid : " + timeTransformId);
+
             return _client.Exec<TimeTransform>(HttpMethod.Get, $@"/timeTransform/entity/{timeTransformId}", ctk: ctk);
         }
 
         public Task<PagedResult<TimeTransform>> ReadTimeTransformsAsync(int page, int pageSize, bool userDefined, CancellationToken ctk = default)
         {
+            if (page < 1 || pageSize < 1)
+                throw new ArgumentException("Page and Page number need to be greater than 0. Page:" + page + " Page Size:" + pageSize);
+
             var url = "/timeTransform/entity"
                     .SetQueryParam("pageSize", pageSize)
                     .SetQueryParam("page", page)
@@ -51,20 +58,23 @@ namespace Artesian.SDK.Service
             return _client.Exec<ArtesianSearchResults>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
 
-        public Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(MarketDataIdentifier id, CancellationToken ctk = default)
+        public Task<MarketDataEntity.Output> ReadMarketDataRegistryAsync(MarketDataIdentifier id, CancellationToken ctk = default)
         {
             id.Validate();
             var url = "/marketdata/entity"
                     .SetQueryParam("provider", id.Provider)
                     .SetQueryParam("name", id.Name)
                     ;
-            return _client.Exec<MarketDataEntity.V2.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
+            return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
 
-        public Task<MarketDataEntity.V2.Output> ReadMarketDataRegistryAsync(int id, CancellationToken ctk = default)
+        public Task<MarketDataEntity.Output> ReadMarketDataRegistryAsync(int id, CancellationToken ctk = default)
         {
+            if (id < 1)
+                throw new ArgumentException("Id invalid :" + id);
+
             var url = "/marketdata/entity/".AppendPathSegment(id.ToString());
-            return _client.Exec<MarketDataEntity.V2.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
+            return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
 
         public Task<PagedResult<CurveRange>> ReadCurveRange(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default)

@@ -33,6 +33,7 @@ namespace Artesian.SDK.Service
             return this;
         }
 
+
         public MasQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -47,6 +48,7 @@ namespace Artesian.SDK.Service
 
         public MasQuery InRelativePeriodRange(Period from, Period to)
         {
+            PeriodRange extractionPeriodRange = new PeriodRange(from, to);
             _inRelativePeriodRange(from, to);
             return this;
         }
@@ -72,9 +74,9 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-        public async Task<IEnumerable<AssessmentRow.V2>> ExecuteAsync(CancellationToken ctk = default)
+        public async Task<IEnumerable<AssessmentRow>> ExecuteAsync(CancellationToken ctk = default)
         {
-            return await _client.Exec<IEnumerable<AssessmentRow.V2>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
+            return await _client.Exec<IEnumerable<AssessmentRow>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
         }
 
         #region private

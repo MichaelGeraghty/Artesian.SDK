@@ -4,11 +4,9 @@ using System;
 
 namespace Artesian.SDK.Dto
 {
-    public static partial class AssessmentRow
+    [MessagePackObject]
+    public class AssessmentRow
     {
-        [MessagePackObject]
-        public class V2
-        {
             /// <summary>
             /// Provider Name
             /// </summary>
@@ -102,6 +100,5 @@ namespace Artesian.SDK.Dto
             public double? VolumeTotal { get; set; }
 
             #endregion Mas Values
-        }
     }
 }

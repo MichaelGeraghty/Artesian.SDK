@@ -7,7 +7,7 @@ namespace Artesian.SDK.Dto
     public class ArtesianSearchResults
     {
         [Key(0)]
-        public List<MarketDataEntity.V2.Output> Results { get; set; }
+        public List<MarketDataEntity.Output> Results { get; set; }
         [Key(1)]
         public List<ArtesianMetadataFacet> Facets { get; set; }
         [Key(2)]

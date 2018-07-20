@@ -8,16 +8,14 @@ namespace Artesian.SDK.Dto
     /// <summary>
     /// The MarketData Entity with Etag
     /// </summary>
-    public static class MarketDataEntity
+    [MessagePackObject]
+    public class MarketDataEntity
     {
-        public class V2
-        {
-            [MessagePackObject]
             public class Input
             {
                 public Input() { }
 
-                public Input(MarketDataEntity.V2.Output output)
+                public Input(MarketDataEntity.Output output)
                 {
                     if (output != null)
                     {
@@ -125,7 +123,7 @@ namespace Artesian.SDK.Dto
             {
                 public Output() { }
 
-                public Output(MarketDataEntity.V2.Input input)
+                public Output(MarketDataEntity.Input input)
                 {
                     if (input != null)
                     {
@@ -184,6 +182,5 @@ namespace Artesian.SDK.Dto
                 /// </summary>
                 public IEnumerable<CurveRange> Curves { get; set; }
             }
-        }
     }
 }
