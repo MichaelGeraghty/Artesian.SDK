@@ -9,15 +9,15 @@ using System;
 
 namespace Artesian.SDK.Service
 {
-    public class MetadataService : IMetaDataService
+    public class MetaDataService : IMetaDataService
     {
         private IArtesianServiceConfig _cfg;
         private static Auth0Client _client;
 
-        public MetadataService(IArtesianServiceConfig cfg)
+        public MetaDataService(IArtesianServiceConfig cfg)
         {
             _cfg = cfg;
-            _client = new Auth0Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(ArtesianConstants.MetadataVersion)
+            _client = new Auth0Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(ArtesianConstants.MetaDataVersion)
             );
         }
 
@@ -63,7 +63,7 @@ namespace Artesian.SDK.Service
             id.Validate();
             var url = "/marketdata/entity"
                     .SetQueryParam("provider", id.Provider)
-                    .SetQueryParam("name", id.Name)
+                    .SetQueryParam("curveName", id.Name)
                     ;
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
@@ -77,7 +77,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
 
-        public Task<PagedResult<CurveRange>> ReadCurveRange(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default)
+        public Task<PagedResult<CurveRange>> ReadCurveRangeAsync(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default)
         {
             var url = "/marketdata/entity/".AppendPathSegment(id.ToString()).AppendPathSegment("curves")
                      .SetQueryParam("page", page)

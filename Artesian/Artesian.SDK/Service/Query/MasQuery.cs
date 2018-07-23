@@ -33,7 +33,6 @@ namespace Artesian.SDK.Service
             return this;
         }
 
-
         public MasQuery InTimezone(string tz)
         {
             _inTimezone(tz);
@@ -48,7 +47,6 @@ namespace Artesian.SDK.Service
 
         public MasQuery InRelativePeriodRange(Period from, Period to)
         {
-            PeriodRange extractionPeriodRange = new PeriodRange(from, to);
             _inRelativePeriodRange(from, to);
             return this;
         }

@@ -8,7 +8,7 @@
         internal static string QueryVersion { get { return "v1.0"; } }
         internal static string QueryRoute { get { return "query"; } }
 
-        internal static string MetadataVersion { get { return "v2.1"; } }
+        internal static string MetaDataVersion { get { return "v2.1"; } }
 
     }
 }

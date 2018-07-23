@@ -94,7 +94,7 @@ namespace Artesian.SDK.Service
                 throw new ApplicationException("Marketadata ids must be provided for extraction");
         }
 
-        protected string _toUrlParam(LocalDateRange range)
+        internal string _toUrlParam(LocalDateRange range)
         {
             return $"{_localDatePattern.Format(range.Start)}/{_localDatePattern.Format(range.End)}";
         }

@@ -2,9 +2,9 @@
 
 namespace Artesian.SDK.Service
 {
-    public class PeriodRange
+    internal class PeriodRange
     {
-        public PeriodRange(Period from, Period to)
+        internal PeriodRange(Period from, Period to)
         {
             From = from;
             To = to;

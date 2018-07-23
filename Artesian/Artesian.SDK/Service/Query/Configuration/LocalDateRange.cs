@@ -2,9 +2,9 @@
 
 namespace Artesian.SDK.Service
 {
-    public struct LocalDateRange
+    internal struct LocalDateRange
     {
-        public LocalDateRange(LocalDate start, LocalDate end)
+        internal LocalDateRange(LocalDate start, LocalDate end)
         {
             Start = start;
             End = end;

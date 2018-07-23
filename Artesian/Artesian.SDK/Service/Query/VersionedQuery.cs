@@ -103,18 +103,19 @@ namespace Artesian.SDK.Service
 
         public VersionedQuery ForLastOfDays(LocalDate start, LocalDate end)
         {
-            LocalDateRange lastOfDateRange = new LocalDateRange(start, end);
+            if (end <= start)
+                throw new ArgumentException("End date " + end + " must be greater than start date " + start);
+
             _versionSelectionType = VersionSelectionType.LastOfDays;
-            _versionSelectionCfg.LastOf.DateRange = lastOfDateRange;
+            _versionSelectionCfg.LastOf.DateRange = new LocalDateRange(start, end);
 
             return this;
         }
 
         public VersionedQuery ForLastOfDays(Period from, Period to)
         {
-            PeriodRange lastOfPeriodRange = new PeriodRange(from, to);
             _versionSelectionType = VersionSelectionType.LastOfDays;
-            _versionSelectionCfg.LastOf.PeriodRange = lastOfPeriodRange;
+            _versionSelectionCfg.LastOf.PeriodRange = new PeriodRange(from, to);
 
             return this;
         }
@@ -129,9 +130,11 @@ namespace Artesian.SDK.Service
 
         public VersionedQuery ForLastOfMonths(LocalDate start, LocalDate end)
         {
-            LocalDateRange lastOfDateRange = new LocalDateRange(start, end);
+            if (end <= start)
+                throw new ArgumentException("End date " + end + " must be greater than start date " + start);
+
             _versionSelectionType = VersionSelectionType.LastOfMonths;
-            _versionSelectionCfg.LastOf.DateRange = lastOfDateRange;
+            _versionSelectionCfg.LastOf.DateRange = new LocalDateRange(start, end);
 
             return this;
         }
@@ -146,9 +149,8 @@ namespace Artesian.SDK.Service
 
         public VersionedQuery ForLastOfMonths(Period from, Period to)
         {
-            PeriodRange lastOfPeriodRange = new PeriodRange(from, to);
             _versionSelectionType = VersionSelectionType.LastOfMonths;
-            _versionSelectionCfg.LastOf.PeriodRange = lastOfPeriodRange;
+            _versionSelectionCfg.LastOf.PeriodRange = new PeriodRange(from, to);
 
             return this;
         }

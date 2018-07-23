@@ -1,6 +1,6 @@
 ﻿namespace Artesian.SDK.Service
 {
-    interface IQueryService
+    public interface IQueryService
     {
         ActualQuery CreateActual();
         VersionedQuery CreateVersioned();
