@@ -1,35 +1,40 @@
 ﻿using System;
-using System.Net.Http;
-using Artesian.SDK.Dto;
+using System.Text;
+using System.Collections.Generic;
 using Artesian.SDK.Service;
 using Flurl.Http.Testing;
+using Artesian.SDK.Dto;
+using System.Net.Http;
 using NodaTime;
 using NUnit.Framework;
 
 namespace Artesian.SDK.Tests
 {
+    /// <summary>
+    /// Summary description for MarketAssessmentQueries
+    /// </summary>
     [TestFixture]
-    public class ActualTimeSerieQueries
+    public class MarketAssessmentQueries
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
         {
-         
+          
         };
 
         [Test]
-        public void ActInRelativeIntervalExtractionWindow()
+        public void MasInRelativeIntervalExtractionWindow()
         {
             using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
-                var act = qs.CreateActual()
+                var mas = qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
+                       .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativeInterval(RelativeInterval.RollingMonth)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/RollingMonth")
                     .WithQueryParamValue("id", 100000001)
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
@@ -38,20 +43,20 @@ namespace Artesian.SDK.Tests
         }
 
         [Test]
-        public void ActInAbsoluteDateRangeExtractionWindow()
+        public void MasInAbsoluteDateRangeExtractionWindow()
         {
             using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
-                var act = qs.CreateActual()
+                var mas = qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
+                       .ForProducts(new string[] { "M+1","GY+1"})
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .ExecuteAsync().Result;
 
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10")
                         .WithVerb(HttpMethod.Get)
                         .WithQueryParamValue("id", 100000001)
                         .Times(1);
@@ -60,20 +65,20 @@ namespace Artesian.SDK.Tests
         }
 
         [Test]
-        public void ActInRelativePeriodExtractionWindow()
+        public void MasInRelativePeriodExtractionWindow()
         {
             using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
-                var act = qs.CreateActual()
+                var mas = qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
+                       .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativePeriod(Period.FromDays(5))
                        .ExecuteAsync().Result;
 
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/P5D")
                         .WithVerb(HttpMethod.Get)
                         .WithQueryParamValue("id", 100000001)
                         .Times(1);
@@ -82,20 +87,20 @@ namespace Artesian.SDK.Tests
         }
 
         [Test]
-        public void ActInRelativePeriodRangeExtractionWindow()
+        public void MasInRelativePeriodRangeExtractionWindow()
         {
             using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
-                var act = qs.CreateActual()
+                var mas = qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
+                       .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/P2W/P20D")
                         .WithVerb(HttpMethod.Get)
                         .WithQueryParamValue("id", 100000001)
                         .Times(1);
@@ -104,19 +109,19 @@ namespace Artesian.SDK.Tests
         }
 
         [Test]
-        public void ActMultipleMarketDataWindow()
+        public void MasMultipleMarketDataWindow()
         {
             using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
-                var act = qs.CreateActual()
+                var mas = qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001, 100000002, 100000003 })
-                       .InGranularity(Granularity.Day)
+                       .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/P2W/P20D")
                         .WithVerb(HttpMethod.Get)
                         .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                         .Times(1);
@@ -125,21 +130,21 @@ namespace Artesian.SDK.Tests
         }
 
         [Test]
-        public void ActWithTimeZone()
+        public void MasWithTimeZone()
         {
             using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
-                var act = qs.CreateActual()
+                var mas = qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
+                       .ForProducts(new string[] { "M+1", "GY+1" })
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .InTimezone("CET")
                        .ExecuteAsync().Result;
 
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10")
                         .WithVerb(HttpMethod.Get)
                         .WithQueryParamValue("id", 100000001)
                         .WithQueryParamValue("tz", "CET")
@@ -147,50 +152,5 @@ namespace Artesian.SDK.Tests
 
             }
         }
-
-        [Test]
-        public void ActWithTimeTransfrom()
-        {
-            using (var httpTest = new HttpTest())
-            {
-                var qs = new QueryService(_cfg);
-
-                var act = qs.CreateActual()
-                       .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
-                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
-                       .WithTimeTransform(1)
-                       .ExecuteAsync().Result;
-
-
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
-                        .WithVerb(HttpMethod.Get)
-                        .WithQueryParamValue("id", 100000001)
-                        .WithQueryParamValue("tr", 1)
-                        .Times(1);
-
-            }
-
-            using (var httpTest = new HttpTest())
-            {
-                var qs = new QueryService(_cfg);
-
-                var act = qs.CreateActual()
-                       .ForMarketData(new int[] { 100000001 })
-                       .InGranularity(Granularity.Day)
-                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
-                       .WithTimeTransform(SystemTimeTransform.THERMALYEAR)
-                       .ExecuteAsync().Result;
-
-
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
-                        .WithVerb(HttpMethod.Get)
-                        .WithQueryParamValue("id", 100000001)
-                        .WithQueryParamValue("tr", 2)
-                        .Times(1);
-
-            }
-        }
-
     }
 }

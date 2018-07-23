@@ -33,7 +33,7 @@ namespace Artesian.SDK.Service
         protected Query _inAbsoluteDateRange(LocalDate start, LocalDate end)
         {
             if (end <= start)
-                throw new ArgumentException("End date must be greater than start date");
+                throw new ArgumentException("End date " + end + " must be greater than start date " + start);
 
             _extractionRangeType = ExtractionRangeType.DateRange;
             _extractionRangeCfg.DateRange = new LocalDateRange(start, end);
