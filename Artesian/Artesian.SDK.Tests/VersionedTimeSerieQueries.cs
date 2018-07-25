@@ -18,7 +18,7 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
         {
-         
+          
         };
 
         [Test]

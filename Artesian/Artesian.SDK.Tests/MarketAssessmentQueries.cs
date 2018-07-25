@@ -18,7 +18,7 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
         {
-         
+           
         };
 
         [Test]
@@ -39,15 +39,6 @@ namespace Artesian.SDK.Tests
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
 
-            }
-            {
-                var qs = new QueryService(_cfg);
-
-                var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100001250 })
-                       .ForProducts(new string[] { "M+1", "GY+1" })
-                       .InRelativeInterval(RelativeInterval.RollingMonth)
-                       .ExecuteAsync().Result;
             }
         }
 
@@ -71,15 +62,6 @@ namespace Artesian.SDK.Tests
                         .Times(1);
 
             }
-            {
-                var qs = new QueryService(_cfg);
-
-                var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100001250 })
-                       .ForProducts(new string[] { "M+1", "GY+1" })
-                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
-                       .ExecuteAsync().Result;
-            }
         }
 
         [Test]
@@ -101,15 +83,6 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValue("id", 100000001)
                         .Times(1);
 
-            }
-            {
-                var qs = new QueryService(_cfg);
-
-                var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100001250 })
-                       .ForProducts(new string[] { "M+1", "GY+1" })
-                       .InRelativePeriod(Period.FromDays(5))
-                       .ExecuteAsync().Result;
             }
         }
 
@@ -133,15 +106,6 @@ namespace Artesian.SDK.Tests
                         .Times(1);
 
             }
-            {
-                var qs = new QueryService(_cfg);
-
-                var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100001250 })
-                       .ForProducts(new string[] { "M+1", "GY+1" })
-                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
-                       .ExecuteAsync().Result;
-            }
         }
 
         [Test]
@@ -162,15 +126,6 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                         .Times(1);
 
-            }
-            {
-                var qs = new QueryService(_cfg);
-
-                var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100001250, 100000028, 100000029 })
-                       .ForProducts(new string[] { "M+1", "GY+1" })
-                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
-                       .ExecuteAsync().Result;
             }
         }
 
@@ -195,16 +150,6 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValue("tz", "CET")
                         .Times(1);
 
-            }
-            {
-                var qs = new QueryService(_cfg);
-
-                var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100001250 })
-                       .ForProducts(new string[] { "M+1", "GY+1" })
-                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
-                       .InTimezone("CET")
-                       .ExecuteAsync().Result;
             }
         }
     }
