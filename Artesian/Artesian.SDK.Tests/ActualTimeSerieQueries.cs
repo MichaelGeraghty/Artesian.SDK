@@ -13,7 +13,7 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
         {
-           
+     
         };
 
         [Test]
@@ -34,6 +34,15 @@ namespace Artesian.SDK.Tests
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
 
+            }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000028 })
+                       .InGranularity(Granularity.Day)
+                       .InRelativeInterval(RelativeInterval.RollingMonth)
+                       .ExecuteAsync().Result;
             }
         }
 
@@ -57,6 +66,15 @@ namespace Artesian.SDK.Tests
                         .Times(1);
 
             }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000028 })
+                       .InGranularity(Granularity.Day)
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
+                       .ExecuteAsync().Result;
+            }
         }
 
         [Test]
@@ -78,6 +96,15 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValue("id", 100000001)
                         .Times(1);
 
+            }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000028 })
+                       .InGranularity(Granularity.Day)
+                       .InRelativePeriod(Period.FromDays(5))
+                       .ExecuteAsync().Result;
             }
         }
 
@@ -101,6 +128,15 @@ namespace Artesian.SDK.Tests
                         .Times(1);
 
             }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000028 })
+                       .InGranularity(Granularity.Day)
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
+                       .ExecuteAsync().Result;
+            }
         }
 
         [Test]
@@ -121,6 +157,15 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                         .Times(1);
 
+            }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100001250, 100000028, 100000029 })
+                       .InGranularity(Granularity.Day)
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
+                       .ExecuteAsync().Result;
             }
         }
 
@@ -145,6 +190,16 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValue("tz", "CET")
                         .Times(1);
 
+            }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100001250 })
+                       .InGranularity(Granularity.Day)
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("CET")
+                       .ExecuteAsync().Result;
             }
         }
 
@@ -188,6 +243,17 @@ namespace Artesian.SDK.Tests
                         .WithQueryParamValue("id", 100000001)
                         .WithQueryParamValue("tr", 2)
                         .Times(1);
+
+            }
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100001250 })
+                       .InGranularity(Granularity.Day)
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
+                       .WithTimeTransform(1)
+                       .ExecuteAsync().Result;
 
             }
         }

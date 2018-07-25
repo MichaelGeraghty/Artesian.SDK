@@ -6,6 +6,6 @@ namespace Artesian.SDK.Service
     {
         public int LastN { get; set; }
         public LocalDateTime Version { get; set; }
-        public LastOfSelectionConfig LastOf { get; set; }
+        public LastOfSelectionConfig LastOf { get; set; } = new LastOfSelectionConfig();
     }
 }

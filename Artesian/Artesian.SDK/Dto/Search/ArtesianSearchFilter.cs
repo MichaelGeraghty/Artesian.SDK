@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
-using System.Linq;
 
 namespace Artesian.SDK.Dto
 {
@@ -43,34 +42,43 @@ namespace Artesian.SDK.Dto
 
             if (artesianSearchFilter.SearchText == null)
                 throw new ArgumentNullException(nameof(artesianSearchFilter.SearchText));
-            foreach (string element in artesianSearchFilter.Sorts)
+
+            if (artesianSearchFilter.Sorts != null)
             {
-                if (element.Equals(validSorts))
-                    throw new ArgumentException("Invalid search params");
+                foreach (string element in artesianSearchFilter.Sorts)
+                {
+                    if (element.Equals(validSorts))
+                        throw new ArgumentException("Invalid search params");
+                }
             }
+
             if (artesianSearchFilter.PageSize < 0)
                 throw new ArgumentException("Page size is less than 0");
+
             if (artesianSearchFilter.Page < 0)
                 throw new ArgumentException("Page is less than 0");
-            foreach(KeyValuePair<string, string[]> element in artesianSearchFilter.Filters)
-            {
-                ArtesianUtils.IsValidString(element.Key,3,50);
 
-                if(element.Value != null)
+            if (artesianSearchFilter.Filters!=null) {
+                foreach (KeyValuePair<string, string[]> element in artesianSearchFilter.Filters)
                 {
-                    if(element.Key != "MarketDataName")
-                    {
-                        foreach (string value in element.Value)
-                        {
-                            ArtesianUtils.IsValidString(value, 1, 50);
-                        }
+                    ArtesianUtils.IsValidString(element.Key, 3, 50);
 
-                    }
-                    else if (element.Key == "MarketDataName")
+                    if (element.Value != null)
                     {
-                        foreach (string value in element.Value)
+                        if (element.Key != "MarketDataName")
                         {
-                            ArtesianUtils.IsValidString(value, 1, 250);
+                            foreach (string value in element.Value)
+                            {
+                                ArtesianUtils.IsValidString(value, 1, 50);
+                            }
+
+                        }
+                        else if (element.Key == "MarketDataName")
+                        {
+                            foreach (string value in element.Value)
+                            {
+                                ArtesianUtils.IsValidString(value, 1, 250);
+                            }
                         }
                     }
                 }
