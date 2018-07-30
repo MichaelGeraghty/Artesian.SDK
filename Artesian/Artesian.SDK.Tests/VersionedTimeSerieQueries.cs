@@ -31,7 +31,6 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth"
                    .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
@@ -906,7 +905,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -930,7 +928,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -954,7 +951,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 

@@ -7,6 +7,7 @@ namespace Artesian.SDK.Service
         public LocalDate? DateStart { get; set; }
         public LocalDate? DateEnd { get; set; }
         public Period Period { get; set; }
-        public PeriodRange PeriodRange { get; set; }
+        public Period PeriodFrom { get; set; }
+        public Period PeriodTo { get; set; }
     }
 }

@@ -48,7 +48,6 @@ namespace Artesian.SDK.Tests
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .ExecuteAsync().Result;
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001))
                     .WithVerb(HttpMethod.Get)
@@ -70,7 +69,6 @@ namespace Artesian.SDK.Tests
                        .InRelativePeriod(Period.FromDays(5))
                        .ExecuteAsync().Result;
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P5D"
                     .SetQueryParam("id", 100000001))
                     .WithVerb(HttpMethod.Get)
@@ -91,7 +89,6 @@ namespace Artesian.SDK.Tests
                        .InGranularity(Granularity.Day)
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
-
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D"
                     .SetQueryParam("id", 100000001))
@@ -135,7 +132,6 @@ namespace Artesian.SDK.Tests
                        .InTimezone("CET")
                        .ExecuteAsync().Result;
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001)
                     .SetQueryParam("tz", "CET"))
@@ -159,7 +155,6 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001)
                     .SetQueryParam("tr", 1))
@@ -177,7 +172,6 @@ namespace Artesian.SDK.Tests
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .WithTimeTransform(SystemTimeTransform.THERMALYEAR)
                        .ExecuteAsync().Result;
-
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001)

@@ -116,7 +116,8 @@ namespace Artesian.SDK.Service
         public VersionedQuery ForLastOfDays(Period from, Period to)
         {
             _versionSelectionType = VersionSelectionType.LastOfDays;
-            _versionSelectionCfg.LastOf.PeriodRange = new PeriodRange(from, to);
+            _versionSelectionCfg.LastOf.PeriodFrom = from;
+            _versionSelectionCfg.LastOf.PeriodTo = to;
 
             return this;
         }
@@ -152,7 +153,8 @@ namespace Artesian.SDK.Service
         public VersionedQuery ForLastOfMonths(Period from, Period to)
         {
             _versionSelectionType = VersionSelectionType.LastOfMonths;
-            _versionSelectionCfg.LastOf.PeriodRange = new PeriodRange(from, to);
+            _versionSelectionCfg.LastOf.PeriodFrom = from;
+            _versionSelectionCfg.LastOf.PeriodTo = to;
 
             return this;
         }
@@ -169,7 +171,6 @@ namespace Artesian.SDK.Service
         {
             return await _client.Exec<IEnumerable<TimeSerieRow.Versioned>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
         }
-
 
         #region private
         protected override void _validateQuery()
@@ -217,8 +218,8 @@ namespace Artesian.SDK.Service
                 subPath = $"{_versionSelectionType}/{_toUrlParam(_versionSelectionCfg.LastOf.DateStart.Value,_versionSelectionCfg.LastOf.DateEnd.Value)}";
             else if (_versionSelectionCfg.LastOf.Period != null)
                 subPath = $"{_versionSelectionType}/{_versionSelectionCfg.LastOf.Period}";
-            else if (_versionSelectionCfg.LastOf.PeriodRange != null)
-                subPath = $"{_versionSelectionType}/{_versionSelectionCfg.LastOf.PeriodRange.From}/{_versionSelectionCfg.LastOf.PeriodRange.To}";
+            else if (_versionSelectionCfg.LastOf.PeriodFrom != null && _versionSelectionCfg.LastOf.PeriodTo != null)
+                subPath = $"{_versionSelectionType}/{_versionSelectionCfg.LastOf.PeriodFrom}/{_versionSelectionCfg.LastOf.PeriodTo}";
             else
                 throw new ApplicationException("LastOf extraction type not defined");
 

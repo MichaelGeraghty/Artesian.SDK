@@ -77,7 +77,6 @@ namespace Artesian.SDK.Service
         }
         #endregion
 
-
         #region actual query methods
         public ActualQuery InGranularity(Granularity granularity)
         {
@@ -89,7 +88,6 @@ namespace Artesian.SDK.Service
         {
             return await _client.Exec<IEnumerable<TimeSerieRow.Actual>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
         }
-
 
         #region private
         string _buildRequest()

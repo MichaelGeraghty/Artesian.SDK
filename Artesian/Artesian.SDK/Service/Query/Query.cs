@@ -44,7 +44,8 @@ namespace Artesian.SDK.Service
         protected Query _inRelativePeriodRange(Period from, Period to)
         {
             _extractionRangeType = ExtractionRangeType.PeriodRange;
-            _extractionRangeCfg.PeriodRange = new PeriodRange(from, to);
+            _extractionRangeCfg.PeriodFrom = from;
+            _extractionRangeCfg.PeriodTo = to;
             return this;
         }
 
@@ -74,7 +75,7 @@ namespace Artesian.SDK.Service
                     subPath = $"{_extractionRangeCfg.Period}";
                     break;
                 case ExtractionRangeType.PeriodRange:
-                    subPath = $"{_extractionRangeCfg.PeriodRange.From}/{_extractionRangeCfg.PeriodRange.To}";
+                    subPath = $"{_extractionRangeCfg.PeriodFrom}/{_extractionRangeCfg.PeriodTo}";
                     break;
                 case ExtractionRangeType.RelativeInterval:
                     subPath = $"{_extractionRangeCfg.Interval}";

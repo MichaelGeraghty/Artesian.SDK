@@ -23,7 +23,6 @@ namespace Artesian.SDK.Tests
 
                 var mdq = mds.ReadTimeTransformBaseAsync(1).ConfigureAwait(true).GetAwaiter().GetResult();
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}v2.1/timeTransform/entity/1")
                    .WithVerb(HttpMethod.Get)
                    .Times(1);

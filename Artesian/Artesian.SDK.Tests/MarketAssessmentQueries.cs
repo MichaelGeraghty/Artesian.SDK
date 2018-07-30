@@ -50,7 +50,6 @@ namespace Artesian.SDK.Tests
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .ExecuteAsync().Result;
 
-
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001)
                     .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
@@ -137,7 +136,6 @@ namespace Artesian.SDK.Tests
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .InTimezone("CET")
                        .ExecuteAsync().Result;
-
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001)
