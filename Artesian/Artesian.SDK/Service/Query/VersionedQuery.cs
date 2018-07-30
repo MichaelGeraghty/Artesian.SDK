@@ -14,12 +14,12 @@ namespace Artesian.SDK.Service
         private VersionSelectionConfig _versionSelectionCfg = new VersionSelectionConfig();
         private VersionSelectionType? _versionSelectionType = null;
         private Granularity? _granularity;
-        private Auth0Client _client;
+        private Client _client;
         private int? _tr;
         private string _routePrefix = "vts";
 
 
-        internal VersionedQuery(Auth0Client client)
+        internal VersionedQuery(Client client)
         {
             _client = client;
         }

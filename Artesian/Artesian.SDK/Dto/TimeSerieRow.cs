@@ -9,7 +9,6 @@ namespace Artesian.SDK.Dto
         [MessagePackObject]
         public class Versioned
         {
-            
                 [JsonProperty(PropertyName = "P")]
                 [Key(0)]
                 public virtual string ProviderName { get; set; }

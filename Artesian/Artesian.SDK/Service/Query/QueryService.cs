@@ -5,12 +5,12 @@ namespace Artesian.SDK.Service
     public class QueryService: IQueryService
     {
         private IArtesianServiceConfig _cfg;
-        private Auth0Client _client;
+        private Client _client;
 
         public QueryService(IArtesianServiceConfig cfg)
         {
             _cfg = cfg;
-            _client = new Auth0Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(ArtesianConstants.QueryRoute).AppendPathSegment(ArtesianConstants.QueryVersion)
+            _client = new Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(ArtesianConstants.QueryRoute).AppendPathSegment(ArtesianConstants.QueryVersion)
             );
         }
 

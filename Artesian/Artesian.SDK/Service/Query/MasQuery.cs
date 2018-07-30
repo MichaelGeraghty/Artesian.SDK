@@ -13,9 +13,9 @@ namespace Artesian.SDK.Service
     {
         private IEnumerable<string> _products;
         private string _routePrefix = "mas";
-        private Auth0Client _client;
+        private Client _client;
 
-        internal MasQuery(Auth0Client client)
+        internal MasQuery(Client client)
         {
             _client = client;
         }
@@ -87,7 +87,7 @@ namespace Artesian.SDK.Service
             .SetQueryParam("p", _products)
             .SetQueryParam("tz", _tz);
 
-            return url.ToString();
+            return url.ToString(true);
         }
 
         protected override void _validateQuery()

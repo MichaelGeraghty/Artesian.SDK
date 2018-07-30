@@ -12,12 +12,12 @@ namespace Artesian.SDK.Service
     public class MetaDataService : IMetaDataService
     {
         private IArtesianServiceConfig _cfg;
-        private static Auth0Client _client;
+        private static Client _client;
 
         public MetaDataService(IArtesianServiceConfig cfg)
         {
             _cfg = cfg;
-            _client = new Auth0Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(ArtesianConstants.MetaDataVersion)
+            _client = new Client(cfg, cfg.BaseAddress.ToString().AppendPathSegment(ArtesianConstants.MetaDataVersion)
             );
         }
 
@@ -80,11 +80,11 @@ namespace Artesian.SDK.Service
         public Task<PagedResult<CurveRange>> ReadCurveRangeAsync(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default)
         {
             var url = "/marketdata/entity/".AppendPathSegment(id.ToString()).AppendPathSegment("curves")
-                     .SetQueryParam("page", page)
-                     .SetQueryParam("pageSize", pageSize)
-                     .SetQueryParam("product", product)
                      .SetQueryParam("versionFrom", versionFrom)
                      .SetQueryParam("versionTo", versionTo)
+                     .SetQueryParam("product", product)
+                     .SetQueryParam("page", page)
+                     .SetQueryParam("pageSize", pageSize)
                      ;
 
             return _client.Exec<PagedResult<CurveRange>>(HttpMethod.Get, url, ctk: ctk);

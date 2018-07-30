@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using NUnit.Framework;
 using Artesian.SDK.Service;
 using Flurl.Http.Testing;
 using Artesian.SDK.Dto;
 using System.Net.Http;
 using NodaTime;
+using Flurl;
 
 namespace Artesian.SDK.Tests
 {
@@ -16,10 +15,7 @@ namespace Artesian.SDK.Tests
     [TestFixture]
     public class VersionedTimeSerieQueries
     {
-        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
-        {
-         
-        };
+        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig();
 
         [Test]
         public void VerInPeriodRelativeIntervalLastOfMonths()
@@ -36,9 +32,9 @@ namespace Artesian.SDK.Tests
                         .ExecuteAsync().Result;
 
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -57,9 +53,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 5, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/2018-05-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/2018-05-22/2018-07-23"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -78,9 +74,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/P5D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -100,9 +96,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromMonths(-2), Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/P-2M/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/P-2M/P5D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
 
             }
@@ -122,9 +118,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/RollingMonth"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -143,9 +139,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 5, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/2018-05-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/2018-05-22/2018-07-23"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -164,9 +160,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/P5D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -185,9 +181,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromMonths(-2), Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/P-2M/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/P20D/Day/P-2M/P5D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -206,9 +202,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-03-22/2018-07-23/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-03-22/2018-07-23/Day/RollingMonth"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -227,9 +223,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 5, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/2018-05-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/2018-05-22/2018-07-23"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -248,9 +244,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromMonths(-4), Period.FromDays(20))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P-4M/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P-4M/P20D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -269,9 +265,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P5D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -290,9 +286,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/RollingMonth"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -311,9 +307,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 6, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/2018-06-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/2018-06-22/2018-07-23"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -332,9 +328,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/P5D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -354,9 +350,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromMonths(-1), Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/P-1M/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-20D/Day/P-1M/P5D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -375,9 +371,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/RollingMonth"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -396,9 +392,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 6, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/2018-06-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/2018-06-22/2018-07-23"
+                 .SetQueryParam("id", 100000001))
                  .WithVerb(HttpMethod.Get)
-                 .WithQueryParamValue("id", 100000001)
                  .Times(1);
             }
         }
@@ -417,9 +413,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/P5D"
+                 .SetQueryParam("id", 100000001))
                  .WithVerb(HttpMethod.Get)
-                 .WithQueryParamValue("id", 100000001)
                  .Times(1);
             }
         }
@@ -438,9 +434,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromMonths(-1), Period.FromDays(20))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/P-1M/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/P-1M/P20D"
+                 .SetQueryParam("id", 100000001))
                  .WithVerb(HttpMethod.Get)
-                 .WithQueryParamValue("id", 100000001)
                  .Times(1);
             }
         }
@@ -459,9 +455,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-05-22/2018-07-23/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-05-22/2018-07-23/Day/RollingMonth"
+                 .SetQueryParam("id", 100000001))
                  .WithVerb(HttpMethod.Get)
-                 .WithQueryParamValue("id", 100000001)
                  .Times(1);
             }
         }
@@ -480,9 +476,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 6, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/2018-06-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/2018-06-22/2018-07-23"
+                 .SetQueryParam("id", 100000001))
                  .WithVerb(HttpMethod.Get)
-                 .WithQueryParamValue("id", 100000001)
                  .Times(1);
             }
         }
@@ -501,9 +497,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/P2W/P20D"
+                .SetQueryParam("id", 100000001))
                 .WithVerb(HttpMethod.Get)
-                .WithQueryParamValue("id", 100000001)
                 .Times(1);
             }
         }
@@ -522,9 +518,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-05-22/2018-07-23/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-05-22/2018-07-23/Day/P5D"
+                .SetQueryParam("id", 100000001))
                 .WithVerb(HttpMethod.Get)
-                .WithQueryParamValue("id", 100000001)
                 .Times(1);
             }
         }
@@ -544,9 +540,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/RollingMonth"
+                .SetQueryParam("id", 100000001))
                 .WithVerb(HttpMethod.Get)
-                .WithQueryParamValue("id", 100000001)
                 .Times(1);
             }
         }
@@ -566,9 +562,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 5, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/2018-05-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/2018-05-22/2018-07-23"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -587,9 +583,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/P5D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -608,9 +604,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/P2W/P20D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -629,9 +625,9 @@ namespace Artesian.SDK.Tests
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -650,9 +646,9 @@ namespace Artesian.SDK.Tests
                         .InAbsoluteDateRange(new LocalDate(2018, 7, 22), new LocalDate(2018, 7, 23))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/2018-07-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/2018-07-22/2018-07-23"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -671,9 +667,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriod(Period.FromDays(5))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/P5D"
+                   .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                   .WithQueryParamValue("id", 100000001)
                    .Times(1);
             }
         }
@@ -692,9 +688,9 @@ namespace Artesian.SDK.Tests
                         .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                         .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/P2W/P20D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
             }
         }
@@ -713,9 +709,9 @@ namespace Artesian.SDK.Tests
                        .InRelativeInterval(RelativeInterval.RollingMonth)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/RollingMonth"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
 
             }
@@ -735,9 +731,9 @@ namespace Artesian.SDK.Tests
                        .InAbsoluteDateRange(new LocalDate(2018, 7, 22), new LocalDate(2018, 7, 23))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/2018-07-22/2018-07-23")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/2018-07-22/2018-07-23"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
 
             }
@@ -757,9 +753,9 @@ namespace Artesian.SDK.Tests
                        .ForMUV()
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P5D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
 
             }
@@ -779,9 +775,9 @@ namespace Artesian.SDK.Tests
                        .ForMUV()
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P2W/P20D"
+                  .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
                   .Times(1);
 
             }
@@ -801,9 +797,9 @@ namespace Artesian.SDK.Tests
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/P2W/P20D"
+                  .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                   .Times(1);
 
             }
@@ -823,9 +819,9 @@ namespace Artesian.SDK.Tests
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P2W/P20D"
+                  .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                   .Times(1);
 
             }
@@ -845,9 +841,9 @@ namespace Artesian.SDK.Tests
                        .InRelativeInterval(RelativeInterval.RollingMonth)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/RollingMonth"
+                  .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                   .Times(1);
             }
         }
@@ -866,9 +862,9 @@ namespace Artesian.SDK.Tests
                        .ForMUV()
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P5D"
+                  .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                   .Times(1);
             }
         }
@@ -887,9 +883,9 @@ namespace Artesian.SDK.Tests
                        .InRelativeInterval(RelativeInterval.RollingMonth)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth"
+                  .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValues(new { id = new int[] { 100000001, 100000002, 100000003 } })
                   .Times(1);
             }
         }
@@ -909,10 +905,10 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/2018-06-22/2018-07-23/Day/P2W/P20D"
+                  .SetQueryParam("id", 100000001)
+                  .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
-                  .WithQueryParamValue("tr", 1)
                   .Times(1);
 
             }
@@ -933,10 +929,10 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P2W/P20D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/2018-05-22/2018-07-23/Day/P2W/P20D"
+                  .SetQueryParam("id", 100000001)
+                  .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
-                  .WithQueryParamValue("tr", 1)
                   .Times(1);
 
             }
@@ -957,10 +953,10 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/RollingMonth"
+                  .SetQueryParam("id", 100000001)
+                  .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
-                  .WithQueryParamValue("tr", 1)
                   .Times(1);
 
             }
@@ -981,10 +977,10 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P5D")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/P5D"
+                  .SetQueryParam("id", 100000001)
+                  .SetQueryParam("tr", 1))
                   .WithVerb(HttpMethod.Get)
-                  .WithQueryParamValue("id", 100000001)
-                  .WithQueryParamValue("tr", 1)
                   .Times(1);
             }
         }
@@ -1004,10 +1000,10 @@ namespace Artesian.SDK.Tests
                         .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth")
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth"
+                 .SetQueryParam("id", 100000001)
+                 .SetQueryParam("tr", 1))
                  .WithVerb(HttpMethod.Get)
-                 .WithQueryParamValue("id", 100000001)
-                 .WithQueryParamValue("tr", 1)
                  .Times(1);
             }
         }

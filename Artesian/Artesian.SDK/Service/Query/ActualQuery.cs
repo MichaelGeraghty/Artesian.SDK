@@ -12,11 +12,11 @@ namespace Artesian.SDK.Service
     public class ActualQuery : Query, IActualQuery<ActualQuery>
     {
         protected Granularity? _granularity;
-        private Auth0Client _client;
+        private Client _client;
         protected int? _tr;
         private string _routePrefix = "ts";
 
-        internal ActualQuery(Auth0Client client)
+        internal ActualQuery(Client client)
         {
             _client = client;
         }

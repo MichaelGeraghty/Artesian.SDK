@@ -9,5 +9,6 @@ namespace Artesian.SDK.Service
         string Domain { get; set; }
         string ClientId { get; set; }
         string ClientSecret { get; set; }
+        string XApiKey { get; set; }
     }
 }

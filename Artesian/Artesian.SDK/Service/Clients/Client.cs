@@ -22,14 +22,13 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.Service
 {
-    internal sealed class Auth0Client : IDisposable
+    internal sealed class Client : IDisposable
     {
         private readonly MediaTypeFormatterCollection _formatters;
 
         private readonly AuthenticationApiClient _auth0;
         private readonly ClientCredentialsTokenRequest _credentials;
         private readonly IFlurlClient _client;
-
 
         private readonly JsonMediaTypeFormatter _jsonFormatter;
         private readonly MessagePackFormatter _msgPackFormatter;
@@ -46,9 +45,8 @@ namespace Artesian.SDK.Service
 
         public IArtesianServiceConfig Config { get; private set; }
 
-        public Auth0Client(IArtesianServiceConfig config, string Url)
+        public Client(IArtesianServiceConfig config, string Url)
         {
-
             this.Config = config;
             this._url = Url;
 
@@ -76,19 +74,21 @@ namespace Artesian.SDK.Service
             formatters.Add(_lz4msgPackFormatter);
             _formatters = formatters;
 
-            // configure webclient
-            _auth0 = new AuthenticationApiClient($"{Config.Domain}");
-            _credentials = new ClientCredentialsTokenRequest()
-            {
-                Audience = Config.Audience,
-                ClientId = Config.ClientId,
-                ClientSecret = Config.ClientSecret,
-            };
+            if (config.XApiKey==null) {
+                // configure webclient with auth0
+                _auth0 = new AuthenticationApiClient($"{Config.Domain}");
+                _credentials = new ClientCredentialsTokenRequest()
+                {
+                    Audience = Config.Audience,
+                    ClientId = Config.ClientId,
+                    ClientSecret = Config.ClientSecret,
+                };
 
+                _cachePolicy = Policy.CacheAsync(_memoryCacheProvider.AsyncFor<(string AccessToken, DateTimeOffset ExpiresOn)>(), new ResultTtl<(string AccessToken, DateTimeOffset ExpiresOn)>(r => new Ttl(r.ExpiresOn - DateTimeOffset.Now, false)));
+
+            }
 
             _client = new FlurlClient(_url);
-            _cachePolicy = Policy.CacheAsync(_memoryCacheProvider.AsyncFor<(string AccessToken, DateTimeOffset ExpiresOn)>(), new ResultTtl<(string AccessToken, DateTimeOffset ExpiresOn)>(r => new Ttl(r.ExpiresOn - DateTimeOffset.Now, false)));
-
         }
 
 
@@ -96,13 +96,24 @@ namespace Artesian.SDK.Service
         {
             try
             {
-                var (token, _) = await _getAccessToken();
+                HttpResponseMessage res = new HttpResponseMessage();
 
-                using (var res = await _client.Request(resource).WithOAuthBearerToken(token).WithAcceptHeader(_formatters).SendAsync(method, cancellationToken: ctk))
+                if (Config.XApiKey != null)
+                {
+                    var ApiKey = Config.XApiKey;
+                    res = await _client.Request(resource).WithHeader("X-Api-Key", ApiKey).WithAcceptHeader(_formatters).SendAsync(method, cancellationToken: ctk);
+                }
+                else
+                {
+                    var (token, _) = await _getAccessToken();
+                    res = await _client.Request(resource).WithOAuthBearerToken(token).WithAcceptHeader(_formatters).SendAsync(method, cancellationToken: ctk);
+                }
+
+                using (res)
                 {
                     if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
                         return default;
-
+                     
                     if (!res.IsSuccessStatusCode)
                     {
                         var responseText = await res.Content.ReadAsStringAsync();
@@ -115,7 +126,7 @@ namespace Artesian.SDK.Service
                         if (res.StatusCode == HttpStatusCode.Conflict)
                             throw new ArtesianSdkOptimisticConcurrencyException($@"{responseText}");
 
-                        throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, _client.HttpClient.BaseAddress + _url + resource, res.StatusCode, responseText);
+                        throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
                     }
 
                     return await res.Content.ReadAsAsync<TResult>(_formatters, ctk);
@@ -127,7 +138,7 @@ namespace Artesian.SDK.Service
             }
             catch (Exception e)
             {
-                throw new ArtesianSdkClientException($"Failed handling REST call to WebInterface: {method} " + _client.HttpClient.BaseAddress + _url + resource, e);
+                throw new ArtesianSdkClientException($"Failed handling REST call to WebInterface: {method} " + Config.BaseAddress + _url + resource, e);
             }
         }
 
