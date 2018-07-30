@@ -81,7 +81,6 @@ namespace Artesian.SDK.Tests
             }
         }
 
-
         [Test]
         public void VerInPeriodRelativePeriodRangeLastOfMonths()
         {
@@ -335,7 +334,6 @@ namespace Artesian.SDK.Tests
             }
         }
 
-
         [Test]
         public void VerInPeriodRelativePeriodRangeLastOfDays()
         {
@@ -525,7 +523,6 @@ namespace Artesian.SDK.Tests
             }
         }
 
-
         [Test]
         public void VerInRelativeIntervalLastN()
         {
@@ -546,7 +543,6 @@ namespace Artesian.SDK.Tests
                 .Times(1);
             }
         }
-
 
         [Test]
         public void VerInAbsoluteDateRangeLastN()

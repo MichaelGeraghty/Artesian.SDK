@@ -87,7 +87,7 @@ namespace Artesian.SDK.Service
             .SetQueryParam("p", _products)
             .SetQueryParam("tz", _tz);
 
-            return url.ToString(true);
+            return url.ToString();
         }
 
         protected override void _validateQuery()

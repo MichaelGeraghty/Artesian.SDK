@@ -36,7 +36,8 @@ namespace Artesian.SDK.Service
                 throw new ArgumentException("End date " + end + " must be greater than start date " + start);
 
             _extractionRangeType = ExtractionRangeType.DateRange;
-            _extractionRangeCfg.DateRange = new LocalDateRange(start, end);
+            _extractionRangeCfg.DateStart = start;
+            _extractionRangeCfg.DateEnd = end;
             return this;
         }
 
@@ -67,7 +68,7 @@ namespace Artesian.SDK.Service
             switch (_extractionRangeType)
             {
                 case ExtractionRangeType.DateRange:
-                    subPath = $"{_toUrlParam(_extractionRangeCfg.DateRange)}";
+                    subPath = $"{_toUrlParam(_extractionRangeCfg.DateStart,_extractionRangeCfg.DateEnd)}";
                     break;
                 case ExtractionRangeType.Period:
                     subPath = $"{_extractionRangeCfg.Period}";
@@ -94,9 +95,9 @@ namespace Artesian.SDK.Service
                 throw new ApplicationException("Marketadata ids must be provided for extraction");
         }
 
-        internal string _toUrlParam(LocalDateRange range)
+        internal string _toUrlParam(LocalDate start, LocalDate end)
         {
-            return $"{_localDatePattern.Format(range.Start)}/{_localDatePattern.Format(range.End)}";
+            return $"{_localDatePattern.Format(start)}/{_localDatePattern.Format(end)}";
         }
 
         protected string _toUrlParam(LocalDateTime dateTime)

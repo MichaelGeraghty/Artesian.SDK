@@ -85,9 +85,7 @@ namespace Artesian.SDK.Service
                 };
 
                 _cachePolicy = Policy.CacheAsync(_memoryCacheProvider.AsyncFor<(string AccessToken, DateTimeOffset ExpiresOn)>(), new ResultTtl<(string AccessToken, DateTimeOffset ExpiresOn)>(r => new Ttl(r.ExpiresOn - DateTimeOffset.Now, false)));
-
             }
-
             _client = new FlurlClient(_url);
         }
 

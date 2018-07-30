@@ -107,7 +107,8 @@ namespace Artesian.SDK.Service
                 throw new ArgumentException("End date " + end + " must be greater than start date " + start);
 
             _versionSelectionType = VersionSelectionType.LastOfDays;
-            _versionSelectionCfg.LastOf.DateRange = new LocalDateRange(start, end);
+            _versionSelectionCfg.LastOf.DateStart = start;
+            _versionSelectionCfg.LastOf.DateEnd = end;
 
             return this;
         }
@@ -134,7 +135,8 @@ namespace Artesian.SDK.Service
                 throw new ArgumentException("End date " + end + " must be greater than start date " + start);
 
             _versionSelectionType = VersionSelectionType.LastOfMonths;
-            _versionSelectionCfg.LastOf.DateRange = new LocalDateRange(start, end);
+            _versionSelectionCfg.LastOf.DateStart = start;
+            _versionSelectionCfg.LastOf.DateEnd = end;
 
             return this;
         }
@@ -211,8 +213,8 @@ namespace Artesian.SDK.Service
         {
             string subPath;
 
-            if (_versionSelectionCfg.LastOf.DateRange != null)
-                subPath = $"{_versionSelectionType}/{_toUrlParam(_versionSelectionCfg.LastOf.DateRange.Value)}";
+            if (_versionSelectionCfg.LastOf.DateStart != null && _versionSelectionCfg.LastOf.DateEnd !=null)
+                subPath = $"{_versionSelectionType}/{_toUrlParam(_versionSelectionCfg.LastOf.DateStart.Value,_versionSelectionCfg.LastOf.DateEnd.Value)}";
             else if (_versionSelectionCfg.LastOf.Period != null)
                 subPath = $"{_versionSelectionType}/{_versionSelectionCfg.LastOf.Period}";
             else if (_versionSelectionCfg.LastOf.PeriodRange != null)
