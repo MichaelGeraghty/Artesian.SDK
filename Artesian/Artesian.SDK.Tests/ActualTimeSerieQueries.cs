@@ -14,6 +14,13 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig();
 
+        private readonly string _baseUrl;
+
+        public ActualTimeSerieQueries()
+        {
+            _baseUrl = _cfg.BaseAddress.ToString();
+        }
+
         [Test]
         public void ActInRelativeIntervalExtractionWindow()
         {
@@ -27,11 +34,10 @@ namespace Artesian.SDK.Tests
                        .InRelativeInterval(RelativeInterval.RollingMonth)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/RollingMonth"
-                    .SetQueryParam("id", 100000001))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/RollingMonth")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
                     .Times(1);
-
             }
         }
 
@@ -48,11 +54,10 @@ namespace Artesian.SDK.Tests
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
-                    .SetQueryParam("id", 100000001))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
                     .Times(1);
-
             }
         }
 
@@ -69,11 +74,10 @@ namespace Artesian.SDK.Tests
                        .InRelativePeriod(Period.FromDays(5))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P5D"
-                    .SetQueryParam("id", 100000001))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P5D")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
                     .Times(1);
-
             }
         }
 
@@ -90,11 +94,10 @@ namespace Artesian.SDK.Tests
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D"
-                    .SetQueryParam("id", 100000001))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
                     .Times(1);
-
             }
         }
 
@@ -111,9 +114,25 @@ namespace Artesian.SDK.Tests
                        .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D"
-                    .SetQueryParam( "id" ,new int[] { 100000001, 100000002, 100000003 } ))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", new int[] { 100000001, 100000002, 100000003 })
+                    .Times(1);
+            }
+
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000001, 100000002, 100000003 })
+                       .InGranularity(Granularity.Month)
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromMonths(6))
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Month/P2W/P6M")
+                    .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", new int[] { 100000001, 100000002, 100000003 })
                     .Times(1);
             }
         }
@@ -126,18 +145,35 @@ namespace Artesian.SDK.Tests
                 var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
-                       .ForMarketData(new int[] { 100000001 })
+                       .ForMarketData(new int[] { 100000028 })
                        .InGranularity(Granularity.Day)
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
-                       .InTimezone("CET")
+                       .InTimezone("UTC")
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
-                    .SetQueryParam("id", 100000001)
-                    .SetQueryParam("tz", "CET"))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000028)
+                    .WithQueryParamValue("tz", "UTC")
                     .Times(1);
+            }
 
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Hour)
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("WET")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Hour/2018-01-01/2018-01-10")
+                    .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
+                    .WithQueryParamValue("tz", "WET")
+                    .Times(1);
             }
         }
 
@@ -155,10 +191,10 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
-                    .SetQueryParam("id", 100000001)
-                    .SetQueryParam("tr", 1))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
+                    .WithQueryParamValue("tr", 1)
                     .Times(1);
             }
 
@@ -173,10 +209,34 @@ namespace Artesian.SDK.Tests
                        .WithTimeTransform(SystemTimeTransform.THERMALYEAR)
                        .ExecuteAsync().Result;
 
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10"
-                    .SetQueryParam("id", 100000001)
-                    .SetQueryParam("tr", 2))
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("id", 100000001)
+                    .WithQueryParamValue("tr", 2)
+                    .Times(1);
+            }
+        }
+
+        [Test]
+        public void ActWithHeaders()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateActual()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Day)
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/P2W/P20D"
+                    .SetQueryParam("id", 100000001))
+                    .WithVerb(HttpMethod.Get)
+                    .WithHeader("Accept", "application/json; q=1.0")
+                    .WithHeader("Accept", "application/x-msgpack; q=0.75")
+                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
+                    //.WithHeader("X-Api-Key", "testXAPIKEY")
                     .Times(1);
             }
         }

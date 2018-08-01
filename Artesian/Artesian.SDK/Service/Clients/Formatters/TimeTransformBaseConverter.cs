@@ -7,7 +7,7 @@ namespace Artesian.SDK.Service
 {
     class TimeTransformConverter : JsonCreationConverter<TimeTransform>
     {
-        protected override Dto.TimeTransform Create(Type objectType, JObject jObject)
+        protected override TimeTransform Create(Type objectType, JObject jObject)
         {
 
             if (jObject.TryGetValue(nameof(TimeTransform.Type), StringComparison.InvariantCultureIgnoreCase, out var token))

@@ -18,7 +18,6 @@ namespace Artesian.SDK.Service
         private int? _tr;
         private string _routePrefix = "vts";
 
-
         internal VersionedQuery(Client client)
         {
             _client = client;

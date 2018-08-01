@@ -28,7 +28,5 @@ namespace Artesian.SDK.Service
         {
             return new MasQuery(_client);
         }
-
-
     }
 }

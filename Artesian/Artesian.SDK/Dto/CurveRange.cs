@@ -9,7 +9,6 @@ namespace Artesian.SDK.Dto
     [MessagePackObject]
     public class CurveRange
     {
-
         /// <summary>
         /// The Market Data Identifier
         /// </summary>

@@ -9,7 +9,7 @@ namespace Artesian.SDK.Dto
         [Key(0)]
         public List<MarketDataEntity.Output> Results { get; set; }
         [Key(1)]
-        public List<ArtesianMetaDataFacet> Facets { get; set; }
+        public List<ArtesianMetadataFacet> Facets { get; set; }
         [Key(2)]
         public long? CountResults { get; set; }
     }

@@ -33,7 +33,6 @@ namespace Artesian.SDK.Tests
                     .SetQueryParam("id", 100000001))
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
-
             }
         }
 
@@ -61,22 +60,15 @@ namespace Artesian.SDK.Tests
         [Test]
         public void MasInRelativePeriodExtractionWindow()
         {
-            using (var httpTest = new HttpTest())
+            
             {
                 var qs = new QueryService(_cfg);
 
                 var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100000001 })
+                       .ForMarketData(new int[] { 100000028 })
                        .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativePeriod(Period.FromDays(5))
                        .ExecuteAsync().Result;
-
-                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/P5D"
-                    .SetQueryParam("id", 100000001)
-                    .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
-                    .WithVerb(HttpMethod.Get)
-                    .Times(1);
-
             }
         }
 
@@ -119,7 +111,23 @@ namespace Artesian.SDK.Tests
                     .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
+            }
 
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var mas = qs.CreateMarketAssessment()
+                       .ForMarketData(new int[] { 100000001, 100000002, 100000003 })
+                       .ForProducts(new string[] { "M+1", "GY+1" })
+                       .InRelativePeriodRange(Period.FromWeeks(2), Period.FromMonths(6))
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/P2W/P6M"
+                    .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 })
+                    .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
+                    .WithVerb(HttpMethod.Get)
+                    .Times(1);
             }
         }
 
@@ -134,16 +142,58 @@ namespace Artesian.SDK.Tests
                        .ForMarketData(new int[] { 100000001 })
                        .ForProducts(new string[] { "M+1", "GY+1" })
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
-                       .InTimezone("CET")
+                       .InTimezone("UTC")
                        .ExecuteAsync().Result;
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10"
                     .SetQueryParam("id", 100000001)
                     .SetQueryParam("p", new string[] { "M+1", "GY+1" })
-                    .SetQueryParam("tz", "CET"))
+                    .SetQueryParam("tz", "UTC"))
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
+            }
 
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var mas = qs.CreateMarketAssessment()
+                       .ForMarketData(new int[] { 100000001 })
+                       .ForProducts(new string[] { "M+1", "GY+1" })
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("WET")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10"
+                    .SetQueryParam("id", 100000001)
+                    .SetQueryParam("p", new string[] { "M+1", "GY+1" })
+                    .SetQueryParam("tz", "WET"))
+                    .WithVerb(HttpMethod.Get)
+                    .Times(1);
+            }
+        }
+
+        [Test]
+        public void MasWithHeaders()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var mas = qs.CreateMarketAssessment()
+                       .ForMarketData(new int[] { 100000001 })
+                       .ForProducts(new string[] { "M+1", "GY+1" })
+                       .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/2018-01-01/2018-01-10"
+                    .SetQueryParam("id", 100000001)
+                    .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
+                    .WithVerb(HttpMethod.Get)
+                    .WithHeader("Accept", "application/json; q=1.0")
+                    .WithHeader("Accept", "application/x-msgpack; q=0.75")
+                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
+                    .Times(1);
             }
         }
     }

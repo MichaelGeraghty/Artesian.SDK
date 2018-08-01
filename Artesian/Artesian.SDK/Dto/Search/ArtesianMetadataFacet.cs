@@ -4,18 +4,18 @@ using System.Collections.Generic;
 namespace Artesian.SDK.Dto
 {
     [MessagePackObject]
-    public class ArtesianMetaDataFacet
+    public class ArtesianMetadataFacet
     {
         [Key(0)]
         public string FacetName { get; set; }
         [Key(1)]
-        public ArtesianMetaDataFacetType FacetType { get; set; }
+        public ArtesianMetadataFacetType FacetType { get; set; }
         [Key(2)]
-        public List<ArtesianMetaDataFacetCount> Values { get; set; }
+        public List<ArtesianMetadataFacetCount> Values { get; set; }
     }
 
     [MessagePackObject]
-    public class ArtesianMetaDataFacetCount
+    public class ArtesianMetadataFacetCount
     {
         [Key(0)]
         public string Value { get; set; }
@@ -23,7 +23,7 @@ namespace Artesian.SDK.Dto
         public long? Count { get; set; }
     }
 
-    public enum ArtesianMetaDataFacetType
+    public enum ArtesianMetadataFacetType
     {
         Property = 0
         , Tag

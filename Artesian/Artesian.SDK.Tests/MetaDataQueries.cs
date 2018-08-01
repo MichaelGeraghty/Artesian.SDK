@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Artesian.SDK.Tests
 {
     [TestFixture]
-    public class MetaDataQueries
+    public class MetadataQueries
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig();
 
@@ -19,7 +19,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var mds = new MetaDataService(_cfg);
+                var mds = new MetadataService(_cfg);
 
                 var mdq = mds.ReadTimeTransformBaseAsync(1).ConfigureAwait(true).GetAwaiter().GetResult();
 
@@ -34,7 +34,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var mds = new MetaDataService(_cfg);
+                var mds = new MetadataService(_cfg);
 
                 var mdq = mds.ReadTimeTransformsAsync(1, 1, true).ConfigureAwait(true).GetAwaiter().GetResult();
 
@@ -52,7 +52,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var mds = new MetaDataService(_cfg);
+                var mds = new MetadataService(_cfg);
 
                 var mdq = mds.ReadMarketDataRegistryAsync(new MarketDataIdentifier("TestProvider", "TestCurveName")).ConfigureAwait(true).GetAwaiter().GetResult();
 
@@ -69,7 +69,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var mds = new MetaDataService(_cfg);
+                var mds = new MetadataService(_cfg);
 
                 var mdq = mds.ReadCurveRangeAsync(100000001,1,1,"M+1", new LocalDateTime(2018, 07, 19, 12, 0), new LocalDateTime(2017, 07, 19, 12, 0)).ConfigureAwait(true).GetAwaiter().GetResult();
 
@@ -89,7 +89,7 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var mds = new MetaDataService(_cfg);
+                var mds = new MetadataService(_cfg);
 
                 var mdq = mds.ReadMarketDataRegistryAsync(100000001).ConfigureAwait(true).GetAwaiter().GetResult();
 
@@ -104,20 +104,43 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
-                var mds = new MetaDataService(_cfg);
-                var filter = new ArtesianSearchFilter();
-                filter.SearchText = "TestText";
-                filter.Page = 1;
-                filter.PageSize = 1;
+                var mds = new MetadataService(_cfg);
+                var filter = new ArtesianSearchFilter
+                {
+                    SearchText = "TestText",
+                    Page = 1,
+                    PageSize = 1
+                };
                 var mdq = mds.SearchFacetAsync(filter).ConfigureAwait(true).GetAwaiter().GetResult();
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}v2.1/marketdata/searchfacet"
                     .SetQueryParam("pageSize", 1)
                     .SetQueryParam("page",1)
-                    .SetQueryParam("searchText", "TestText"))
+                    )
                     .WithVerb(HttpMethod.Get)
+                    .WithQueryParamValue("searchText", "Test")
                     .Times(1);
+            }
+        }
 
+        [Test]
+        public void ReadTimeTransformWithHeaders()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var mds = new MetadataService(_cfg);
+
+                var mdq = mds.ReadTimeTransformsAsync(1, 1, true).ConfigureAwait(true).GetAwaiter().GetResult();
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}v2.1/timeTransform/entity"
+                    .SetQueryParam("pageSize", 1)
+                    .SetQueryParam("page", 1)
+                    .SetQueryParam("userDefined", true))
+                    .WithVerb(HttpMethod.Get)
+                    .WithHeader("Accept", "application/json; q=1.0")
+                    .WithHeader("Accept", "application/x-msgpack; q=0.75")
+                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
+                    .Times(1);
             }
         }
 

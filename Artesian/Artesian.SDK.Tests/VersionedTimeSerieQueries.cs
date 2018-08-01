@@ -34,6 +34,9 @@ namespace Artesian.SDK.Tests
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth"
                    .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
+                    .WithHeader("Accept", "application/json; q=1.0")
+                    .WithHeader("Accept", "application/x-msgpack; q=0.75")
+                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
                    .Times(1);
             }
         }
@@ -98,7 +101,6 @@ namespace Artesian.SDK.Tests
                    .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
                    .Times(1);
-
             }
         }
 
@@ -708,7 +710,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -730,7 +731,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -752,7 +752,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -774,7 +773,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("id", 100000001))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -796,7 +794,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -818,7 +815,6 @@ namespace Artesian.SDK.Tests
                   .SetQueryParam("id", new int[] { 100000001, 100000002, 100000003 }))
                   .WithVerb(HttpMethod.Get)
                   .Times(1);
-
             }
         }
 
@@ -986,10 +982,10 @@ namespace Artesian.SDK.Tests
 
                 var ver = qs.CreateVersioned()
                        .ForMarketData(new int[] { 100000001 })
-                        .InGranularity(Granularity.Day)
-                        .ForVersion(new LocalDateTime(2018, 07, 19, 12, 0))
-                        .InRelativeInterval(RelativeInterval.RollingMonth)
-                        .WithTimeTransform(1)
+                       .InGranularity(Granularity.Day)
+                       .ForVersion(new LocalDateTime(2018, 07, 19, 12, 0))
+                       .InRelativeInterval(RelativeInterval.RollingMonth)
+                       .WithTimeTransform(1)
                        .ExecuteAsync().Result;
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/RollingMonth"
@@ -997,6 +993,145 @@ namespace Artesian.SDK.Tests
                  .SetQueryParam("tr", 1))
                  .WithVerb(HttpMethod.Get)
                  .Times(1);
+            }
+        }
+
+        [Test]
+        public void VerWithTimeZoneLastOfDays()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateVersioned()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Day)
+                       .ForLastOfDays(Period.FromMonths(-1), Period.FromDays(20))
+                       .InAbsoluteDateRange(new LocalDate(2017, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("UTC")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/2017-01-01/2018-01-10"
+                 .SetQueryParam("id", 100000001)
+                 .SetQueryParam("tz","UTC"))
+                 .WithVerb(HttpMethod.Get)
+                 .Times(1);
+            }
+        }
+
+        [Test]
+        public void VerWithTimeZoneLastOfMonths()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateVersioned()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Day)
+                       .ForLastOfMonths(Period.FromMonths(-1), Period.FromDays(20))
+                       .InAbsoluteDateRange(new LocalDate(2017, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("UTC")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-1M/P20D/Day/2017-01-01/2018-01-10"
+                 .SetQueryParam("id", 100000001)
+                 .SetQueryParam("tz", "UTC"))
+                 .WithVerb(HttpMethod.Get)
+                 .Times(1);
+            }
+        }
+
+        [Test]
+        public void VerWithTimeZoneLastN()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateVersioned()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Day)
+                       .ForLastNVersions(3)
+                       .InAbsoluteDateRange(new LocalDate(2017, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("UTC")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Last3/Day/2017-01-01/2018-01-10"
+                 .SetQueryParam("id", 100000001)
+                 .SetQueryParam("tz", "UTC"))
+                 .WithVerb(HttpMethod.Get)
+                 .Times(1);
+            }
+        }
+
+        [Test]
+        public void VerWithTimeZoneMUV()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateVersioned()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Day)
+                       .ForMUV()
+                       .InAbsoluteDateRange(new LocalDate(2017, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("UTC")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/MUV/Day/2017-01-01/2018-01-10"
+                 .SetQueryParam("id", 100000001)
+                 .SetQueryParam("tz", "UTC"))
+                 .WithVerb(HttpMethod.Get)
+                 .Times(1);
+            }
+        }
+
+        [Test]
+        public void VerWithTimeZoneVersion()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var act = qs.CreateVersioned()
+                       .ForMarketData(new int[] { 100000001 })
+                       .InGranularity(Granularity.Day)
+                       .ForVersion(new LocalDateTime(2018, 07, 19, 12, 0))
+                       .InAbsoluteDateRange(new LocalDate(2017, 1, 1), new LocalDate(2018, 1, 10))
+                       .InTimezone("UTC")
+                       .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/Version/2018-07-19T12:00:00/Day/2017-01-01/2018-01-10"
+                 .SetQueryParam("id", 100000001)
+                 .SetQueryParam("tz", "UTC"))
+                 .WithVerb(HttpMethod.Get)
+                 .Times(1);
+            }
+        }
+
+        [Test]
+        public void VerInPeriodRelativeIntervalLastOfMonthsWithHeaders()
+        {
+            using (var httpTest = new HttpTest())
+            {
+                var qs = new QueryService(_cfg);
+
+                var ver = qs.CreateVersioned()
+                        .ForMarketData(new int[] { 100000001 })
+                        .InGranularity(Granularity.Day)
+                        .ForLastOfMonths(Period.FromMonths(-4))
+                        .InRelativeInterval(RelativeInterval.RollingMonth)
+                        .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth"
+                   .SetQueryParam("id", 100000001))
+                   .WithVerb(HttpMethod.Get)
+                    .WithHeader("Accept", "application/json; q=1.0")
+                    .WithHeader("Accept", "application/x-msgpack; q=0.75")
+                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
+                   .Times(1);
             }
         }
     }

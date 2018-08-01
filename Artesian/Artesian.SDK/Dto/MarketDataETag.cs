@@ -35,7 +35,6 @@ namespace Artesian.SDK.Dto
         [MessagePack.Key(1)]
         public string ETag { get; protected set; }
 
-
         public override bool Equals(object obj)
         {
             var item = obj as MarketDataETag;
@@ -51,7 +50,6 @@ namespace Artesian.SDK.Dto
         {
             return ID.GetHashCode() ^ ETag.GetHashCode();
         }
-
 
         public static bool operator ==(MarketDataETag x, MarketDataETag y)
         {

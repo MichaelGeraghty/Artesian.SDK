@@ -60,8 +60,10 @@ namespace Artesian.SDK.Service
             cfg.TypeNameHandling = TypeNameHandling.None;
             cfg.ObjectCreationHandling = ObjectCreationHandling.Replace;
 
-            var jsonFormatter = new JsonMediaTypeFormatter();
-            jsonFormatter.SerializerSettings = cfg;
+            var jsonFormatter = new JsonMediaTypeFormatter
+            {
+                SerializerSettings = cfg
+            };
             _jsonFormatter = jsonFormatter;
 
             _msgPackFormatter = new MessagePackFormatter(CustomCompositeResolver.Instance);
@@ -74,8 +76,7 @@ namespace Artesian.SDK.Service
             formatters.Add(_lz4msgPackFormatter);
             _formatters = formatters;
 
-            if (config.XApiKey==null) {
-                // configure webclient with auth0
+            if (config.ApiKey==null) {
                 _auth0 = new AuthenticationApiClient($"{Config.Domain}");
                 _credentials = new ClientCredentialsTokenRequest()
                 {
@@ -94,20 +95,18 @@ namespace Artesian.SDK.Service
         {
             try
             {
-                HttpResponseMessage res = new HttpResponseMessage();
 
-                if (Config.XApiKey != null)
-                {
-                    var ApiKey = Config.XApiKey;
-                    res = await _client.Request(resource).WithHeader("X-Api-Key", ApiKey).WithAcceptHeader(_formatters).SendAsync(method, cancellationToken: ctk);
-                }
+                var req = _client.Request(resource).WithAcceptHeader(_formatters);
+
+                if (Config.ApiKey != null)
+                    req = req.WithHeader("X-Api-Key", Config.ApiKey);
                 else
                 {
                     var (token, _) = await _getAccessToken();
-                    res = await _client.Request(resource).WithOAuthBearerToken(token).WithAcceptHeader(_formatters).SendAsync(method, cancellationToken: ctk);
+                    req = req.WithOAuthBearerToken(token);
                 }
 
-                using (res)
+                using (var res = await req.SendAsync(method, cancellationToken: ctk))
                 {
                     if (res.StatusCode == HttpStatusCode.NoContent || res.StatusCode == HttpStatusCode.NotFound)
                         return default;
@@ -118,11 +117,11 @@ namespace Artesian.SDK.Service
 
                         if (res.StatusCode == HttpStatusCode.BadRequest)
                         {
-                            throw new ArtesianSdkValidationException($@"{responseText}");
+                            throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
                         }
 
                         if (res.StatusCode == HttpStatusCode.Conflict)
-                            throw new ArtesianSdkOptimisticConcurrencyException($@"{responseText}");
+                            throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
 
                         throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
                     }

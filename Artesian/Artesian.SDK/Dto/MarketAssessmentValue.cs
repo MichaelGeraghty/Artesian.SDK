@@ -40,6 +40,5 @@ namespace Artesian.SDK.Dto
         public double? VolumeGiven { get; set; }
         [Key(7)]
         public double? Volume { get; set; }
-
     }
 }

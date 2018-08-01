@@ -112,7 +112,5 @@ namespace Artesian.SDK.Service
         } 
         #endregion
         #endregion
-
-
     }
 }
