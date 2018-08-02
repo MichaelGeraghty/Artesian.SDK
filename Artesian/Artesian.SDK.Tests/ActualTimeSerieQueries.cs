@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using Artesian.SDK.Dto;
 using Artesian.SDK.Service;
 using Flurl;
@@ -14,7 +15,7 @@ namespace Artesian.SDK.Tests
     {
         private ArtesianServiceConfig _cfg = new ArtesianServiceConfig();
 
-        private readonly string _baseUrl;
+        private readonly string _baseUrl = "UTC";
 
         public ActualTimeSerieQueries()
         {
@@ -145,7 +146,7 @@ namespace Artesian.SDK.Tests
                 var qs = new QueryService(_cfg);
 
                 var act = qs.CreateActual()
-                       .ForMarketData(new int[] { 100000028 })
+                       .ForMarketData(new int[] { 100000001 })
                        .InGranularity(Granularity.Day)
                        .InAbsoluteDateRange(new LocalDate(2018, 1, 1), new LocalDate(2018, 1, 10))
                        .InTimezone("UTC")
@@ -153,7 +154,7 @@ namespace Artesian.SDK.Tests
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/ts/Day/2018-01-01/2018-01-10")
                     .WithVerb(HttpMethod.Get)
-                    .WithQueryParamValue("id", 100000028)
+                    .WithQueryParamValue("id", 100000001)
                     .WithQueryParamValue("tz", "UTC")
                     .Times(1);
             }

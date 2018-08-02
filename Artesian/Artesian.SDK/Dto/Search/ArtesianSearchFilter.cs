@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) ARK LTD. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for
+// license information. 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
@@ -39,9 +42,6 @@ namespace Artesian.SDK.Dto
         public static void Validate(this ArtesianSearchFilter artesianSearchFilter)
         {
             var validSorts = @"^(MarketDataId|ProviderName|MarketDataName|OriginalGranularity|Type|OriginalTimezone|Created|LastUpdated)( (asc|desc))?$";
-
-            if (artesianSearchFilter.SearchText == null)
-                throw new ArgumentNullException(nameof(artesianSearchFilter.SearchText));
 
             if (artesianSearchFilter.Sorts != null)
             {

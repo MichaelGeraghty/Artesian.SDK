@@ -1,4 +1,7 @@
-﻿using Auth0.AuthenticationApi;
+﻿// Copyright (c) ARK LTD. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for
+// license information. 
+using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 using Flurl.Http;
 using JWT.Builder;
@@ -90,7 +93,6 @@ namespace Artesian.SDK.Service
             _client = new FlurlClient(_url);
         }
 
-
         public async Task<TResult> Exec<TResult, TBody>(HttpMethod method, string resource, TBody body = default(TBody), CancellationToken ctk = default(CancellationToken))
         {
             try
@@ -114,14 +116,6 @@ namespace Artesian.SDK.Service
                     if (!res.IsSuccessStatusCode)
                     {
                         var responseText = await res.Content.ReadAsStringAsync();
-
-                        if (res.StatusCode == HttpStatusCode.BadRequest)
-                        {
-                            throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
-                        }
-
-                        if (res.StatusCode == HttpStatusCode.Conflict)
-                            throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
 
                         throw new ArtesianSdkRemoteException("Failed handling REST call to WebInterface {0} {1}. Returned status: {2}. Content: \n{3}", method, Config.BaseAddress + _url + resource, res.StatusCode, responseText);
                     }

@@ -34,9 +34,6 @@ namespace Artesian.SDK.Tests
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth"
                    .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                    .WithHeader("Accept", "application/json; q=1.0")
-                    .WithHeader("Accept", "application/x-msgpack; q=0.75")
-                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
                    .Times(1);
             }
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net.Http;
 using Artesian.SDK.Dto;
 using Artesian.SDK.Service;
@@ -24,6 +26,17 @@ namespace Artesian.SDK.Tests
                 var mdq = mds.ReadTimeTransformBaseAsync(1).ConfigureAwait(true).GetAwaiter().GetResult();
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}v2.1/timeTransform/entity/1")
+                   .WithVerb(HttpMethod.Get)
+                   .Times(1);
+            }
+
+            using (var httpTest = new HttpTest())
+            {
+                var mds = new MetadataService(_cfg);
+
+                var mdq = mds.ReadTimeTransformBaseAsync(2).ConfigureAwait(true).GetAwaiter().GetResult();
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}v2.1/timeTransform/entity/2")
                    .WithVerb(HttpMethod.Get)
                    .Times(1);
             }
@@ -104,21 +117,27 @@ namespace Artesian.SDK.Tests
         {
             using (var httpTest = new HttpTest())
             {
+                Dictionary<string, string[]> filterDict = new Dictionary<string, string[]>
+                {
+                    {"TestKey",new string[]{"TestValue"} }
+                };
                 var mds = new MetadataService(_cfg);
                 var filter = new ArtesianSearchFilter
                 {
-                    SearchText = "TestText",
                     Page = 1,
-                    PageSize = 1
+                    PageSize = 1,
+                    SearchText = "testText",
+                    Filters = filterDict
                 };
                 var mdq = mds.SearchFacetAsync(filter).ConfigureAwait(true).GetAwaiter().GetResult();
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}v2.1/marketdata/searchfacet"
                     .SetQueryParam("pageSize", 1)
                     .SetQueryParam("page",1)
+                    .SetQueryParam("searchText", "testText")
+                    .SetQueryParam("filters", "TestKey%3ATestValue", true)
                     )
                     .WithVerb(HttpMethod.Get)
-                    .WithQueryParamValue("searchText", "Test")
                     .Times(1);
             }
         }

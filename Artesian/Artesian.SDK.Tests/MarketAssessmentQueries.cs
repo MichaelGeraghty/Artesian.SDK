@@ -30,7 +30,8 @@ namespace Artesian.SDK.Tests
                        .ExecuteAsync().Result;
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/RollingMonth"
-                    .SetQueryParam("id", 100000001))
+                    .SetQueryParam("id", 100000001)
+                    .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
                     .WithVerb(HttpMethod.Get)
                     .Times(1);
             }
@@ -60,15 +61,21 @@ namespace Artesian.SDK.Tests
         [Test]
         public void MasInRelativePeriodExtractionWindow()
         {
-            
+            using (var httpTest = new HttpTest())
             {
                 var qs = new QueryService(_cfg);
 
                 var mas = qs.CreateMarketAssessment()
-                       .ForMarketData(new int[] { 100000028 })
+                       .ForMarketData(new int[] { 100000001 })
                        .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativePeriod(Period.FromDays(5))
                        .ExecuteAsync().Result;
+
+                httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/mas/P5D"
+                    .SetQueryParam("id", 100000001)
+                    .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
+                    .WithVerb(HttpMethod.Get)
+                    .Times(1);
             }
         }
 
