@@ -25,54 +25,93 @@ namespace Artesian.SDK.Service
         }
 
         #region facade methods
+        /// <summary>
+        /// Set of Market Data ID's to be queried
+        /// </summary>
+        /// <param name="ids">An Int array</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery ForMarketData(int[] ids)
         {
             _ids = ids;
             return this;
         }
-
+        /// <summary>
+        /// Market Data ID to be queried
+        /// </summary>
+        /// <param name="id">An Int</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery ForMarketData(int id)
         {
             _ids = new int[] { id };
             return this;
         }
-
+        /// <summary>
+        /// Timezone to be queried defaults to UTC
+        /// </summary>
+        /// <param name="tz">String</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery InTimezone(string tz)
         {
             _inTimezone(tz);
             return this;
         }
-
+        /// <summary>
+        /// Date range to be queried
+        /// </summary>
+        /// <param name="start">LocalDate</param>
+        /// <param name="end">LocalDate</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
             _inAbsoluteDateRange(start, end);
             return this;
         }
-
+        /// <summary>
+        /// Period Range to be queried
+        /// </summary>
+        /// <param name="from">Period</param>
+        /// <param name="to">Period</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery InRelativePeriodRange(Period from, Period to)
         {
             _inRelativePeriodRange(from, to);
             return this;
         }
-
+        /// <summary>
+        /// Period to be queried
+        /// </summary>
+        /// <param name="extractionPeriod">Period</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery InRelativePeriod(Period extractionPeriod)
         {
             _inRelativePeriod(extractionPeriod);
             return this;
         }
-
+        /// <summary>
+        /// Interval to be queried
+        /// </summary>
+        /// <param name="relativeInterval">RelativeInterval</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery InRelativeInterval(RelativeInterval relativeInterval)
         {
             _inRelativeInterval(relativeInterval);
             return this;
         }
-
+        /// <summary>
+        /// With Time Transform to be queried
+        /// </summary>
+        /// <param name="tr">An Int</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery WithTimeTransform(int tr)
         {
             _tr = tr;
             return this;
         }
-
+        /// <summary>
+        /// With Time Transform to be queried
+        /// </summary>
+        /// <param name="tr">SystemTimeTransform</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery WithTimeTransform(SystemTimeTransform tr)
         {
             _tr = (int)tr;
@@ -81,12 +120,21 @@ namespace Artesian.SDK.Service
         #endregion
 
         #region actual query methods
+        /// <summary>
+        /// Granularity to be queried
+        /// </summary>
+        /// <param name="granularity">Granularity</param>
+        /// <returns>ActualQuery</returns>
         public ActualQuery InGranularity(Granularity granularity)
         {
             _granularity = granularity;
             return this;
         }
-
+        /// <summary>
+        /// Execute ActualQuery
+        /// </summary>
+        /// <param name="ctk">CancellationToken</param>
+        /// <returns>client.Exec() <see cref="Client.Exec{TResult}(HttpMethod, string, CancellationToken)"/></returns>
         public async Task<IEnumerable<TimeSerieRow.Actual>> ExecuteAsync(CancellationToken ctk = default)
         {
             return await _client.Exec<IEnumerable<TimeSerieRow.Actual>>(HttpMethod.Get, _buildRequest(), ctk: ctk);
@@ -105,7 +153,6 @@ namespace Artesian.SDK.Service
             return url.ToString();
         }
 
-        //not required if granularity set through ctor
         protected sealed override void _validateQuery()
         {
             base._validateQuery();
