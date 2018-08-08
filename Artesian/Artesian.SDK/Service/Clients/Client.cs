@@ -98,7 +98,7 @@ namespace Artesian.SDK.Service
             try
             {
 
-                var req = _client.Request(resource).WithAcceptHeader(_formatters);
+                var req = _client.Request(resource).WithAcceptHeader(_formatters).AllowAnyHttpStatus();
 
                 if (Config.ApiKey != null)
                     req = req.WithHeader("X-Api-Key", Config.ApiKey);

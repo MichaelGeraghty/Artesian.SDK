@@ -15,7 +15,11 @@ namespace Artesian.SDK.Tests
     [TestFixture]
     public class VersionedTimeSerieQueries
     {
-        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig();
+        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
+        {
+            BaseAddress = new Uri(TestConstants.BaseAddress),
+            ApiKey = TestConstants.APIKey
+        };
 
         [Test]
         public void VerInPeriodRelativeIntervalLastOfMonths()

@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActualTimeSerieQueries.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="MarketAssessmentQueries.cs" />
     <Compile Include="MetaDataQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

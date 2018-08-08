@@ -13,9 +13,13 @@ namespace Artesian.SDK.Tests
     [TestFixture]
     public class ActualTimeSerieQueries
     {
-        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig();
+        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
+        {
+            BaseAddress = new Uri(TestConstants.BaseAddress),
+            ApiKey = TestConstants.APIKey
+        };
 
-        private readonly string _baseUrl = "UTC";
+        private readonly string _baseUrl;
 
         public ActualTimeSerieQueries()
         {
