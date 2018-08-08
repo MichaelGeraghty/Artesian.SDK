@@ -19,13 +19,6 @@ namespace Artesian.SDK.Tests
             ApiKey = TestConstants.APIKey
         };
 
-        private readonly string _baseUrl;
-
-        public ActualTimeSerieQueries()
-        {
-            _baseUrl = _cfg.BaseAddress.ToString();
-        }
-
         [Test]
         public void ActInRelativeIntervalExtractionWindow()
         {
