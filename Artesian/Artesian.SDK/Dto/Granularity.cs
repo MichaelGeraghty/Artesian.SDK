@@ -3,6 +3,9 @@
 // license information. 
 namespace Artesian.SDK.Dto
 {
+    /// <summary>
+    /// Granularity enums
+    /// </summary>
     public enum Granularity
     {
         Hour = 0

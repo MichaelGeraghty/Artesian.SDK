@@ -201,9 +201,9 @@ namespace Artesian.SDK.Tests
                     .SetQueryParam("id", 100000001)
                     .SetQueryParam("p", new string[] { "M+1", "GY+1" }))
                     .WithVerb(HttpMethod.Get)
-                    .WithHeader("Accept", "application/json; q=1.0")
+                    .WithHeader("Accept", "application/x.msgpacklz4; q=1.0")
                     .WithHeader("Accept", "application/x-msgpack; q=0.75")
-                    .WithHeader("Accept", "application/x.msgpacklz4; q=0.5")
+                    .WithHeader("Accept", "application/json; q=0.5")
                     .Times(1);
             }
         }

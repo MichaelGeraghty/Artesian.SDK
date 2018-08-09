@@ -3,6 +3,9 @@
 // license information. 
 namespace Artesian.SDK.Dto
 {
+    /// <summary>
+    /// Aggregation rule enums
+    /// </summary>
     public enum AggregationRule
     {
         Undefined = 0,

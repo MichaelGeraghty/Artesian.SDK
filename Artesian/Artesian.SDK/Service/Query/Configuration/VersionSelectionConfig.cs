@@ -5,10 +5,22 @@ using NodaTime;
 
 namespace Artesian.SDK.Service
 {
-    class VersionSelectionConfig
+    /// <summary>
+    /// Version selection configuration
+    /// </summary>
+    public class VersionSelectionConfig
     {
+        /// <summary>
+        /// LastN version
+        /// </summary>
         public int LastN { get; set; }
+        /// <summary>
+        /// Local date time version
+        /// </summary>
         public LocalDateTime Version { get; set; }
+        /// <summary>
+        /// last of version <see cref="LastOfSelectionConfig"/>
+        /// </summary>
         public LastOfSelectionConfig LastOf { get; set; } = new LastOfSelectionConfig();
     }
 }

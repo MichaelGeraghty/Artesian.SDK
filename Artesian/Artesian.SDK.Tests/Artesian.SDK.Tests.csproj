@@ -74,7 +74,7 @@
     <Compile Include="ActualTimeSerieQueries.cs" />
     <Compile Include="TestConstants.cs" />
     <Compile Include="MarketAssessmentQueries.cs" />
-    <Compile Include="MetaDataQueries.cs" />
+    <Compile Include="MetadataQueries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VersionedTimeSerieQueries.cs" />
   </ItemGroup>

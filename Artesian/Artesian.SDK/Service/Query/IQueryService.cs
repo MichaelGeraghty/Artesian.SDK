@@ -3,10 +3,25 @@
 // license information. 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// Query Service Interface
+    /// </summary>
     public interface IQueryService
     {
+        /// <summary>
+        /// Create Actual Time Serie
+        /// </summary>
+        /// <returns></returns>
         ActualQuery CreateActual();
+        /// <summary>
+        /// Create Versioned Time Serie
+        /// </summary>
+        /// <returns></returns>
         VersionedQuery CreateVersioned();
+        /// <summary>
+        /// Create Market Assessment Time Serie
+        /// </summary>
+        /// <returns></returns>
         MasQuery CreateMarketAssessment();
     }
 }

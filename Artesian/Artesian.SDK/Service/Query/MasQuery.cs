@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// Market Assessment Query Class
+    /// </summary>
     public class MasQuery : Query, IMasQuery<MasQuery>
     {
         private IEnumerable<string> _products;

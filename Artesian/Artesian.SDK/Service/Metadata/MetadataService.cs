@@ -12,6 +12,9 @@ using System;
 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// MetadataService class
+    /// </summary>
     public class MetadataService : IMetadataService
     {
         private IArtesianServiceConfig _cfg;
@@ -61,7 +64,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<PagedResult<TimeTransform>>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Get MetaData by provider and curve name with MarketDataIdentifier
+        /// Get Metadata by provider and curve name with MarketDataIdentifier
         /// </summary>
         /// <param name="id">MarketDataIdentifier</param>
         /// <param name="ctk">CancellationToken</param>
@@ -76,7 +79,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Read MetaData by curve id
+        /// Read Metadata by curve id
         /// </summary>
         /// <param name="id">An Int</param>
         /// <param name="ctk">CancellationToken</param>

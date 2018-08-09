@@ -3,6 +3,9 @@
 // license information. 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// Artesian Constants
+    /// </summary>
     public abstract class ArtesianConstants
     {
         internal const string CharacterValidatorRegEx = @"^[^'"",:;\s](?:(?:[^'"",:;\s]| )*[^'"",:;\s])?$";

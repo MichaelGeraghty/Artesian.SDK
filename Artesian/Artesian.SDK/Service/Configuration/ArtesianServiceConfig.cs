@@ -5,15 +5,26 @@ using System;
 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// ArtesianServiceConfig
+    /// </summary>
     public class ArtesianServiceConfig: IArtesianServiceConfig
     {
+        /// <summary>
+        /// Auth credentials
+        /// </summary>
         public Uri BaseAddress { get; set; }
         public string Audience { get; set; }
         public string Domain { get; set; }
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
+        /// <summary>
+        /// ApiKey
+        /// </summary>
         public string ApiKey { get; set; }
-
+        /// <summary>
+        /// Constructor for auto property use
+        /// </summary>
         public ArtesianServiceConfig() { }
         /// <summary>
         /// Config for X-Api-Key

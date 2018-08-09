@@ -7,6 +7,9 @@ using System;
 
 namespace Artesian.SDK.Dto
 {
+    /// <summary>
+    /// Assessment Row class
+    /// </summary>
     [MessagePackObject]
     public class AssessmentRow
     {

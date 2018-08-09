@@ -5,6 +5,9 @@ using MessagePack;
 
 namespace Artesian.SDK.Dto
 {
+    /// <summary>
+    /// Market Assessment Value class
+    /// </summary>
     [MessagePackObject]
     public class MarketAssessmentValue
     {

@@ -5,13 +5,34 @@ using NodaTime;
 
 namespace Artesian.SDK.Service
 {
-    class ExtractionRangeSelectionConfig
+    /// <summary>
+    /// Extraction range selection configuration
+    /// </summary>
+    public class ExtractionRangeSelectionConfig
     {
+        /// <summary>
+        /// Start date for Date Range for extraction
+        /// </summary>
         public LocalDate DateStart{ get; set; }
+        /// <summary>
+        /// End date for Date Range for extraction
+        /// </summary>
         public LocalDate DateEnd { get; set; }
+        /// <summary>
+        /// Period for extraction
+        /// </summary>
         public Period Period { get; set; }
+        /// <summary>
+        /// Period start range for extraction
+        /// </summary>
         public Period PeriodFrom { get; set; }
+        /// <summary>
+        /// Period end range for extraction
+        /// </summary>
         public Period PeriodTo { get; set; }
+        /// <summary>
+        /// Relative Interval for extraction
+        /// </summary>
         public RelativeInterval Interval { get; set; }
     }
 }

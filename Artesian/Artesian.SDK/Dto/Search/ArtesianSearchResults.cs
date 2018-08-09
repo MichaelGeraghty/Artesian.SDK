@@ -6,13 +6,25 @@ using System.Collections.Generic;
 
 namespace Artesian.SDK.Dto
 {
+    /// <summary>
+    /// Artesian search results
+    /// </summary>
     [MessagePackObject]
     public class ArtesianSearchResults
     {
+        /// <summary>
+        /// Results
+        /// </summary>
         [Key(0)]
         public List<MarketDataEntity.Output> Results { get; set; }
+        /// <summary>
+        /// Facets
+        /// </summary>
         [Key(1)]
         public List<ArtesianMetadataFacet> Facets { get; set; }
+        /// <summary>
+        /// Results count
+        /// </summary>
         [Key(2)]
         public long? CountResults { get; set; }
     }

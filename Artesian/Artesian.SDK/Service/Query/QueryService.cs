@@ -5,11 +5,18 @@ using Flurl;
 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// QueryService class
+    /// Contains query types to be created
+    /// </summary>
     public class QueryService: IQueryService
     {
         private IArtesianServiceConfig _cfg;
         private Client _client;
-
+        /// <summary>
+        /// Query service for building a query
+        /// </summary>
+        /// <param name="cfg">IArtesianServiceConfig</param>
         public QueryService(IArtesianServiceConfig cfg)
         {
             _cfg = cfg;

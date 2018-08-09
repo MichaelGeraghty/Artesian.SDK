@@ -15,7 +15,7 @@
     <Description>Artesian SDK library</Description>
     <PackageTags>Ark;c#;Visual Studio;Framework;Arkive;Artesian;</PackageTags>
     <PackageLicenseUrl>https://github.com/ARKlab/Artesian.SDK/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>0.1.0-alpha02</Version>
+    <Version>0.2.2-alpha02</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -25,6 +25,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Artesian.SDK.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\Artesian.SDK.xml</DocumentationFile>
   </PropertyGroup>
 
 

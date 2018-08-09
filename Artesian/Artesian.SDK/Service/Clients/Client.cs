@@ -45,9 +45,15 @@ namespace Artesian.SDK.Service
            = new Polly.Caching.Memory.MemoryCacheProvider(new Microsoft.Extensions.Caching.Memory.MemoryCache(new Microsoft.Extensions.Caching.Memory.MemoryCacheOptions()));
 
         private readonly Policy<(string AccessToken, DateTimeOffset ExpiresOn)> _cachePolicy;
-
+        /// <summary>
+        /// IArtesianServiceConfig Config
+        /// </summary>
         public IArtesianServiceConfig Config { get; private set; }
-
+        /// <summary>
+        /// Client constructor Auth credentials / ApiKey can be passed through config
+        /// </summary>
+        /// <param name="config">Config</param>
+        /// <param name="Url">string</param>
         public Client(IArtesianServiceConfig config, string Url)
         {
             this.Config = config;
@@ -71,12 +77,12 @@ namespace Artesian.SDK.Service
 
             _msgPackFormatter = new MessagePackFormatter(CustomCompositeResolver.Instance);
             _lz4msgPackFormatter = new LZ4MessagePackFormatter(CustomCompositeResolver.Instance);
-
+            //Order of formatters important for correct weight in accept header
             var formatters = new MediaTypeFormatterCollection();
             formatters.Clear();
-            formatters.Add(_jsonFormatter);
-            formatters.Add(_msgPackFormatter);
             formatters.Add(_lz4msgPackFormatter);
+            formatters.Add(_msgPackFormatter);
+            formatters.Add(_jsonFormatter);
             _formatters = formatters;
 
             if (config.ApiKey==null) {
@@ -92,7 +98,7 @@ namespace Artesian.SDK.Service
             }
             _client = new FlurlClient(_url);
         }
-
+        
         public async Task<TResult> Exec<TResult, TBody>(HttpMethod method, string resource, TBody body = default(TBody), CancellationToken ctk = default(CancellationToken))
         {
             try
@@ -168,9 +174,17 @@ namespace Artesian.SDK.Service
 
         #endregion private methods
     }
-
+    /// <summary>
+    /// Flurl Extension
+    /// </summary>
     public static class FlurlExt
     {
+        /// <summary>
+        /// Flurl request extension to return Accept headers
+        /// </summary>
+        /// <param name="request">IFlurlRequest</param>
+        /// <param name="formatters">MediaTypeFormatterCollection</param>
+        /// <returns></returns>
         public static IFlurlRequest WithAcceptHeader(this IFlurlRequest request, MediaTypeFormatterCollection formatters)
         {
             var cnt = formatters.Count;

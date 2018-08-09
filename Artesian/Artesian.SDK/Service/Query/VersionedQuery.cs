@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// Versioned Time Serie Query Class
+    /// </summary>
     public class VersionedQuery : Query, IVersionedQuery<VersionedQuery>
     {
         private VersionSelectionConfig _versionSelectionCfg = new VersionSelectionConfig();
@@ -48,7 +51,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Timezone to be queried defaults to UTC
+        /// Timezone to be queried
         /// </summary>
         /// <param name="tz">String</param>
         /// <returns>VersionedQuery</returns>

@@ -26,7 +26,9 @@ namespace Artesian.SDK.Service
         LastOfMonths,
         Version
     }
-
+    /// <summary>
+    /// Relative interval enums
+    /// </summary>
     public enum RelativeInterval
     {
         RollingWeek,

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Artesian.SDK.Service
 {
+    /// <summary>
+    /// Actual Time Serie Query Class
+    /// </summary>
     public class ActualQuery : Query, IActualQuery<ActualQuery>
     {
         protected Granularity? _granularity;
