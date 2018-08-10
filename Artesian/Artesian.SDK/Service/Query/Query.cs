@@ -93,10 +93,10 @@ namespace Artesian.SDK.Service
         protected virtual void _validateQuery()
         {
             if (_extractionRangeType == null)
-                throw new ApplicationException("Data extraction range must be provided");
+                throw new ApplicationException("Data extraction range must be provided. Provide a date range , period or period range or a interval eg .InAbsoluteDateRange()");
 
             if (_ids == null)
-                throw new ApplicationException("Marketadata ids must be provided for extraction");
+                throw new ApplicationException("Marketadata ids must be provided for extraction. Use .ForMarketData() and provide a integer or integer array as an argument");
         }
 
         internal string _toUrlParam(LocalDate start, LocalDate end)

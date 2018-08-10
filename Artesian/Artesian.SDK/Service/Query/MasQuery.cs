@@ -50,7 +50,7 @@ namespace Artesian.SDK.Service
         /// <summary>
         /// Timezone of extracted marketdata. Defaults to UTC
         /// </summary>
-        /// <param name="tz">String</param>
+        /// <param name="tz">String timezone eg UTC/CET</param>
         /// <returns>MasQuery</returns>
         public MasQuery InTimezone(string tz)
         {
@@ -60,8 +60,8 @@ namespace Artesian.SDK.Service
         /// <summary>
         /// Date range to be queried
         /// </summary>
-        /// <param name="start">LocalDate</param>
-        /// <param name="end">LocalDate</param>
+        /// <param name="start">LocalDate start date of range</param>
+        /// <param name="end">LocalDate end date of range</param>
         /// <returns>MasQuery</returns>
         public MasQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
@@ -69,10 +69,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Period Range to be queried
+        /// Relative period range from today to be queried
         /// </summary>
-        /// <param name="from">Period</param>
-        /// <param name="to">Period</param>
+        /// <param name="from">Period start of period range</param>
+        /// <param name="to">Period end of period range</param>
         /// <returns>MasQuery</returns>
         public MasQuery InRelativePeriodRange(Period from, Period to)
         {
@@ -105,7 +105,7 @@ namespace Artesian.SDK.Service
         /// <summary>
         /// Products to be queried
         /// </summary>
-        /// <param name="products">params string array</param>
+        /// <param name="products">params string array of products</param>
         /// <returns></returns>
         public MasQuery ForProducts(params string[] products)
         {
@@ -140,7 +140,7 @@ namespace Artesian.SDK.Service
             base._validateQuery();
 
             if (_products == null)
-                throw new ApplicationException("Products must be provided for extraction");
+                throw new ApplicationException("Products must be provided for extraction. Use .ForProducts() argument takes a string or string array of products");
         } 
         #endregion
         #endregion
