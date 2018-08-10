@@ -12,9 +12,6 @@ using System;
 
 namespace Artesian.SDK.Service
 {
-    /// <summary>
-    /// MetadataService class
-    /// </summary>
     public class MetadataService : IMetadataService
     {
         private IArtesianServiceConfig _cfg;
@@ -30,7 +27,7 @@ namespace Artesian.SDK.Service
             );
         }
         /// <summary>
-        /// Retrieve the TimeTransform entity from the database
+        /// Read a TimeTransform entity from the service by ID
         /// </summary>
         /// <param name="timeTransformId">An Int</param>
         /// <param name="ctk">CancellationToken</param>
@@ -43,7 +40,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<TimeTransform>(HttpMethod.Get, $@"/timeTransform/entity/{timeTransformId}", ctk: ctk);
         }
         /// <summary>
-        /// Read the TimeTransform entity from the database paged
+        /// Read a paged set of TimeTransform entities from the service
         /// </summary>
         /// <param name="page">int</param>
         /// <param name="pageSize">int</param>
@@ -64,7 +61,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<PagedResult<TimeTransform>>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Get Metadata by provider and curve name with MarketDataIdentifier
+        /// Get marketdata metadata by provider and curve name with MarketDataIdentifier
         /// </summary>
         /// <param name="id">MarketDataIdentifier</param>
         /// <param name="ctk">CancellationToken</param>
@@ -79,7 +76,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Read Metadata by curve id
+        /// Get marketdata metadata by curve id
         /// </summary>
         /// <param name="id">An Int</param>
         /// <param name="ctk">CancellationToken</param>
@@ -93,7 +90,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Get the metadata versions by id
+        /// Get the marketdata metadata versions by id
         /// </summary>
         /// <param name="id">Int</param>
         /// <param name="page">Int</param>
@@ -117,7 +114,7 @@ namespace Artesian.SDK.Service
             return _client.Exec<PagedResult<CurveRange>>(HttpMethod.Get, url, ctk: ctk);
         }
         /// <summary>
-        /// Search the market data collection with faceted results
+        /// Search the marketdata metadata
         /// </summary>
         /// <param name="filter">ArtesianSearchFilter</param>
         /// <param name="ctk">CancellationToken</param>

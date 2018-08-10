@@ -29,7 +29,7 @@ namespace Artesian.SDK.Service
 
         #region facade methods
         /// <summary>
-        /// Set of Market Data ID's to be queried
+        /// Set of marketdata ID's to be queried
         /// </summary>
         /// <param name="ids">An Int array</param>
         /// <returns>ActualQuery</returns>
@@ -39,7 +39,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Market Data ID to be queried
+        /// Marketdata ID to be queried
         /// </summary>
         /// <param name="id">An Int</param>
         /// <returns>ActualQuery</returns>
@@ -49,7 +49,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Timezone to be queried defaults to UTC
+        /// Timezone of extracted marketdata. Defaults to UTC
         /// </summary>
         /// <param name="tz">String</param>
         /// <returns>ActualQuery</returns>
@@ -81,7 +81,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Period to be queried
+        /// Relative period from today to be queried
         /// </summary>
         /// <param name="extractionPeriod">Period</param>
         /// <returns>ActualQuery</returns>
@@ -101,7 +101,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// With Time Transform to be queried
+        /// Time Transform to be applied to query
         /// </summary>
         /// <param name="tr">An Int</param>
         /// <returns>ActualQuery</returns>
@@ -111,7 +111,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// With Time Transform to be queried
+        /// Time Transform to be applied to query
         /// </summary>
         /// <param name="tr">SystemTimeTransform</param>
         /// <returns>ActualQuery</returns>
@@ -124,7 +124,7 @@ namespace Artesian.SDK.Service
 
         #region actual query methods
         /// <summary>
-        /// Granularity to be queried
+        /// Granularity of the extracted marketdata
         /// </summary>
         /// <param name="granularity">Granularity</param>
         /// <returns>ActualQuery</returns>

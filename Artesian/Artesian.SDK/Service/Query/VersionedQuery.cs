@@ -31,7 +31,7 @@ namespace Artesian.SDK.Service
 
         #region facade methods
         /// <summary>
-        /// Set of Market Data ID's to be queried
+        /// Set of marketdata ID's to be queried
         /// </summary>
         /// <param name="ids">An Int array</param>
         /// <returns>VersionedQuery</returns>
@@ -41,7 +41,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Market Data ID to be queried
+        /// Marketdata ID to be queried
         /// </summary>
         /// <param name="id">An Int</param>
         /// <returns>VersionedQuery</returns>
@@ -51,7 +51,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Timezone to be queried
+        /// Timezone of extracted marketdata. Defaults to UTC
         /// </summary>
         /// <param name="tz">String</param>
         /// <returns>VersionedQuery</returns>
@@ -72,7 +72,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Period Range to be queried
+        /// Relative period range from today to be queried
         /// </summary>
         /// <param name="from">Period</param>
         /// <param name="to">Period</param>
@@ -83,7 +83,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Period to be queried
+        /// Relative period from today to be queried
         /// </summary>
         /// <param name="extractionPeriod">Period</param>
         /// <returns>VersionedQuery</returns>
@@ -103,7 +103,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// With Time Transform to be queried
+        /// Time Transform to be applied to query
         /// </summary>
         /// <param name="tr">An Int</param>
         /// <returns>VersionedQuery</returns>
@@ -113,7 +113,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// With Time Transform to be queried
+        /// Time Transform to be applied to query
         /// </summary>
         /// <param name="tr">SystemTimeTransform</param>
         /// <returns>VersionedQuery</returns>
@@ -126,7 +126,7 @@ namespace Artesian.SDK.Service
 
         #region versioned query methods
         /// <summary>
-        /// Granularity to be queried
+        /// Granularity of the extracted marketdata
         /// </summary>
         /// <param name="granularity">Granularity</param>
         /// <returns>VersionedQuery</returns>
@@ -136,7 +136,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For LastNVersions 
+        /// For LastNVersions version selection
         /// </summary>
         /// <param name="lastN">An Int</param>
         /// <returns>VersionedQuery</returns>
@@ -147,7 +147,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Most updated version
+        /// For Most updated version selection
         /// </summary>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForMUV()
@@ -156,7 +156,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last Of Days Date Range
+        /// For Last Of Days date range version selection
         /// </summary>
         /// <param name="start">LocalDate</param>
         /// <param name="end">LocalDate</param>
@@ -173,7 +173,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Days Period Range
+        /// For Last Of Days period range version selection
         /// </summary>
         /// <param name="from">Period</param>
         /// <param name="to">Period</param>
@@ -187,7 +187,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Days Period
+        /// For Last Of Days period version selection
         /// </summary>
         /// <param name="lastOfPeriod">Period</param>
         /// <returns>VersionedQuery</returns>
@@ -199,7 +199,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Months Date Range
+        /// For Last of Months date range
         /// </summary>
         /// <param name="start">LocalDate</param>
         /// <param name="end">LocalDate</param>
@@ -216,7 +216,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Months Period
+        /// For Last of Months period
         /// </summary>
         /// <param name="lastOfPeriod">Period</param>
         /// <returns>VersionedQuery</returns>
@@ -228,7 +228,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Months Period Range
+        /// For Last of Months period range
         /// </summary>
         /// <param name="from">Period</param>
         /// <param name="to">Period</param>
@@ -242,7 +242,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Version with Local Date Time
+        /// For Version with LocalDateTime
         /// </summary>
         /// <param name="version">LocalDateTime</param>
         /// <returns>VersionedQuery</returns>

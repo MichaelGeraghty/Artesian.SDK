@@ -24,7 +24,7 @@ namespace Artesian.SDK.Service
             );
         }
         /// <summary>
-        /// Create Actual Time Serie
+        /// Create Actual Time Serie Query
         /// </summary>
         /// <returns>
         /// Actual Time Serie <see cref="ActualQuery"/>
@@ -34,7 +34,7 @@ namespace Artesian.SDK.Service
             return new ActualQuery(_client);
         }
         /// <summary>
-        /// Create Versioned Time Serie
+        /// Create Versioned Time Serie Query
         /// </summary>
         /// <returns>
         /// Versioned Time Serie <see cref="VersionedQuery"/>
@@ -44,7 +44,7 @@ namespace Artesian.SDK.Service
             return new VersionedQuery(_client);
         }
         /// <summary>
-        /// Create Market Assessment Time Serie
+        /// Create Market Assessment Time Serie Query
         /// </summary>
         /// <returns>
         /// Market Assessment Time Serie <see cref="MasQuery"/>
