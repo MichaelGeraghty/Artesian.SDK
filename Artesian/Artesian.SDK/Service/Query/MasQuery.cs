@@ -28,9 +28,9 @@ namespace Artesian.SDK.Service
 
         #region facade methods
         /// <summary>
-        /// Set of marketdata ID's to be queried
+        /// Set the list of marketdata to be queried
         /// </summary>
-        /// <param name="ids">An Int array</param>
+        /// <param name="ids">Array of marketdata id's to be queried</param>
         /// <returns>MasQuery</returns>
         public MasQuery ForMarketData(int[] ids)
         {
@@ -38,9 +38,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Marketdata ID to be queried
+        /// Set the marketdata to be queried
         /// </summary>
-        /// <param name="id">An Int</param>
+        /// <param name="id">The marketdata id to be queried</param>
         /// <returns>MasQuery</returns>
         public MasQuery ForMarketData(int id)
         {
@@ -48,9 +48,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Timezone of extracted marketdata. Defaults to UTC
+        /// Specify the timezone of extracted marketdata. Defaults to UTC
         /// </summary>
-        /// <param name="tz">String timezone eg UTC/CET</param>
+        /// <param name="tz">Timezone in which to extract eg UTC/CET</param>
         /// <returns>MasQuery</returns>
         public MasQuery InTimezone(string tz)
         {
@@ -58,10 +58,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Date range to be queried
+        /// Set the date range to be queried
         /// </summary>
-        /// <param name="start">LocalDate start date of range</param>
-        /// <param name="end">LocalDate end date of range</param>
+        /// <param name="start">Start date of range</param>
+        /// <param name="end">End date of range</param>
         /// <returns>MasQuery</returns>
         public MasQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
@@ -69,10 +69,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Relative period range from today to be queried
+        /// Set the relative period range from today to be queried
         /// </summary>
-        /// <param name="from">Period start of period range</param>
-        /// <param name="to">Period end of period range</param>
+        /// <param name="from">Start period of range</param>
+        /// <param name="to">End period of range</param>
         /// <returns>MasQuery</returns>
         public MasQuery InRelativePeriodRange(Period from, Period to)
         {
@@ -80,9 +80,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Relative period from today to be queried
+        /// Set the relative period from today to be queried
         /// </summary>
-        /// <param name="extractionPeriod">Period</param>
+        /// <param name="extractionPeriod">Period to be queried</param>
         /// <returns>MasQuery</returns>
         public MasQuery InRelativePeriod(Period extractionPeriod)
         {
@@ -90,9 +90,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Interval to be queried
+        /// Set the relative interval to be queried
         /// </summary>
-        /// <param name="relativeInterval">RelativeInterval</param>
+        /// <param name="relativeInterval">The relative interval to be queried</param>
         /// <returns>MasQuery</returns>
         public MasQuery InRelativeInterval(RelativeInterval relativeInterval)
         {
@@ -103,9 +103,9 @@ namespace Artesian.SDK.Service
 
         #region market assessment methods
         /// <summary>
-        /// Products to be queried
+        /// Set list of market products to be queried
         /// </summary>
-        /// <param name="products">params string array of products</param>
+        /// <param name="products">List of products to be queried</param>
         /// <returns></returns>
         public MasQuery ForProducts(params string[] products)
         {

@@ -31,9 +31,9 @@ namespace Artesian.SDK.Service
 
         #region facade methods
         /// <summary>
-        /// Set of marketdata ID's to be queried
+        /// Set the list of marketdata to be queried
         /// </summary>
-        /// <param name="ids">An Int array</param>
+        /// <param name="ids">Array of marketdata id's to be queried</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForMarketData(int[] ids)
         {
@@ -41,9 +41,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Marketdata ID to be queried
+        /// Set the marketdata to be queried
         /// </summary>
-        /// <param name="id">An Int</param>
+        /// <param name="id">The marketdata id to be queried</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForMarketData(int id)
         {
@@ -51,9 +51,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Timezone of extracted marketdata. Defaults to UTC
+        /// Specify the timezone of extracted marketdata. Defaults to UTC
         /// </summary>
-        /// <param name="tz">String timezone eg UTC/CET</param>
+        /// <param name="tz">Timezone in which to extract eg UTC/CET</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery InTimezone(string tz)
         {
@@ -61,10 +61,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Date range to be queried
+        /// Set the date range to be queried
         /// </summary>
-        /// <param name="start">LocalDate start date of range</param>
-        /// <param name="end">LocalDate end date of range</param>
+        /// <param name="start">Start date of range</param>
+        /// <param name="end">End date of range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
@@ -72,10 +72,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Relative period range from today to be queried
+        /// Set the relative period range from today to be queried
         /// </summary>
-        /// <param name="from">Period start of period range</param>
-        /// <param name="to">Period end of period range</param>
+        /// <param name="from">Start period of range</param>
+        /// <param name="to">End period of range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery InRelativePeriodRange(Period from, Period to)
         {
@@ -83,9 +83,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Relative period from today to be queried
+        /// Set the relative period from today to be queried
         /// </summary>
-        /// <param name="extractionPeriod">Period</param>
+        /// <param name="extractionPeriod">Period to be queried</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery InRelativePeriod(Period extractionPeriod)
         {
@@ -93,9 +93,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Interval to be queried
+        /// Set the relative interval to be queried
         /// </summary>
-        /// <param name="relativeInterval">RelativeInterval</param>
+        /// <param name="relativeInterval">The relative interval to be queried</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery InRelativeInterval(RelativeInterval relativeInterval)
         {
@@ -103,9 +103,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Time Transform to be applied to query
+        /// Set the time transform to be applied to extraction
         /// </summary>
-        /// <param name="tr">An Int GASDAY66=1/THERMALYEAR=2</param>
+        /// <param name="tr">The Time Tramsform id to be applied to the extraction</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery WithTimeTransform(int tr)
         {
@@ -113,9 +113,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Time Transform to be applied to query
+        /// Set the time transform to be applied to extraction
         /// </summary>
-        /// <param name="tr">SystemTimeTransform GASDAY66/THERMALYEAR</param>
+        /// <param name="tr">The system defined time transform to be applied to the extraction</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery WithTimeTransform(SystemTimeTransform tr)
         {
@@ -126,9 +126,9 @@ namespace Artesian.SDK.Service
 
         #region versioned query methods
         /// <summary>
-        /// Granularity of the extracted marketdata
+        /// Set the granularity of the extracted marketdata
         /// </summary>
-        /// <param name="granularity">Granularity <see cref="Granularity"/> for types of Granularity</param>
+        /// <param name="granularity">The granulairty in which to extract data. See <see cref="Granularity"/> for types of Granularity</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery InGranularity(Granularity granularity)
         {
@@ -136,9 +136,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For LastNVersions version selection
+        /// Set the number of versions to retrieve in the extraction
         /// </summary>
-        /// <param name="lastN">An Int</param>
+        /// <param name="lastN">The number of previous versions to extract</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastNVersions(int lastN)
         {
@@ -147,7 +147,7 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Most updated version selection
+        /// Set the version selection type to MUV. 
         /// </summary>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForMUV()
@@ -156,10 +156,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last Of Days date range version selection
+        /// Set Last Of Days date range version selection
         /// </summary>
-        /// <param name="start">LocalDate</param>
-        /// <param name="end">LocalDate</param>
+        /// <param name="start">Start date of version range</param>
+        /// <param name="end">End date of version range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastOfDays(LocalDate start, LocalDate end)
         {
@@ -173,10 +173,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last Of Days period range version selection
+        /// Set Last Of Days period range version selection
         /// </summary>
-        /// <param name="from">Period</param>
-        /// <param name="to">Period</param>
+        /// <param name="from">Start period of version range</param>
+        /// <param name="to">End period of version range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastOfDays(Period from, Period to)
         {
@@ -187,9 +187,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last Of Days period version selection
+        /// Set Last Of Days period version selection
         /// </summary>
-        /// <param name="lastOfPeriod">Period</param>
+        /// <param name="lastOfPeriod">Period of version range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastOfDays(Period lastOfPeriod)
         {
@@ -199,10 +199,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Months date range
+        /// Set Last of Months date range version selection
         /// </summary>
-        /// <param name="start">LocalDate</param>
-        /// <param name="end">LocalDate</param>
+        /// <param name="start">Start date of version range</param>
+        /// <param name="end">End date of version range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastOfMonths(LocalDate start, LocalDate end)
         {
@@ -216,9 +216,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Months period
+        /// Set Last of Months period version selection
         /// </summary>
-        /// <param name="lastOfPeriod">Period</param>
+        /// <param name="lastOfPeriod">Period of version range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastOfMonths(Period lastOfPeriod)
         {
@@ -228,10 +228,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Last of Months period range
+        /// Set Last of Months period range version selection
         /// </summary>
-        /// <param name="from">Period</param>
-        /// <param name="to">Period</param>
+        /// <param name="from">Start period of version range</param>
+        /// <param name="to">End period of version range</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForLastOfMonths(Period from, Period to)
         {
@@ -242,9 +242,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// For Version with LocalDateTime
+        /// Set specific version selection
         /// </summary>
-        /// <param name="version">LocalDateTime</param>
+        /// <param name="version">Date time of the version to be extracted</param>
         /// <returns>VersionedQuery</returns>
         public VersionedQuery ForVersion(LocalDateTime version)
         {

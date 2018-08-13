@@ -29,9 +29,9 @@ namespace Artesian.SDK.Service
 
         #region facade methods
         /// <summary>
-        /// Set of marketdata ID's to be queried
+        /// Set the list of marketdata to be queried
         /// </summary>
-        /// <param name="ids">An Int array</param>
+        /// <param name="ids">Array of marketdata id's to be queried</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery ForMarketData(int[] ids)
         {
@@ -39,9 +39,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Marketdata ID to be queried
+        /// Set the marketdata to be queried
         /// </summary>
-        /// <param name="id">An Int</param>
+        /// <param name="id">The marketdata id to be queried</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery ForMarketData(int id)
         {
@@ -49,9 +49,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Timezone of extracted marketdata. Defaults to UTC
+        /// Specify the timezone of extracted marketdata. Defaults to UTC
         /// </summary>
-        /// <param name="tz">String timezone eg UTC/CET</param>
+        /// <param name="tz">Timezone in which to extract eg UTC/CET</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery InTimezone(string tz)
         {
@@ -59,10 +59,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Date range to be queried
+        /// Set the date range to be queried
         /// </summary>
-        /// <param name="start">LocalDate start date of range</param>
-        /// <param name="end">LocalDate end date of range</param>
+        /// <param name="start">Start date of range</param>
+        /// <param name="end">End date of range</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery InAbsoluteDateRange(LocalDate start, LocalDate end)
         {
@@ -70,10 +70,10 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Relative period range from today to be queried
+        /// Set the relative period range from today to be queried
         /// </summary>
-        /// <param name="from">Period start of period range</param>
-        /// <param name="to">Period end of period range</param>
+        /// <param name="from">Start period of range</param>
+        /// <param name="to">End period of range</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery InRelativePeriodRange(Period from, Period to)
         {
@@ -81,9 +81,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Relative period from today to be queried
+        /// Set the relative period from today to be queried
         /// </summary>
-        /// <param name="extractionPeriod">Period</param>
+        /// <param name="extractionPeriod">Period to be queried</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery InRelativePeriod(Period extractionPeriod)
         {
@@ -91,9 +91,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Interval to be queried
+        /// Set the relative interval to be queried
         /// </summary>
-        /// <param name="relativeInterval">RelativeInterval</param>
+        /// <param name="relativeInterval">The relative interval to be queried</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery InRelativeInterval(RelativeInterval relativeInterval)
         {
@@ -101,9 +101,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Time Transform to be applied to query
+        /// Set the time transform to be applied to extraction
         /// </summary>
-        /// <param name="tr">An Int GASDAY66=1/THERMALYEAR=2</param>
+        /// <param name="tr">The Time Tramsform id to be applied to the extraction</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery WithTimeTransform(int tr)
         {
@@ -111,9 +111,9 @@ namespace Artesian.SDK.Service
             return this;
         }
         /// <summary>
-        /// Time Transform to be applied to query
+        /// Set the time transform to be applied to extraction
         /// </summary>
-        /// <param name="tr">SystemTimeTransform GASDAY66/THERMALYEAR</param>
+        /// <param name="tr">The system defined time transform to be applied to the extraction</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery WithTimeTransform(SystemTimeTransform tr)
         {
@@ -124,9 +124,9 @@ namespace Artesian.SDK.Service
 
         #region actual query methods
         /// <summary>
-        /// Granularity of the extracted marketdata
+        /// Set the granularity of the extracted marketdata
         /// </summary>
-        /// <param name="granularity">Granularity <see cref="Granularity"/> for types of Granularity</param>
+        /// <param name="granularity">The granulairty in which to extract data. See <see cref="Granularity"/> for types of Granularity</param>
         /// <returns>ActualQuery</returns>
         public ActualQuery InGranularity(Granularity granularity)
         {

@@ -27,9 +27,9 @@ namespace Artesian.SDK.Service
             );
         }
         /// <summary>
-        /// Read a TimeTransform entity from the service by ID
+        /// Read a time transform entity from the service by ID
         /// </summary>
-        /// <param name="timeTransformId">An Int</param>
+        /// <param name="timeTransformId">ID of the time transform to be retrieved</param>
         /// <param name="ctk">CancellationToken</param>
         /// <returns>client.Exec() <see cref="Client.Exec{TResult}(HttpMethod, string, CancellationToken)"/></returns>
         public Task<TimeTransform> ReadTimeTransformBaseAsync(int timeTransformId, CancellationToken ctk = default)
@@ -40,11 +40,11 @@ namespace Artesian.SDK.Service
             return _client.Exec<TimeTransform>(HttpMethod.Get, $@"/timeTransform/entity/{timeTransformId}", ctk: ctk);
         }
         /// <summary>
-        /// Read a paged set of TimeTransform entities from the service
+        /// Read a paged set of time transform entities from the service
         /// </summary>
-        /// <param name="page">int</param>
-        /// <param name="pageSize">int</param>
-        /// <param name="userDefined">bool</param>
+        /// <param name="page">Page number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="userDefined">Retrieve either user or system defined time transforms</param>
         /// <param name="ctk">CancellationToken</param>
         /// <returns>client.exec() <see cref="Client.Exec{TResult}(HttpMethod, string, CancellationToken)"/></returns>
         public Task<PagedResult<TimeTransform>> ReadTimeTransformsAsync(int page, int pageSize, bool userDefined, CancellationToken ctk = default)
@@ -61,9 +61,9 @@ namespace Artesian.SDK.Service
             return _client.Exec<PagedResult<TimeTransform>>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Get marketdata metadata by provider and curve name with MarketDataIdentifier
+        /// Read marketdata metadata by provider and curve name with MarketDataIdentifier
         /// </summary>
-        /// <param name="id">MarketDataIdentifier</param>
+        /// <param name="id">MarketDataIdentifier of markedata to be retrieved</param>
         /// <param name="ctk">CancellationToken</param>
         /// <returns>client.Exec() <see cref="Client.Exec{TResult}(HttpMethod, string, CancellationToken)"/></returns>
         public Task<MarketDataEntity.Output> ReadMarketDataRegistryAsync(MarketDataIdentifier id, CancellationToken ctk = default)
@@ -76,9 +76,9 @@ namespace Artesian.SDK.Service
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Get marketdata metadata by curve id
+        /// Read marketdata metadata by id
         /// </summary>
-        /// <param name="id">An Int</param>
+        /// <param name="id">Id of the marketdata to be retrieved</param>
         /// <param name="ctk">CancellationToken</param>
         /// <returns>client.Exec() <see cref="Client.Exec{TResult}(HttpMethod, string, CancellationToken)"/></returns>
         public Task<MarketDataEntity.Output> ReadMarketDataRegistryAsync(int id, CancellationToken ctk = default)
@@ -90,14 +90,14 @@ namespace Artesian.SDK.Service
             return _client.Exec<MarketDataEntity.Output>(HttpMethod.Get, url.ToString(), ctk: ctk);
         }
         /// <summary>
-        /// Get the marketdata metadata versions by id
+        /// Read paged set of available versions of the marketdata by id
         /// </summary>
-        /// <param name="id">Int</param>
-        /// <param name="page">Int</param>
-        /// <param name="pageSize">Int</param>
-        /// <param name="product">string</param>
-        /// <param name="versionFrom">LocalDateTime</param>
-        /// <param name="versionTo">LocalDateTime</param>
+        /// <param name="id">Id of the marketdata to be retrieved</param>
+        /// <param name="page">Page number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="product">Market product in the case of Market Assessment</param>
+        /// <param name="versionFrom">Start date of version range</param>
+        /// <param name="versionTo">End date of version range</param>
         /// <param name="ctk">CancellationToken</param>
         /// <returns>client.Exec() <see cref="Client.Exec{TResult}(HttpMethod, string, CancellationToken)"/></returns>
         public Task<PagedResult<CurveRange>> ReadCurveRangeAsync(int id, int page, int pageSize, string product = null, LocalDateTime? versionFrom = null, LocalDateTime? versionTo = null, CancellationToken ctk = default)
@@ -116,7 +116,7 @@ namespace Artesian.SDK.Service
         /// <summary>
         /// Search the marketdata metadata
         /// </summary>
-        /// <param name="filter">ArtesianSearchFilter</param>
+        /// <param name="filter">ArtesianSearchFilter containing the search params</param>
         /// <param name="ctk">CancellationToken</param>
         /// <returns></returns>
         public Task<ArtesianSearchResults> SearchFacetAsync(ArtesianSearchFilter filter, CancellationToken ctk = default)
