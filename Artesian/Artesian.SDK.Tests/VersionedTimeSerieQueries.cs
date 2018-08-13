@@ -15,11 +15,7 @@ namespace Artesian.SDK.Tests
     [TestFixture]
     public class VersionedTimeSerieQueries
     {
-        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
-        {
-            BaseAddress = new Uri(TestConstants.BaseAddress),
-            ApiKey = TestConstants.APIKey
-        };
+        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig(new Uri(TestConstants.BaseAddress), TestConstants.APIKey);
 
         [Test]
         public void VerInPeriodRelativeIntervalLastOfMonths()
@@ -619,7 +615,7 @@ namespace Artesian.SDK.Tests
                 var ver = qs.CreateVersioned()
                         .ForMarketData(new int[] { 100000001 })
                         .InGranularity(Granularity.Day)
-                        .ForVersion(new LocalDateTime(2018,07,19,12,0))
+                        .ForVersion(new LocalDateTime(2018, 07, 19, 12, 0))
                         .InRelativeInterval(RelativeInterval.RollingMonth)
                         .ExecuteAsync().Result;
 
@@ -1014,7 +1010,7 @@ namespace Artesian.SDK.Tests
 
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfDays/P-1M/P20D/Day/2017-01-01/2018-01-10"
                  .SetQueryParam("id", 100000001)
-                 .SetQueryParam("tz","UTC"))
+                 .SetQueryParam("tz", "UTC"))
                  .WithVerb(HttpMethod.Get)
                  .Times(1);
             }
@@ -1149,7 +1145,7 @@ namespace Artesian.SDK.Tests
                 httpTest.ShouldHaveCalled($"{_cfg.BaseAddress}query/v1.0/vts/LastOfMonths/P-4M/Day/RollingMonth"
                    .SetQueryParam("id", 100000001))
                    .WithVerb(HttpMethod.Get)
-                    //.WithHeader
+                   //.WithHeader
                    .Times(1);
             }
         }

@@ -96,9 +96,12 @@ namespace Artesian.SDK.Service
 
                 _cachePolicy = Policy.CacheAsync(_memoryCacheProvider.AsyncFor<(string AccessToken, DateTimeOffset ExpiresOn)>(), new ResultTtl<(string AccessToken, DateTimeOffset ExpiresOn)>(r => new Ttl(r.ExpiresOn - DateTimeOffset.Now, false)));
             }
+
             _client = new FlurlClient(_url);
+            _client.WithTimeout(TimeSpan.FromMinutes(ArtesianConstants.ServiceRequestTimeOutMinutes));
+
         }
-        
+
         public async Task<TResult> Exec<TResult, TBody>(HttpMethod method, string resource, TBody body = default(TBody), CancellationToken ctk = default(CancellationToken))
         {
             try

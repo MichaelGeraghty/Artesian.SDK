@@ -13,11 +13,7 @@ namespace Artesian.SDK.Tests
     [TestFixture]
     public class MetadataQueries
     {
-        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
-        {
-            BaseAddress = new Uri(TestConstants.BaseAddress),
-            ApiKey = TestConstants.APIKey
-        };
+        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig(new Uri(TestConstants.BaseAddress), TestConstants.APIKey);
 
         [Test]
         public void ReadTimeTransformBaseWithTimeTransformID()

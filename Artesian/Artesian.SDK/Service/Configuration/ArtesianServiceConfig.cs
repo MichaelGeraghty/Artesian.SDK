@@ -11,23 +11,32 @@ namespace Artesian.SDK.Service
     public class ArtesianServiceConfig: IArtesianServiceConfig
     {
         /// <summary>
-        /// Auth credentials
+        /// Base address of the Artesian service
         /// </summary>
-        public Uri BaseAddress { get; set; }
-        public string Audience { get; set; }
-        public string Domain { get; set; }
-        public string ClientId { get; set; }
-        public string ClientSecret { get; set; }
+        public Uri BaseAddress { get; }
         /// <summary>
-        /// ApiKey
+        /// Audience of Artesian service. Required when authenticating with Bearer Token
         /// </summary>
-        public string ApiKey { get; set; }
+        public string Audience { get; }
         /// <summary>
-        /// Constructor for auto property use
+        /// IDP Domain. Required when authenticating with Bearer Token
         /// </summary>
-        public ArtesianServiceConfig() { }
+        public string Domain { get; }
         /// <summary>
-        /// Config for X-Api-Key
+        /// Client ID. Required when authenticating with Bearer Token
+        /// </summary>
+        public string ClientId { get; }
+        /// <summary>
+        /// Client Secret. Required when authenticating with Bearer Token
+        /// </summary>
+        public string ClientSecret { get; }
+        /// <summary>
+        /// ApiKey used for access to the service
+        /// </summary>s
+        public string ApiKey { get; }
+
+        /// <summary>
+        /// Config for ApiKey service access
         /// </summary>
         /// <param name="baseAddress">Uri</param>
         /// <param name="xApiKey">string</param>
@@ -37,7 +46,7 @@ namespace Artesian.SDK.Service
             ApiKey = xApiKey;
         }
         /// <summary>
-        /// Config for Auth0
+        /// Config for Bearer token service access
         /// </summary>
         /// <param name="baseAddress">Uri</param>
         /// <param name="audience">string</param>

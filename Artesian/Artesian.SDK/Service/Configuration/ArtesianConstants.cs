@@ -1,6 +1,8 @@
 ﻿// Copyright (c) ARK LTD. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for
 // license information. 
+using System;
+
 namespace Artesian.SDK.Service
 {
     /// <summary>
@@ -13,6 +15,7 @@ namespace Artesian.SDK.Service
         internal static string QueryVersion { get { return "v1.0"; } }
         internal static string QueryRoute { get { return "query"; } }
         internal static string MetadataVersion { get { return "v2.1"; } }
+        internal static int ServiceRequestTimeOutMinutes { get { return 10; } }
 
     }
 }

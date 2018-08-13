@@ -14,11 +14,8 @@ namespace Artesian.SDK.Tests
     [TestFixture]
     public class MarketAssessmentQueries
     {
-        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig()
-        {
-            BaseAddress = new Uri(TestConstants.BaseAddress),
-            ApiKey = TestConstants.APIKey
-        };
+        private ArtesianServiceConfig _cfg = new ArtesianServiceConfig(new Uri(TestConstants.BaseAddress), TestConstants.APIKey);
+
 
         [Test]
         public void MasInRelativeIntervalExtractionWindow()
