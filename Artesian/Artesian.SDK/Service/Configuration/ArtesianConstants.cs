@@ -12,10 +12,10 @@ namespace Artesian.SDK.Service
     {
         internal const string CharacterValidatorRegEx = @"^[^'"",:;\s](?:(?:[^'"",:;\s]| )*[^'"",:;\s])?$";
         internal const string MarketDataNameValidatorRegEx = @"^[^\s](?:(?:[^\s]| )*[^\s])?$";
-        internal static string QueryVersion { get { return "v1.0"; } }
-        internal static string QueryRoute { get { return "query"; } }
-        internal static string MetadataVersion { get { return "v2.1"; } }
-        internal static int ServiceRequestTimeOutMinutes { get { return 10; } }
+        internal const string QueryVersion = "v1.0";
+        internal const string QueryRoute = "query";
+        internal const string MetadataVersion = "v2.1";
+        internal const int ServiceRequestTimeOutMinutes = 10;
 
     }
 }

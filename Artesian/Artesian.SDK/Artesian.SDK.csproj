@@ -27,15 +27,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Artesian.SDK.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Artesian.SDK.xml</DocumentationFile>
-  </PropertyGroup>
-
-
   <ItemGroup>
     <PackageReference Include="Auth0.AuthenticationApi" Version="5.6.0" />
     <PackageReference Include="Flurl.Http" Version="2.3.2" />
