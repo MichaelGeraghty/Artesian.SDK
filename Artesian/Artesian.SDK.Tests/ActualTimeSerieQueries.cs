@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using Artesian.SDK.Dto;
 using Artesian.SDK.Service;
 using Flurl;
