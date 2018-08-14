@@ -32,6 +32,9 @@ To use the Artesian SDK to build a query, you will need to provide a valid authe
 		"client_secret"
 		);
 ```
+
+## Artesian SDK Queries
+
 Passing this authentication configuration to create a query service to start building queries.
 ```csharp
  var queryservice = new QueryService(_cfg);
@@ -45,7 +48,7 @@ var actualTimeSeries = qs.CreateActual()
                 .InAbsoluteDateRange(new LocalDate(2018,08,01),new LocalDate(2018,08,10))
                 .ExecuteAsync().Result;
 ```
-### Artesian SDK Queries
+
 <table>
   <tr><th>Query type</th><th>Description</th></tr>
   <tr><td>Market Assessment Market Data</td><td>Get a Market Assessment timeserie for the given Market Data IDs and Products names and extraction window.</td></tr>
@@ -105,6 +108,31 @@ Most update version
 ```csharp
   .ForMUV()
 ```
+
+## Artesian SDK Metadata Queries
+
+Passing this authentication configuration to create a metadata service to start building meta data queries.
+```csharp
+ var metadataservice = new MetadataService(_cfg);
+```
+For an example of a metadata query. ReadMarketDataRegistryAsync Gets Metadata by provider and curve name.
+```csharp
+ var metadataquery = metadataservice.ReadMarketDataRegistryAsync(
+		new MarketDataIdentifier("TestProvider", "TestCurveName"))
+		.ConfigureAwait(true)
+		.GetAwaiter()
+		.GetResult();
+```
+
+<table>
+  <tr><th>Query type</th><th>Description</th></tr>
+  <tr><td>ReadTimeTransformBaseAsync</td><td>Retrieve the TimeTransform entity from the database.</td></tr>
+  <tr><td>ReadTimeTransformsAsync</td><td>Read the TimeTransform entity from the database paged.</td></tr>
+  <tr><td>ReadMarketDataRegistryAsync</td><td>Get Metadata by provider and curve name with MarketDataIdentifier/Read Metadata by curve id.</td></tr>
+  <tr><td>ReadCurveRangeAsync</td><td>Get the metadata versions by id.</td></tr>
+  <tr><td>SearchFacetAsync</td><td>Search the market data collection with faceted results.</td></tr>
+</table>
+
 ## Links
 * [Nuget](https://www.nuget.org/packages/Artesian.SDK/)
 * [Github](https://github.com/ARKlab/Artesian.SDK)
