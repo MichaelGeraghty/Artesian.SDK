@@ -1,4 +1,4 @@
-# Artesian.SDK![image](http://www.ark-energy.eu/wp-content/uploads/ark-dark.png)
+![image](http://www.ark-energy.eu/wp-content/uploads/ark-dark.png)
 # Artesian.SDK
 
 This Library provides read access to the Artesian API
