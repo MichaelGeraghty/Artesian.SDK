@@ -1,7 +1,7 @@
 ![image](http://www.ark-energy.eu/wp-content/uploads/ark-dark.png)
 # Artesian.SDK
 
-This Library adds support for building Artesian queries.
+This Library provides read access to the Artesian API
 
 ## Getting Started
 ### Installation
@@ -15,15 +15,18 @@ Install-Package Artesian.SDK
 ```
 
 or download directly from NuGet.
+* [NuGet](https://www.nuget.org/packages/Artesian.SDK/)
 
 ## How to use
-To use the Artesian SDK to build a query, you will need to provide a valid authentication(Api-key/Auth credentials)
+The Artesian.SDK instance can be configured using either Client credentials or API-Key authentication 
 ```csharp
+//API-Key
  ArtesianServiceConfig _cfg = new ArtesianServiceConfig(
 		new Uri("https://fake-artesian-env/"),
 		"5418B0DB - 7AB9 - 4875 - 81BA - 6EE609E073B6"
 		);
 
+//Client credentials
  ArtesianServiceConfig _cfg = new ArtesianServiceConfig(
 		new Uri("https://fake-artesian-env/"),
 		"audience",
@@ -33,34 +36,64 @@ To use the Artesian SDK to build a query, you will need to provide a valid authe
 		);
 ```
 
-## Artesian SDK Queries
+## QueryService
 
-Passing this authentication configuration to create a query service to start building queries.
+Using the ArtesianServiceConfig we create an instance of the QueryService which is used to create Actual, Versioned and Market Assessment time series queries
+
+### Actual Time Series
 ```csharp
- var queryservice = new QueryService(_cfg);
-```
-For an example of a query. This is an Actual Time Series Query providing a time granularity of Day 
-and a Date range to query by as well as a set of Market Data ids we want to return.
-```csharp
-var actualTimeSeries = qs.CreateActual()
+var queryservice = new QueryService(_cfg);
+var actualTimeSeries = await qs.CreateActual()
                 .ForMarketData(new int[] { 100000001, 100000002, 100000003 })
                 .InGranularity(Granularity.Day)
                 .InAbsoluteDateRange(new LocalDate(2018,08,01),new LocalDate(2018,08,10))
-                .ExecuteAsync().Result;
+                .ExecuteAsync();
 ```
-
+To construct an Actual Time Series the following must be provided.
 <table>
-  <tr><th>Query type</th><th>Description</th></tr>
-  <tr><td>Market Assessment Market Data</td><td>Get a Market Assessment timeserie for the given Market Data IDs and Products names and extraction window.</td></tr>
-  <tr><td>Actual Market Data</td><td>Gets a Timeseries for a set of Actual Market Data IDs over an extraction window at a specified Granularity</td></tr>
-  <tr><td>Versioned Market Data for specific version</td><td>Gets the specific version within an extraction window.</td></tr>
-  <tr><td>Versioned Market Data for last of days</td><td>Gets the latest version of each day in an extraction window.</td></tr>
-  <tr><td>Versioned Market Data for last of months</td><td>Gets the latest version of each month in an extraction window.</td></tr>
-  <tr><td>Versioned Market Data for last N</td><td>Gets the latest N timeserie versions that have data in an extraction window.</td></tr>
-  <tr><td>Versioned Market Data for most updated version</td><td>Gets the timeserie of the most updated version of each timepoint.</td></tr>
+  <tr><th>Actual Query</th><th>Description</th></tr>
+  <tr><td>Market Data ID</td><td>Provide a market data id or set of market data id's to query</td></tr>
+  <tr><td>Time Granularity</td><td>Specify the granularity type</td></tr>
+  <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried</td></tr>
+</table>
+
+### Market Assessment Time Series
+```csharp
+var queryservice = new QueryService(_cfg);
+var marketAssesmentSeries = await qs.CreateMarketAssessment()
+                       .ForMarketData(new int[] { 100000001 })
+                       .ForProducts(new string[] { "M+1", "GY+1" })
+                       .InRelativeInterval(RelativeInterval.RollingMonth)
+                       .ExecuteAsync().Result;
+```
+To construct a Market Assessment Time Series the following must be provided.
+<table>
+  <tr><th>Actual Query</th><th>Description</th></tr>
+  <tr><td>Market Data ID</td><td>Provide a market data id or set of market data id's to query</td></tr>
+  <tr><td>Product</td><td>Provide a product or set of products</td></tr>
+  <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried</td></tr>
+</table>
+
+### Versioned Time Series
+```csharp
+ var versionedSeries = await qs.CreateVersioned()
+		.ForMarketData(new int[] { 100000001 })
+		.InGranularity(Granularity.Day)
+		.ForLastOfMonths(Period.FromMonths(-4))
+		.InRelativeInterval(RelativeInterval.RollingMonth)
+		.ExecuteAsync().Result;
+```
+To construct a Versioned Time Series the following must be provided.
+<table>
+  <tr><th>Versioned Query</th><th>Description</th></tr>
+  <tr><td>Market Data ID</td><td>Provide a market data id or set of market data id's to query</td></tr>
+  <tr><td>Time Granularity</td><td>Specify the granularity type</td></tr>
+  <tr><td>Versioned Time Extraction Window</td><td>Versioned extraction time window</td></tr>
+  <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried</td></tr>
 </table>
 
 ### Artesian SDK Extraction Windows
+Extraction window types  for queries.
 
 Date Range
 ```csharp
@@ -79,59 +112,15 @@ Period Range
  .InRelativePeriodRange(Period.FromWeeks(2), Period.FromDays(20))
 ```
 
-### Artesian SDK Versioned Queries
-```csharp
- var ver = qs.CreateVersioned()
-		.ForMarketData(new int[] { 100000001 })
-		.InGranularity(Granularity.Day)
-		.ForLastOfMonths(Period.FromMonths(-4)) //Define the type of versioned query and provide an extraction time window
-		.InRelativeInterval(RelativeInterval.RollingMonth)
-		.ExecuteAsync().Result;
-```
-Version with date range
-```csharp
- .ForVersion(new LocalDateTime(2018, 07, 19, 12, 0))
-```
-Last Of Days with Period Range
-```csharp
- .ForLastOfDays(Period.FromMonths(-1), Period.FromDays(20))
-```
-Last Of Months with Period
-```csharp
- .ForLastOfMonths(Period.FromMonths(-4))
-```
-Last N 3 the number of versions to retrieve in the extraction
-```csharp
-  .ForLastNVersions(3)
-```
-Most update version
-```csharp
-  .ForMUV()
-```
+## MetadataService
 
-## Artesian SDK Metadata Queries
+The MetadataService service is used to access the Artesian api market data metadata and related entitys.
 
-Passing this authentication configuration to create a metadata service to start building meta data queries.
 ```csharp
  var metadataservice = new MetadataService(_cfg);
+ var metadataquery = await metadataservice.ReadMarketDataRegistryAsync(
+		new MarketDataIdentifier("TestProvider", "TestCurveName"));
 ```
-For an example of a metadata query. ReadMarketDataRegistryAsync Gets Metadata by provider and curve name.
-```csharp
- var metadataquery = metadataservice.ReadMarketDataRegistryAsync(
-		new MarketDataIdentifier("TestProvider", "TestCurveName"))
-		.ConfigureAwait(true)
-		.GetAwaiter()
-		.GetResult();
-```
-
-<table>
-  <tr><th>Query type</th><th>Description</th></tr>
-  <tr><td>ReadTimeTransformBaseAsync</td><td>Retrieve the TimeTransform entity from the database.</td></tr>
-  <tr><td>ReadTimeTransformsAsync</td><td>Read the TimeTransform entity from the database paged.</td></tr>
-  <tr><td>ReadMarketDataRegistryAsync</td><td>Get Metadata by provider and curve name with MarketDataIdentifier/Read Metadata by curve id.</td></tr>
-  <tr><td>ReadCurveRangeAsync</td><td>Get the metadata versions by id.</td></tr>
-  <tr><td>SearchFacetAsync</td><td>Search the market data collection with faceted results.</td></tr>
-</table>
 
 ## Links
 * [Nuget](https://www.nuget.org/packages/Artesian.SDK/)
@@ -139,5 +128,4 @@ For an example of a metadata query. ReadMarketDataRegistryAsync Gets Metadata by
 * [Ark Energy](http://www.ark-energy.eu/)
 
 ## Acknowledgments
-* [MessagePack.NodaTime for C#](https://github.com/ARKlab/MessagePack)
 * [Flurl](https://flurl.io/docs/fluent-url/)
