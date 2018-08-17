@@ -57,6 +57,8 @@ To construct an Actual Time Series the following must be provided.
   <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried</td></tr>
 </table>
 
+[Go to Time Extraction window section](#artesian-sdk-extraction-windows)
+
 ### Market Assessment Time Series
 ```csharp
 var queryservice = new QueryService(_cfg);
@@ -64,15 +66,17 @@ var marketAssesmentSeries = await qs.CreateMarketAssessment()
                        .ForMarketData(new int[] { 100000001 })
                        .ForProducts(new string[] { "M+1", "GY+1" })
                        .InRelativeInterval(RelativeInterval.RollingMonth)
-                       .ExecuteAsync().Result;
+                       .ExecuteAsync();
 ```
 To construct a Market Assessment Time Series the following must be provided.
 <table>
   <tr><th>Actual Query</th><th>Description</th></tr>
   <tr><td>Market Data ID</td><td>Provide a market data id or set of market data id's to query</td></tr>
   <tr><td>Product</td><td>Provide a product or set of products</td></tr>
-  <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried</td></tr>
+  <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried </td></tr>
 </table>
+
+[Go to Time Extraction window section](#artesian-sdk-extraction-windows)
 
 ### Versioned Time Series
 ```csharp
@@ -81,7 +85,7 @@ To construct a Market Assessment Time Series the following must be provided.
 		.InGranularity(Granularity.Day)
 		.ForLastOfMonths(Period.FromMonths(-4))
 		.InRelativeInterval(RelativeInterval.RollingMonth)
-		.ExecuteAsync().Result;
+		.ExecuteAsync();
 ```
 To construct a Versioned Time Series the following must be provided.
 <table>
@@ -91,6 +95,8 @@ To construct a Versioned Time Series the following must be provided.
   <tr><td>Versioned Time Extraction Window</td><td>Versioned extraction time window</td></tr>
   <tr><td>Time Extraction Window</td><td>An extraction time window for data to be queried</td></tr>
 </table>
+
+[Go to Time Extraction window section](#artesian-sdk-extraction-windows)
 
 ### Artesian SDK Extraction Windows
 Extraction window types  for queries.
